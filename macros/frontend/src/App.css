@@ -1,9 +1,56 @@
+@import "open-props/style";
+
+@import "open-props/normalize";
+@import "open-props/buttons";
+
+@import "open-props/indigo";
+@import "open-props/easings";
+@import "open-props/animations";
+@import "open-props/sizes";
+@import "open-props/gradients";
+
 .App {
   text-align: center;
 }
 
 #mainBodyDiv {
-  height: 700px;
-  width: 100%;
-  background-color: red;
+  height: 80vh;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  background-color: var(--indigo-3);
+
+  box-shadow: var(--shadow-6);
+}
+
+#homePageTitle{
+  padding-top: 3vh;
+  padding-bottom: 1vh; /*for commmit? */
+  font-family: var(--font-sans);
+  font-size: var(--font-size-7);
+  font-weight: var(--font-weight-7)
+}
+
+#homePageCardContainer{
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  margin-left: 4vw;
+  margin-right: 4vw;
+
+  width: 72vw;
+  height: 55vh;
+}
+
+.card{
+  margin-left: 4vw;
+  margin-right: 4vw;
+  
+  width: 22vw;
+  height: 50vh;
+
+  background-color: var(--indigo-6);
+  box-shadow: var(--shadow-4);
+  border-radius: var(--radius-2);
+
+  display: inline-block;
 }
