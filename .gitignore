@@ -130,3 +130,5 @@ dmypy.json
 
 .vscode/
 .idea/
+
+frontend/node_modules
