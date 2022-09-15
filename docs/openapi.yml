@@ -1,0 +1,71 @@
+openapi: '3.0.2'
+info:
+  title: Macros
+  version: '0.1.0'
+  description: Macro tracking & exercise application API contract
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: Info
+    description: Application insight operations
+  - name: Recipes
+    description: Recipe Operations
+servers:
+  - url: http://127.0.0.1:8000
+    description: Local server
+components:
+  schemas:
+    Recipe:
+      type: object
+      properties:
+        recipe-id:
+          type: string
+          description: Unique identifier for the recipe
+          example: "1001-0110"
+        name:
+          type: string
+          description: Name of the recipe
+          example: "Mom's famous grilled cheese"
+        description: 
+          type: string
+          description: Description for the recipe
+          example: "The best grilled cheese, just like Mom used to make"
+        label:
+          type: string
+          example: Comfort Food
+        instructions:
+          type: array
+          description: Array of instructions for the recipe
+          example: ["Combine the bread and cheese", "Toast on high for 10 minutes", "Flip the sandwich", "Eat the sandwich"]
+        ingredients:
+          type: array
+          description: Array of ingredients required by the recipe
+          example: ["Sourdough bread", "Colby jack cheese"]
+        
+    Ingredient:
+      type: object
+      properties:
+        ingredient-id:
+          type: string 
+
+paths:
+  /v1/recipes/{recipe-id}:
+    get:
+      description: Get recipe by recipe id
+      tags:
+        - Recipes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: {}
+  /:
+    get:
+      description: Returns a generic response
+      tags:
+        - Info
+      responses:
+        '200':
+          description: OK

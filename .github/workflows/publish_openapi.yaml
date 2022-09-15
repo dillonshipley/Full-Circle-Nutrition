@@ -1,0 +1,16 @@
+name: Publish OpenAPI schema page to GitHub pages site
+on:
+  push:
+    branches:
+      - main
+      
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: 3.10.4
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - run: echo "Hello!"
