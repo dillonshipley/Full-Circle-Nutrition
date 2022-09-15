@@ -1,4 +1,5 @@
 openapi: '3.0.2'
+
 info:
   title: Macros
   version: '0.1.0'
@@ -6,14 +7,19 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
+
 tags:
   - name: Info
     description: Application insight operations
   - name: Recipes
     description: Recipe Operations
+  - name: Ingredients
+    description: Ingredient Operations
+
 servers:
   - url: http://127.0.0.1:8000
     description: Local server
+
 components:
   schemas:
     Recipe:
@@ -31,15 +37,19 @@ components:
           type: string
           description: Description for the recipe
           example: "The best grilled cheese, just like Mom used to make"
-        label:
+        theme:
           type: string
           example: Comfort Food
         instructions:
           type: array
+          items: 
+            type: string
           description: Array of instructions for the recipe
           example: ["Combine the bread and cheese", "Toast on high for 10 minutes", "Flip the sandwich", "Eat the sandwich"]
         ingredients:
           type: array
+          items: 
+            type: string
           description: Array of ingredients required by the recipe
           example: ["Sourdough bread", "Colby jack cheese"]
         
@@ -53,14 +63,25 @@ paths:
   /v1/recipes/{recipe-id}:
     get:
       description: Get recipe by recipe id
+      summary: Find recipes based off of inputted recipe ID
+      operationId: getRecipeById 
       tags:
         - Recipes
+      parameters:
+        - name: recipe-id
+          in: path
+          description: Unique identifier for the recipe
+          required: true
+          schema: 
+            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
-              schema: {}
+              schema: 
+                $ref: '#/components/schemas/Recipe'
+
   /:
     get:
       description: Returns a generic response
