@@ -1,4 +1,5 @@
 openapi: '3.0.2'
+
 info:
   title: Macros
   version: '0.1.0'
@@ -6,61 +7,173 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
+
 tags:
   - name: Info
     description: Application insight operations
   - name: Recipes
     description: Recipe Operations
+  - name: Ingredients
+    description: Ingredient Operations
+
 servers:
   - url: http://127.0.0.1:8000
     description: Local server
+
 components:
   schemas:
     Recipe:
+      description: Request body for creating a new recipe object
       type: object
       properties:
-        recipe-id:
+        creator: 
+          description: User id of the creator of the recipe
+          type: integer
+          nullable: false
+        recipe_name: 
+          description: Name for the new recipe
           type: string
+          nullable: false
+        description:
+          description: Description of the recipe
+          type: string
+
+    GetRecipeResponse:
+      description: Recipe response object that is returned on requests for recipe objects
+      type: object
+      properties:
+        recipe_id:
           description: Unique identifier for the recipe
-          example: "1001-0110"
+          type: integer
+          example: 10010110
         name:
-          type: string
           description: Name of the recipe
+          type: string
           example: "Mom's famous grilled cheese"
         description: 
-          type: string
           description: Description for the recipe
+          type: string
           example: "The best grilled cheese, just like Mom used to make"
-        label:
+        theme:
+          description: Theme of the recipe
           type: string
           example: Comfort Food
         instructions:
-          type: array
           description: Array of instructions for the recipe
+          type: array
+          items: 
+            type: string
           example: ["Combine the bread and cheese", "Toast on high for 10 minutes", "Flip the sandwich", "Eat the sandwich"]
         ingredients:
-          type: array
           description: Array of ingredients required by the recipe
+          type: array
+          items: 
+            type: string
           example: ["Sourdough bread", "Colby jack cheese"]
-        
-    Ingredient:
+      
+    PostRecipeNoIngredientsResponse:
+      description: POST response after successfully creating a new recipe. This response is for the creation of a recipe with no ingredients as of yet.
+      type: object
+      properties:
+        status:
+          description: Status of the creation of a new recipe object
+          type: string
+          example: SUCCESS
+        recipe_id:
+          description: Unique identifier for the newly created recipe
+          type: integer
+          example: 10010110
+
+    GetIngredientResponse:
       type: object
       properties:
         ingredient-id:
-          type: string 
+          description: Unique identifier for the ingredient
+          type: integer
+          example: 01101001
+        name:
+          description: Name of the ingredient
+          type: string
+          example: "Colby Jack cheese"
+        vegetarian:
+          description: Vegetarian flag for the ingredient
+          type: boolean
+          example: false
+        units:
+          description: Units of measurement this ingredient will use for its recipe
+          type: string
+          example: slices
+        amount:
+          description: Amount of the ingredient to use in the recipe
+        nutrition_information:
+          description: Macro nutrition information about the ingredient
+          type: object
+          items:
+            type: object
+          example: {'calories': 100, 'carbs': 100, 'protein': 100, 'fat': 100}
+          
+        notes:
+          description: Notes about the ingredient. 
+          type: object
+          items:
+            type: string
+          example: {'flavor_profile': "Salty"}
+
+    HealthReponse:
+      type: object
+      properties:
+        timestamp:
+          description: UTC time on the application server
+          type: number
+          example: 1663270531.3822038
+        status:
+          description: Status of the application
+          type: string
+          example: "UP"
+        
 
 paths:
-  /v1/recipes/{recipe-id}:
+  /v1/recipes/{recipe_id}:
     get:
       description: Get recipe by recipe id
+      summary: Find recipes based off of inputted recipe ID
+      operationId: getRecipeById 
       tags:
         - Recipes
+      parameters:
+        - name: recipe_id
+          in: path
+          description: Unique identifier for the recipe
+          required: true
+          schema: 
+            type: string
       responses:
         '200':
-          description: OK
+          description: Recipe found
           content:
             application/json:
-              schema: {}
+              schema: 
+                $ref: '#/components/schemas/GetRecipeResponse'
+  /v1/recipes/:
+    post:
+      description: Post recipe by recipe id
+      summary: Find recipes based off of inputted recipe ID
+      operationId: createRecipe 
+      tags:
+        - Recipes
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Recipe'
+      responses:
+        '200':
+          description: Recipe created
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PostRecipeNoIngredientsResponse'
+
   /:
     get:
       description: Returns a generic response
@@ -69,3 +182,16 @@ paths:
       responses:
         '200':
           description: OK
+  
+  /health:
+    get:
+      description: Return a health snapshot of the application
+      tags:
+        - Info
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthReponse'

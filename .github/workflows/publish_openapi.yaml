@@ -3,14 +3,16 @@ on:
   push:
     branches:
       - main
-      
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
-  PYTHON_VERSION: 3.10.4
+  SWAGGER_PATH: '../../docs/openapi.yml'
 
 jobs:
-  test:
+  publish:
     runs-on: ubuntu-18.04
     steps:
-      - run: echo "Hello!"
+      - run: echo "Publish step"

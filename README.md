@@ -24,9 +24,9 @@ Macros
 
 ## Environment Variables
 
-If it is your first time running the app locally, create a .env file in the macros directory
+If it is your first time running the app locally, create a .env file in the macros-backend directory
 ```bash
-touch macros/.env
+touch macros-backend/.env
 ```
 There is a `dist.env` file that has the keys already filled out, the values can be found in the GitHub secrets page. *DO NOT* fill in the values into the `dist.env` file, this file is tracked by version control, use the `.env` file instead.
 
@@ -36,4 +36,4 @@ Since there is no production environment yet, we should use a Postgres Docker im
 ```bash
 docker pull postgres
 ```
-Use/create the environment variables file at `macros/.env` to store the user and password for the database instance you create. You will need to create your own username and password. I recommend using the default username and generating a random password and saving it in the `.env` file for now.
+Use/create the environment variables file at `macros-backend/.env` to store the user and password for the database instance you create. You will need to create your own username and password. I recommend using the default username and generating a random password and saving it in the `.env` file for now.
