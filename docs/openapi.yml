@@ -15,6 +15,8 @@ tags:
     description: Recipe Operations
   - name: Ingredients
     description: Ingredient Operations
+  - name: User
+    description: User operations
 
 servers:
   - url: http://127.0.0.1:8000
@@ -45,31 +47,25 @@ components:
         recipe_id:
           description: Unique identifier for the recipe
           type: integer
-          example: 10010110
         name:
           description: Name of the recipe
           type: string
-          example: "Mom's famous grilled cheese"
         description: 
           description: Description for the recipe
           type: string
-          example: "The best grilled cheese, just like Mom used to make"
         theme:
           description: Theme of the recipe
           type: string
-          example: Comfort Food
         instructions:
           description: Array of instructions for the recipe
           type: array
           items: 
             type: string
-          example: ["Combine the bread and cheese", "Toast on high for 10 minutes", "Flip the sandwich", "Eat the sandwich"]
         ingredients:
           description: Array of ingredients required by the recipe
           type: array
           items: 
             type: string
-          example: ["Sourdough bread", "Colby jack cheese"]
       
     PostRecipeNoIngredientsResponse:
       description: POST response after successfully creating a new recipe. This response is for the creation of a recipe with no ingredients as of yet.
@@ -78,11 +74,20 @@ components:
         status:
           description: Status of the creation of a new recipe object
           type: string
-          example: SUCCESS
         recipe_id:
           description: Unique identifier for the newly created recipe
           type: integer
-          example: 10010110
+
+    PostUserResponse:
+      description: POST response after successfully creating a new user.
+      type: object
+      properties:
+        status:
+          description: Status of the creation of a new user
+          type: string
+        user_id:
+          description: Unique identifier for the newly created user
+          type: integer
 
     GetIngredientResponse:
       type: object
@@ -90,27 +95,23 @@ components:
         ingredient-id:
           description: Unique identifier for the ingredient
           type: integer
-          example: 01101001
         name:
           description: Name of the ingredient
           type: string
-          example: "Colby Jack cheese"
         vegetarian:
           description: Vegetarian flag for the ingredient
           type: boolean
-          example: false
         units:
           description: Units of measurement this ingredient will use for its recipe
           type: string
-          example: slices
         amount:
           description: Amount of the ingredient to use in the recipe
+          type: number
         nutrition_information:
           description: Macro nutrition information about the ingredient
           type: object
           items:
             type: object
-          example: {'calories': 100, 'carbs': 100, 'protein': 100, 'fat': 100}
           
         notes:
           description: Notes about the ingredient. 
@@ -125,18 +126,40 @@ components:
         timestamp:
           description: UTC time on the application server
           type: number
-          example: 1663270531.3822038
         status:
           description: Status of the application
           type: string
-          example: "UP"
         
+    User:
+      description: Request body for creating a new user object
+      type: object
+      properties:
+        user_name:
+          description: User name
+          type: string
+          nullable: false
+        goal:
+          description: User's fitness goal
+          type: string
+          nullable: false
+        weight:
+          description: User's weight
+          type: number
+          nullable: false
+        height:
+          description: User's height
+          type: number
+          nullable: false
+        body_fat:
+          description: User's body fat pecentage
+          type: number
+          nullable: false
 
 paths:
   /v1/recipes/{recipe_id}:
-    get:
-      description: Get recipe by recipe id
-      summary: Find recipes based off of inputted recipe ID
+    get: 
+      summary: Get recipe by recipe_id
+      description: Find recipes based off of inputted recipe ID
       operationId: getRecipeById 
       tags:
         - Recipes
@@ -154,10 +177,31 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/GetRecipeResponse'
+    patch:
+      summary: Patch a recipe object by recipe_id
+      description: Update a recipe object with new values
+      tags:
+        - Recipes
+      parameters:
+        - name: recipe_id
+          in: path
+          description: Unique identifier for the recipe
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Recipe'
+      responses:
+        '200':
+          description: Recipe updated
+  
   /v1/recipes/:
     post:
-      description: Post recipe by recipe id
-      summary: Find recipes based off of inputted recipe ID
+      summary: Create new recipe
+      description: Create new recipe with no ingredients
       operationId: createRecipe 
       tags:
         - Recipes
@@ -167,24 +211,47 @@ paths:
             schema:
               $ref: '#/components/schemas/Recipe'
       responses:
-        '200':
+        '201':
           description: Recipe created
           content:
             application/json:
               schema: 
                 $ref: '#/components/schemas/PostRecipeNoIngredientsResponse'
 
+  /v1/user/:
+    post:
+      summary: Create new user
+      description: Create new user with goals and metrics
+      operationId: createUser
+      tags:
+        - User
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PostUserResponse'
+
+
   /:
     get:
+      summary: Application index
       description: Returns a generic response
       tags:
         - Info
       responses:
         '200':
-          description: OK
+          description: Application is probably running 
   
   /health:
     get:
+      summary: Get health snapshot
       description: Return a health snapshot of the application
       tags:
         - Info
