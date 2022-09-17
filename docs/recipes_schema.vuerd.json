@@ -3,9 +3,15 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
+<<<<<<< HEAD
     "scrollTop": -665.8437605301538,
     "scrollLeft": -709.9999717871367,
     "zoomLevel": 0.3,
+=======
+    "scrollTop": -915,
+    "scrollLeft": -32,
+    "zoomLevel": 1,
+>>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -70,6 +76,29 @@
             "id": "31f8505b-c035-4579-bb3b-003cb2167d62"
           },
           {
+            "name": "user_id",
+            "comment": "Unique identifier for the creator of the recipe",
+            "dataType": "int4",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 120,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "f1da7db9-f35a-4463-a44a-529e69d8bb0a"
+          },
+          {
             "name": "name",
             "comment": "Name of the recipe",
             "dataType": "text",
@@ -114,29 +143,6 @@
               "widthDefault": 60
             },
             "id": "3b83b620-f66e-4ac7-84bc-2ca2e15f7150"
-          },
-          {
-            "name": "theme",
-            "comment": "Theme enum value",
-            "dataType": "theme",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 113.28076171875,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "87714bf4-c055-4aab-aa99-34ecb1b80281"
           },
           {
             "name": "created_at",
@@ -187,9 +193,15 @@
         ],
         "ui": {
           "active": false,
+<<<<<<< HEAD
           "left": 754.5864,
           "top": 1127.0224,
           "zIndex": 12,
+=======
+          "left": 774.9199,
+          "top": 1089.6893,
+          "zIndex": 69,
+>>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "widthName": 60,
           "widthComment": 83.65625
         },
@@ -206,7 +218,7 @@
             "dataType": "int4",
             "default": "",
             "option": {
-              "autoIncrement": false,
+              "autoIncrement": true,
               "primaryKey": true,
               "unique": true,
               "notNull": true
@@ -408,29 +420,6 @@
             "id": "d24ddf68-f220-4637-b1a8-30ac65eb529b"
           },
           {
-            "name": "theme",
-            "comment": "Ingredient theme",
-            "dataType": "theme",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 99.5634765625,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "75df2e5b-f1da-47d4-820b-4d409647b808"
-          },
-          {
             "name": "notes",
             "comment": "Ingredient notes",
             "dataType": "text",
@@ -504,7 +493,11 @@
           "active": false,
           "left": 1274.8169,
           "top": 1088.3043,
+<<<<<<< HEAD
           "zIndex": 8,
+=======
+          "zIndex": 71,
+>>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "widthName": 65.59716796875,
           "widthComment": 101.0107421875
         },
@@ -583,13 +576,40 @@
               "widthDefault": 60
             },
             "id": "51d655a0-b5ea-4d28-acbc-2d01244cdccb"
+          },
+          {
+            "name": "theme",
+            "comment": "Theme of the meal",
+            "dataType": "text",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 110.38623046875,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "f02e87f5-7183-40b9-9d1f-f84ecfb8987e"
           }
         ],
         "ui": {
           "active": false,
           "left": 1078.0644,
           "top": 634.0419,
+<<<<<<< HEAD
           "zIndex": 9,
+=======
+          "zIndex": 18,
+>>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "widthName": 121.234375,
           "widthComment": 116.17529296875,
           "color": "#9E9E9E"
@@ -669,29 +689,6 @@
               "widthDefault": 60
             },
             "id": "13bee54c-e77c-480a-82eb-5114e77c7439"
-          },
-          {
-            "name": "activity_level",
-            "comment": "Activity level enum",
-            "dataType": "activity_level",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 75.6962890625,
-              "widthComment": 109.64990234375,
-              "widthDataType": 75.6962890625,
-              "widthDefault": 60
-            },
-            "id": "5bb00675-a200-414c-b2ef-df3d882a7915"
           },
           {
             "name": "weight",
@@ -811,9 +808,15 @@
         ],
         "ui": {
           "active": false,
+<<<<<<< HEAD
           "left": 227.6466,
           "top": 1092.4409,
           "zIndex": 7,
+=======
+          "left": 193.6466,
+          "top": 1070.4409,
+          "zIndex": 58,
+>>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "widthName": 60,
           "widthComment": 70.63720703125
         },
@@ -1309,13 +1312,42 @@
               "widthDefault": 60
             },
             "id": "73609867-f2e9-43e4-b00f-7b44ac619128"
+          },
+          {
+            "name": "slices",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "2b2318b9-da6e-4488-b9b3-6e4f935bbdde"
           }
         ],
         "ui": {
           "active": false,
+<<<<<<< HEAD
           "left": 500.1992,
           "top": 1737.6174,
           "zIndex": 2,
+=======
+          "left": 499.1992,
+          "top": 1722.6174,
+          "zIndex": 25,
+>>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "widthName": 60,
           "widthComment": 69.18994140625
         },
@@ -1437,8 +1469,13 @@
           "columnIds": [
             "31f8505b-c035-4579-bb3b-003cb2167d62"
           ],
+<<<<<<< HEAD
           "x": 1103.4631089843751,
           "y": 1127.0224,
+=======
+          "x": 891.212136328125,
+          "y": 1089.6893,
+>>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "direction": "top"
         },
         "end": {
@@ -1447,7 +1484,7 @@
             "a837a62b-bb94-4d28-bc80-2b5edc97cad3"
           ],
           "x": 1078.0644,
-          "y": 699.2919,
+          "y": 709.5419,
           "direction": "left"
         },
         "constraintName": "fk_recipes_to_recipe_combinations",
@@ -1473,7 +1510,7 @@
             "6f4ee6aa-182d-45a8-a653-42258d87dfad"
           ],
           "x": 1331.624702734375,
-          "y": 764.5419,
+          "y": 785.0419,
           "direction": "bottom"
         },
         "constraintName": "fk_ingredients_to_recipe_combinations",
@@ -1489,8 +1526,13 @@
           "columnIds": [
             "31f8505b-c035-4579-bb3b-003cb2167d62"
           ],
+<<<<<<< HEAD
           "x": 870.878636328125,
           "y": 1127.0224,
+=======
+          "x": 1123.7966089843749,
+          "y": 1089.6893,
+>>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "direction": "top"
         },
         "end": {
@@ -1515,8 +1557,8 @@
           "columnIds": [
             "a2996068-1a86-4bfe-9a27-ccd15dfe1fb6"
           ],
-          "x": 470.34288906250003,
-          "y": 1092.4409,
+          "x": 426.23107265625003,
+          "y": 1070.4409,
           "direction": "top"
         },
         "end": {
@@ -1531,6 +1573,32 @@
         "constraintName": "fk_users_to_user_history",
         "visible": true,
         "id": "f0b0fa33-ad5a-4613-b734-0f530ae04d8c"
+      },
+      {
+        "identification": false,
+        "relationshipType": "ZeroOne",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "b1920a0c-5579-4cb0-86c5-a3d3e875c0e1",
+          "columnIds": [
+            "a2996068-1a86-4bfe-9a27-ccd15dfe1fb6"
+          ],
+          "x": 658.8155453125,
+          "y": 1186.9409,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "9635b903-3a98-49d8-9737-acb0fa1697d3",
+          "columnIds": [
+            "f1da7db9-f35a-4463-a44a-529e69d8bb0a"
+          ],
+          "x": 774.9199,
+          "y": 1185.6893,
+          "direction": "left"
+        },
+        "constraintName": "fk_users_to_recipes",
+        "visible": true,
+        "id": "7778b640-f4a4-4fbc-99c2-def77e6d11d2"
       }
     ]
   }
