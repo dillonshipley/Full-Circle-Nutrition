@@ -3,15 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-<<<<<<< HEAD
-    "scrollTop": -665.8437605301538,
-    "scrollLeft": -709.9999717871367,
-    "zoomLevel": 0.3,
-=======
-    "scrollTop": -915,
-    "scrollLeft": -32,
+    "scrollTop": -713.3333413468448,
+    "scrollLeft": -22.000000397365564,
     "zoomLevel": 1,
->>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -55,7 +49,7 @@
           {
             "name": "recipe_id",
             "comment": "Unique identifier for the recipe",
-            "dataType": "int4",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": true,
@@ -78,7 +72,7 @@
           {
             "name": "user_id",
             "comment": "Unique identifier for the creator of the recipe",
-            "dataType": "int4",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -193,15 +187,9 @@
         ],
         "ui": {
           "active": false,
-<<<<<<< HEAD
-          "left": 754.5864,
-          "top": 1127.0224,
-          "zIndex": 12,
-=======
           "left": 774.9199,
           "top": 1089.6893,
-          "zIndex": 69,
->>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
+          "zIndex": 14,
           "widthName": 60,
           "widthComment": 83.65625
         },
@@ -215,7 +203,7 @@
           {
             "name": "ingredient_id",
             "comment": "Unique identifier for the ingredient",
-            "dataType": "int4",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": true,
@@ -493,11 +481,7 @@
           "active": false,
           "left": 1274.8169,
           "top": 1088.3043,
-<<<<<<< HEAD
-          "zIndex": 8,
-=======
-          "zIndex": 71,
->>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
+          "zIndex": 19,
           "widthName": 65.59716796875,
           "widthComment": 101.0107421875
         },
@@ -511,7 +495,7 @@
           {
             "name": "recipe_id",
             "comment": "Unique identifier for the recipe",
-            "dataType": "int4",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -534,7 +518,7 @@
           {
             "name": "ingredient_id",
             "comment": "Unique identifier for the ingredient",
-            "dataType": "int4",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -605,11 +589,7 @@
           "active": false,
           "left": 1078.0644,
           "top": 634.0419,
-<<<<<<< HEAD
-          "zIndex": 9,
-=======
-          "zIndex": 18,
->>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
+          "zIndex": 6,
           "widthName": 121.234375,
           "widthComment": 116.17529296875,
           "color": "#9E9E9E"
@@ -624,7 +604,7 @@
           {
             "name": "user_id",
             "comment": "Unique identifier for each user",
-            "dataType": "int4",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": true,
@@ -647,7 +627,7 @@
           {
             "name": "user_name",
             "comment": "User name",
-            "dataType": "smallint",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -807,16 +787,10 @@
           }
         ],
         "ui": {
-          "active": false,
-<<<<<<< HEAD
-          "left": 227.6466,
-          "top": 1092.4409,
-          "zIndex": 7,
-=======
+          "active": true,
           "left": 193.6466,
           "top": 1070.4409,
-          "zIndex": 58,
->>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
+          "zIndex": 21,
           "widthName": 60,
           "widthComment": 70.63720703125
         },
@@ -830,7 +804,7 @@
           {
             "name": "user_id",
             "comment": "",
-            "dataType": "int4",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -853,7 +827,7 @@
           {
             "name": "recipe_id",
             "comment": "Unique identifier for the recipe",
-            "dataType": "int4",
+            "dataType": "text",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -901,7 +875,7 @@
           "active": false,
           "left": 457.3039,
           "top": 634.3381,
-          "zIndex": 4,
+          "zIndex": 3,
           "widthName": 72.80810546875,
           "widthComment": 108.1962890625,
           "color": "#9E9E9E"
@@ -1033,7 +1007,7 @@
           "active": false,
           "left": 936.2749,
           "top": 1801.033,
-          "zIndex": 3,
+          "zIndex": 2,
           "widthName": 60,
           "widthComment": 80.03173828125
         },
@@ -1339,15 +1313,9 @@
         ],
         "ui": {
           "active": false,
-<<<<<<< HEAD
-          "left": 500.1992,
-          "top": 1737.6174,
-          "zIndex": 2,
-=======
           "left": 499.1992,
           "top": 1722.6174,
-          "zIndex": 25,
->>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
+          "zIndex": 7,
           "widthName": 60,
           "widthComment": 69.18994140625
         },
@@ -1432,7 +1400,7 @@
           "active": false,
           "left": 1344.9999,
           "top": 1840.8437,
-          "zIndex": 5,
+          "zIndex": 4,
           "widthName": 75.6962890625,
           "widthComment": 115.4326171875
         },
@@ -1450,7 +1418,7 @@
           "active": false,
           "left": 1639.732619760216,
           "top": 636.55873357109,
-          "zIndex": 10,
+          "zIndex": 5,
           "width": 127,
           "height": 100
         },
@@ -1469,13 +1437,8 @@
           "columnIds": [
             "31f8505b-c035-4579-bb3b-003cb2167d62"
           ],
-<<<<<<< HEAD
-          "x": 1103.4631089843751,
-          "y": 1127.0224,
-=======
           "x": 891.212136328125,
           "y": 1089.6893,
->>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "direction": "top"
         },
         "end": {
@@ -1526,13 +1489,8 @@
           "columnIds": [
             "31f8505b-c035-4579-bb3b-003cb2167d62"
           ],
-<<<<<<< HEAD
-          "x": 870.878636328125,
-          "y": 1127.0224,
-=======
           "x": 1123.7966089843749,
           "y": 1089.6893,
->>>>>>> 2b2da230a01bc155741d52701625c15707cf2058
           "direction": "top"
         },
         "end": {

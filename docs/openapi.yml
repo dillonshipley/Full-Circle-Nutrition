@@ -30,7 +30,7 @@ components:
       properties:
         creator: 
           description: User id of the creator of the recipe
-          type: integer
+          type: string
           nullable: false
         recipe_name: 
           description: Name for the new recipe
@@ -41,12 +41,12 @@ components:
           type: string
 
     GetRecipeResponse:
-      description: Recipe response object that is returned on requests for recipe objects
+      description: GET response for a queried recipe response
       type: object
       properties:
         recipe_id:
           description: Unique identifier for the recipe
-          type: integer
+          type: string
         name:
           description: Name of the recipe
           type: string
@@ -66,6 +66,21 @@ components:
           type: array
           items: 
             type: string
+
+    GetUserResponse:
+      description: GET response for a queried user response
+      type: object
+      properties:
+        user_id:
+          description: Unique identifier for the user
+          type: string
+        user_name:
+          description: User name for the user
+          type: string
+        health_metrics:
+          description: User's health metrics used for tracking macros
+          type: object
+          
       
     PostRecipeNoIngredientsResponse:
       description: POST response after successfully creating a new recipe. This response is for the creation of a recipe with no ingredients as of yet.
@@ -76,7 +91,7 @@ components:
           type: string
         recipe_id:
           description: Unique identifier for the newly created recipe
-          type: integer
+          type: string
 
     PostUserResponse:
       description: POST response after successfully creating a new user.
@@ -87,14 +102,14 @@ components:
           type: string
         user_id:
           description: Unique identifier for the newly created user
-          type: integer
+          type: string
 
     GetIngredientResponse:
       type: object
       properties:
-        ingredient-id:
+        ingredient_id:
           description: Unique identifier for the ingredient
-          type: integer
+          type: string
         name:
           description: Name of the ingredient
           type: string
@@ -180,6 +195,7 @@ paths:
     patch:
       summary: Patch a recipe object by recipe_id
       description: Update a recipe object with new values
+      operationId: updateRecipe
       tags:
         - Recipes
       parameters:
@@ -197,6 +213,23 @@ paths:
       responses:
         '200':
           description: Recipe updated
+    
+    delete:
+      summary: Delete a recipe object by recipe_id
+      description: Remove a recipe object from the database using it's recipe_id as a key
+      operationId: deleteRecipe
+      tags:
+        - Recipes
+      parameters:
+      - name: recipe_id
+        in: path
+        description: Unique identifier for the recipe
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Recipe deleted
   
   /v1/recipes/:
     post:
@@ -218,6 +251,68 @@ paths:
               schema: 
                 $ref: '#/components/schemas/PostRecipeNoIngredientsResponse'
 
+  /v1/user/{user_id}:
+    get:
+      summary: Get user by user_id
+      description: Find a user in the database using the user_id
+      operationId: getUserById
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          description: Unique identifier for the user
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/GetUserResponse'
+      responses:
+        '200':
+          description: Found user
+    
+    patch:
+      summary: Patch user by user_id
+      description: Update a user in the database using the user_id
+      operationId: updateUser
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          description: Unique identifier for the user
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated
+
+    delete:
+      summary: Delete user
+      description: Remove a user from the database using the user_id
+      operationId: deleteUser
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          description: Unique identifier for the user
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted user
+
   /v1/user/:
     post:
       summary: Create new user
@@ -237,7 +332,6 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/PostUserResponse'
-
 
   /:
     get:
