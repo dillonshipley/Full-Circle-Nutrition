@@ -9,7 +9,7 @@ class FormController extends Component {
     super(props);
     this.state = {
       logon: true,
-      inError: false;
+      inError: false
     }
   }
 
@@ -22,13 +22,11 @@ class FormController extends Component {
   render(){
     if(this.state.logon == true){
       return (
-        <LogonBioForm bio_info = "x" />
-        <ScheduleInfo schedule_info = "x" />
-        {
-          if(this.state.inError = false){
-              returnResults(bio_info, schedule_info);
-          }
-        }
+        <div>
+          <LogonBioForm bio_info = "x" />
+          <ScheduleInfo schedule_info = "x" />
+        {{if(this.state.inError = false){returnResults(this.state.bio_info, this.state.schedule_info);}}}
+        </div>
       );
     } else {
       return (

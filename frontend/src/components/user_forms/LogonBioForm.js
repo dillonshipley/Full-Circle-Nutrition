@@ -5,9 +5,18 @@ public class LogonBioForm extends Component{
     }
   }
 
+  componentDidMount(){
+    getLogonInfo();
+  }
+
+  getLogonInfo(){
+
+  }
+
   render(){
     return (
       <div>
+        {getLogonInfo()}
         <div id = "firstName">
             //style: text box
         </div>
