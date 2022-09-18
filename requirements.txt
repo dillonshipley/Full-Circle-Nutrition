@@ -9,3 +9,4 @@ platformdirs==2.5.2
 psycopg2-binary==2.9.3
 sqlparse==0.4.2
 tomli==2.0.1
+uuid==1.30
