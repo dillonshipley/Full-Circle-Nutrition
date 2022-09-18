@@ -71,21 +71,3 @@ class User(models.Model):
     goal = models.CharField(choices=GOAL_CHOICES, max_length=3)
     create_date = models.DateTimeField(name="Creation date & time")
     modify_date = models.DateTimeField(name="Last modified date & time")
-
-class RecipeCombinations(models.Model):
-    pass
-
-class UserHistory(models.Model):
-    user_id = models.UUIDField(
-        max_length=12,
-        primary_key=True,
-        unique=True,
-        editable=False,
-        
-    )
-    recipe_id = models.UUIDField(
-        max_length=12,
-        primary_key=True,
-        unique=True,
-        editable=False,
-    )
