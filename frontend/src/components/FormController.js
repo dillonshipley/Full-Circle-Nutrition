@@ -1,18 +1,22 @@
 import LogonBioForm from './user_forms/LogonBioForm';
 import NonLogonBioForm from './user_forms/NonLogonBioForm';
 import ScheduleInfo from './user_forms/ScheduleInfo'
-import Results from './Results'
 import React, { Component } from 'react';
 
 
+function Logon(props){
+  if(props.logon)
+    return <LogonBioForm bio_info = "x" />
+  else
+    return <NonLogonBioForm bio_info = "x" />
+}
 
-
-class FormController extends React.Component {
+class FormController extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-      logon: true,
+      logon: false,
       recipe_complete: true
     }
   }
@@ -27,26 +31,14 @@ class FormController extends React.Component {
   }
 
   render(){
-    if(this.state.logon == true){
-      return (
-        <div>
-          <div>hello!</div>
-          <LogonBioForm bio_info = "x" />
-          <ScheduleInfo schedule_info = "x" />
-          {this.returnResults()}
-        </div>
-      );
-    } else {
-      return (
-        <div>
-        <div>hello!</div>
-        <NonLogonBioForm bio_info = "x" />
+    return (
+      <div id = "logonDeterminer">
+        <Logon logon = {this.state.logon} />
         <ScheduleInfo schedule_info = "x" />
-        {this.returnResults()}
-        }
-        </div>
+        {/*this.returnResults()*/}
+      </div>
       );
-    }
+
   }
 }
 

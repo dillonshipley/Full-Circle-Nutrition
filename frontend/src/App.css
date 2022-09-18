@@ -44,7 +44,7 @@
 .card{
   margin-left: 4vw;
   margin-right: 4vw;
-  
+
   width: 22vw;
   height: 50vh;
 
@@ -53,4 +53,27 @@
   border-radius: var(--radius-2);
 
   display: inline-block;
+}
+
+#NLBioFormContainer {
+  margin-left: 10px;
+  background-color: grey;
+
+  text-align: left;
+}
+
+.textInput{
+  margin-top: 20px;
+  margin-left: 10px;
+
+
+  border-radius: 2px;
+  border: 2px solid lightblue;
+}
+
+.textInputLabel{
+  padding-top: 10px;
+  margin-left: 10px;
+
+  color: beige;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import FormController from '../FormController'
+import Results from '../Results'
 
 class Body extends Component{
     constructor(props){
@@ -15,13 +16,13 @@ class Body extends Component{
     }
 
     render(){
-      if(this.state.display == "forms"){
+      if(this.state.display === "forms"){
         return (
           <div>
             <FormController linkToHome = {() => this.setState({display: "start"})} />
           </div>
         )
-      } else if (this.state.display == "start"){
+      } else if (this.state.display === "start"){
         return (
             <div id = "mainBodyDiv">
                 <div id = "homePageTitle">Goal to Table Nutrition </div>
@@ -34,6 +35,8 @@ class Body extends Component{
                 </div>
             </div>
         )
+      } else if (this.state.display === "results"){
+          <Results />
       }
     }
 }
