@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 class LogonBioForm extends Component{
+
   constructor(props){
+    super(props);
     this.state = {
 
     }

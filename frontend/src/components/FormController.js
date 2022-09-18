@@ -5,13 +5,7 @@ import Results from './Results'
 import React, { Component } from 'react';
 
 
-function returnResults(props){
-  if(this.state.recipe_complete){
-    return (
-      <Results bio_info = "X" schedule_info = "y" />
-    );
-  }
-}
+
 
 class FormController extends React.Component {
 
@@ -23,21 +17,32 @@ class FormController extends React.Component {
     }
   }
 
+  returnResults(props){
+    if(this.state.recipe_complete){
+      return (
+        <div>oof</div>
+        //<Results bio_info = "X" schedule_info = "y" />
+      );
+    }
+  }
+
   render(){
     if(this.state.logon == true){
       return (
         <div>
+          <div>hello!</div>
           <LogonBioForm bio_info = "x" />
           <ScheduleInfo schedule_info = "x" />
-          {returnResults()}
+          {this.returnResults()}
         </div>
       );
     } else {
       return (
         <div>
+        <div>hello!</div>
         <NonLogonBioForm bio_info = "x" />
         <ScheduleInfo schedule_info = "x" />
-        {returnResults()}
+        {this.returnResults()}
         }
         </div>
       );
