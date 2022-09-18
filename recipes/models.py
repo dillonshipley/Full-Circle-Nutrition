@@ -81,6 +81,7 @@ class UserHistory(models.Model):
         primary_key=True,
         unique=True,
         editable=False,
+        
     )
     recipe_id = models.UUIDField(
         max_length=12,
