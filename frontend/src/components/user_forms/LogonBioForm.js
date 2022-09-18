@@ -14,15 +14,14 @@ class LogonBioForm extends Component{
   }
 
   getLogonInfo(){
-
+    //get user data here
   }
 
   render(){
     return (
       <div>
-        {this.getLogonInfo()}
         <div id = "firstName">
-            //style: text box
+            insert first name text box
         </div>
         <div id = "lastName">
             //style: text box
