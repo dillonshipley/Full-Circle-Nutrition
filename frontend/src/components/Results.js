@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 class Results extends Component{
   constructor(props){
     super(props);
@@ -9,8 +11,8 @@ class Results extends Component{
 
   render(){
     return (
-
-    )
+      <div></div>
+    );
   }
 }
 

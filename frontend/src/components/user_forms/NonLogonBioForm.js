@@ -1,7 +1,9 @@
-public class NonLogonBioForm extends Component{
+import React, { Component } from 'react';
+
+ class NonLogonBioForm extends Component{
   constructor(props){
     this.state = {
-      data: props.data;
+      data: props.data
     }
   }
 

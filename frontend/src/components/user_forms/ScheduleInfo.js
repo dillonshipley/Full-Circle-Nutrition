@@ -1,4 +1,6 @@
-public class ScheduleInfo extends Component{
+import React, { Component } from 'react';
+
+class ScheduleInfo extends Component{
   render(){
     return (
       <div>

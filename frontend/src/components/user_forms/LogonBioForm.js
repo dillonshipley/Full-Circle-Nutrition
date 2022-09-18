@@ -1,4 +1,6 @@
-public class LogonBioForm extends Component{
+import React, { Component } from 'react';
+
+class LogonBioForm extends Component{
   constructor(props){
     this.state = {
 
@@ -6,7 +8,7 @@ public class LogonBioForm extends Component{
   }
 
   componentDidMount(){
-    getLogonInfo();
+    this.getLogonInfo();
   }
 
   getLogonInfo(){
@@ -16,7 +18,7 @@ public class LogonBioForm extends Component{
   render(){
     return (
       <div>
-        {getLogonInfo()}
+        {this.getLogonInfo()}
         <div id = "firstName">
             //style: text box
         </div>
@@ -37,4 +39,4 @@ public class LogonBioForm extends Component{
   }
 }
 
-export default NonLogonBioForm;
+export default LogonBioForm;
