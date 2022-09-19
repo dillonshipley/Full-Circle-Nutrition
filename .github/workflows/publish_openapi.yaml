@@ -12,7 +12,21 @@ env:
   SWAGGER_PATH: '../../docs/openapi.yml'
 
 jobs:
-  publish:
+  publish-openapi:
     runs-on: ubuntu-18.04
     steps:
-      - run: echo "Publish step"
+      - name: Checkout Source
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Generate Swagger HTML File
+        uses: Legion2/swagger-ui-action@v1
+        with:
+          output: index.html
+          spec-file: /docs/openapi.yml
+      - name: Deploy to GitHub Pages Site
+        uses: actions-js/push@v1.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: published
+          force: true
