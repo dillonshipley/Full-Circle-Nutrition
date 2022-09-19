@@ -22,11 +22,11 @@ jobs:
       - name: Generate Swagger HTML File
         uses: Legion2/swagger-ui-action@v1
         with:
-          output: index.html
+          output: swagger-ui
           spec-file: ${{ env.SWAGGER_PATH }}
       - name: Deploy to GitHub Pages Site
         uses: actions-js/push@v1.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           branch: published
           force: true
