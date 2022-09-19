@@ -23,7 +23,7 @@ jobs:
         uses: Legion2/swagger-ui-action@v1
         with:
           output: index.html
-          spec-file: /docs/openapi.yml
+          spec-file: ${{ env.SWAGGER_PATH }}
       - name: Deploy to GitHub Pages Site
         uses: actions-js/push@v1.3
         with:
