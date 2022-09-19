@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 env:
-  SWAGGER_PATH: '../../docs/openapi.yml'
+  SWAGGER_PATH: docs/openapi.yml
 
 jobs:
   publish-openapi:
