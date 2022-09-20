@@ -1,0 +1,358 @@
+openapi: '3.0.2'
+
+info:
+  title: Macros
+  version: '0.1.0'
+  description: Macro tracking & exercise application API contract
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+tags:
+  - name: Info
+    description: Application insight operations
+  - name: Recipes
+    description: Recipe Operations
+  - name: Ingredients
+    description: Ingredient Operations
+  - name: User
+    description: User operations
+
+servers:
+  - url: http://127.0.0.1:8000
+    description: Local server
+
+components:
+  schemas:
+    Recipe:
+      description: Request body for creating a new recipe object
+      type: object
+      properties:
+        creator: 
+          description: User id of the creator of the recipe
+          type: string
+          nullable: false
+        recipe_name: 
+          description: Name for the new recipe
+          type: string
+          nullable: false
+        description:
+          description: Description of the recipe
+          type: string
+
+    GetRecipeResponse:
+      description: GET response for a queried recipe response
+      type: object
+      properties:
+        recipe_id:
+          description: Unique identifier for the recipe
+          type: string
+        name:
+          description: Name of the recipe
+          type: string
+        description: 
+          description: Description for the recipe
+          type: string
+        theme:
+          description: Theme of the recipe
+          type: string
+        instructions:
+          description: Array of instructions for the recipe
+          type: array
+          items: 
+            type: string
+        ingredients:
+          description: Array of ingredients required by the recipe
+          type: array
+          items: 
+            type: string
+
+    GetUserResponse:
+      description: GET response for a queried user response
+      type: object
+      properties:
+        user_id:
+          description: Unique identifier for the user
+          type: string
+        user_name:
+          description: User name for the user
+          type: string
+        health_metrics:
+          description: User's health metrics used for tracking macros
+          type: object
+          
+      
+    PostRecipeNoIngredientsResponse:
+      description: POST response after successfully creating a new recipe. This response is for the creation of a recipe with no ingredients as of yet.
+      type: object
+      properties:
+        status:
+          description: Status of the creation of a new recipe object
+          type: string
+        recipe_id:
+          description: Unique identifier for the newly created recipe
+          type: string
+
+    PostUserResponse:
+      description: POST response after successfully creating a new user.
+      type: object
+      properties:
+        status:
+          description: Status of the creation of a new user
+          type: string
+        user_id:
+          description: Unique identifier for the newly created user
+          type: string
+
+    GetIngredientResponse:
+      type: object
+      properties:
+        ingredient_id:
+          description: Unique identifier for the ingredient
+          type: string
+        name:
+          description: Name of the ingredient
+          type: string
+        vegetarian:
+          description: Vegetarian flag for the ingredient
+          type: boolean
+        units:
+          description: Units of measurement this ingredient will use for its recipe
+          type: string
+        amount:
+          description: Amount of the ingredient to use in the recipe
+          type: number
+        nutrition_information:
+          description: Macro nutrition information about the ingredient
+          type: object
+          items:
+            type: object
+          
+        notes:
+          description: Notes about the ingredient. 
+          type: object
+          items:
+            type: string
+          example: {'flavor_profile': "Salty"}
+
+    HealthReponse:
+      type: object
+      properties:
+        timestamp:
+          description: UTC time on the application server
+          type: number
+        status:
+          description: Status of the application
+          type: string
+        
+    User:
+      description: Request body for creating a new user object
+      type: object
+      properties:
+        user_name:
+          description: User name
+          type: string
+          nullable: false
+        goal:
+          description: User's fitness goal
+          type: string
+          nullable: false
+        weight:
+          description: User's weight
+          type: number
+          nullable: false
+        height:
+          description: User's height
+          type: number
+          nullable: false
+        body_fat:
+          description: User's body fat pecentage
+          type: number
+          nullable: false
+
+paths:
+  /v1/recipes/{recipe_id}:
+    get: 
+      summary: Get recipe by recipe_id
+      description: Find recipes based off of inputted recipe ID
+      operationId: getRecipeById 
+      tags:
+        - Recipes
+      parameters:
+        - name: recipe_id
+          in: path
+          description: Unique identifier for the recipe
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Recipe found
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/GetRecipeResponse'
+    patch:
+      summary: Patch a recipe object by recipe_id
+      description: Update a recipe object with new values
+      operationId: updateRecipe
+      tags:
+        - Recipes
+      parameters:
+        - name: recipe_id
+          in: path
+          description: Unique identifier for the recipe
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Recipe'
+      responses:
+        '200':
+          description: Recipe updated
+    
+    delete:
+      summary: Delete a recipe object by recipe_id
+      description: Remove a recipe object from the database using it's recipe_id as a key
+      operationId: deleteRecipe
+      tags:
+        - Recipes
+      parameters:
+      - name: recipe_id
+        in: path
+        description: Unique identifier for the recipe
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Recipe deleted
+  
+  /v1/recipes/:
+    post:
+      summary: Create new recipe
+      description: Create new recipe with no ingredients
+      operationId: createRecipe 
+      tags:
+        - Recipes
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Recipe'
+      responses:
+        '201':
+          description: Recipe created
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PostRecipeNoIngredientsResponse'
+
+  /v1/user/{user_id}:
+    get:
+      summary: Get user by user_id
+      description: Find a user in the database using the user_id
+      operationId: getUserById
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          description: Unique identifier for the user
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/GetUserResponse'
+      responses:
+        '200':
+          description: Found user
+    
+    patch:
+      summary: Patch user by user_id
+      description: Update a user in the database using the user_id
+      operationId: updateUser
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          description: Unique identifier for the user
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated
+
+    delete:
+      summary: Delete user
+      description: Remove a user from the database using the user_id
+      operationId: deleteUser
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          description: Unique identifier for the user
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted user
+
+  /v1/user/:
+    post:
+      summary: Create new user
+      description: Create new user with goals and metrics
+      operationId: createUser
+      tags:
+        - User
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PostUserResponse'
+
+  /:
+    get:
+      summary: Application index
+      description: Returns a generic response
+      tags:
+        - Info
+      responses:
+        '200':
+          description: Application is probably running 
+  
+  /health:
+    get:
+      summary: Get health snapshot
+      description: Return a health snapshot of the application
+      tags:
+        - Info
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthReponse'
