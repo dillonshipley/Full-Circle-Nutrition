@@ -18,7 +18,7 @@
   width: 80vw;
   margin-left: 10vw;
   margin-right: 10vw;
-  background-color: var(--indigo-3);
+  background-color: var(--gray-7);
 
   box-shadow: var(--shadow-6);
 }
@@ -39,18 +39,88 @@
 
   width: 72vw;
   height: 55vh;
+
+  display: grid;
+  grid-template-columns: 36vw 36vw;
+
 }
 
 .card{
   margin-left: 4vw;
   margin-right: 4vw;
-  
+
   width: 22vw;
   height: 50vh;
 
-  background-color: var(--indigo-6);
-  box-shadow: var(--shadow-4);
-  border-radius: var(--radius-2);
+  background-color: var(--indigo-1);
+  box-shadow: var(--shadow-6);
+  border-radius: var(--radius-3);
 
-  display: inline-block;
+  border: 7px solid var(--gray-9);
+
+  display: grid;
+  grid-template-rows: 30vh 25vh;
+}
+
+.cardSpacer {
+  margin-left: 2vw;
+  width: 18vw;
+  height: 4px;
+
+  border: 1px solid black;
+
+  background-color: var(--indigo-6);
+}
+
+#NLBioFormContainer {
+  margin-left: 10px;
+  background-color: grey;
+
+  text-align: left;
+}
+
+.textInput{
+  margin-top: 25px;
+  margin-left: 50px;
+  margin-bottom: 25px;
+
+
+  border-radius: 2px;
+  border: 2px solid lightblue;
+}
+
+.InputLabel{
+  padding-top: 50px;
+  margin-left: 50px;
+
+  color: beige;
+}
+
+#formControllerHeader {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: 50% 50%;
+  border: 1px dotted red;
+}
+
+.progressBar {
+  display: grid;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.backButton {
+  text-align: left;
+  display: grid;
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.heightSlider {
+  width: 40vw;
+  margin-left: 30vw;
+}
+
+.currentWeight {
+  text-align: center;
 }
