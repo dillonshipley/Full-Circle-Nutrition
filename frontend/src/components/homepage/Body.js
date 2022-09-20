@@ -3,6 +3,32 @@ import React, { Component } from 'react';
 import FormController from '../FormController';
 import Results from '../Results';
 import Login from '../Login';
+import MacroCalculator from '../tools/MacroCalculator';
+
+//var cardTextOneTitle = "BUILD";
+//var cardTextOneDetail = "from the ground up"
+
+//var cardTextOneTitle = "EXPERIMENT";
+
+function Card(props){
+
+  if(props.text === "build"){
+
+  }
+
+  return (
+    <div className = "card" id = {"homepageCard" + props.num} onClick = {props.onClick}>
+      <div className = "cardIcon">
+
+      </div>
+      <div>
+        <div className = "cardSpacer"></div>
+        <div className = "cardInfoText">{props.text}</div>
+      </div>
+    </div>
+
+  );
+}
 
 class Body extends Component{
     constructor(props){
@@ -12,9 +38,6 @@ class Body extends Component{
       }
     }
 
-    swapToForms(){
-      this.setState({display: "forms"});
-    }
 
     render(){
       if(this.state.display === "forms"){
@@ -28,8 +51,8 @@ class Body extends Component{
             <div id = "mainBodyDiv">
                 <div id = "homePageTitle">Goal to Table Nutrition </div>
                 <div id = "homePageCardContainer">
-                    <div className = "card" id = "homePageCard1" onClick = {() => this.swapToForms()}>Build From the Ground Up</div>
-                    <div className = "card" id = "homePageCard2">Use One of Our Tools</div>
+                    <Card onClick = {() => this.setState({display: "forms"})} text = "Build From the Ground Up"/>
+                    <Card onClick = {() => this.setState({display: "tools"})} text = "Use One of Our Tools"/>
                 </div>
                 <div className = "homepageLoginText" onClick = {() => this.setState({display: "login"})}>
                     Log in for the complete experience
@@ -41,7 +64,9 @@ class Body extends Component{
         );
       } else if (this.state.display === "results"){
           <Results />
-      } else if (this.state.display === "login"){
+      } else if (this.state.display === "tools"){
+          <MacroCalculator />
+      }else if (this.state.display === "login"){
         return(
           <div>
             <Login back = {() => this.setState({display: "start"})}/>
