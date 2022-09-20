@@ -33,6 +33,9 @@ class Body extends Component{
                 <div className = "homepageLoginText">
                     Log in for the complete experience
                 </div>
+                <div className = "homepageRegisterText">
+
+                </div>
             </div>
         )
       } else if (this.state.display === "results"){

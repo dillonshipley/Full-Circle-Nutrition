@@ -2,20 +2,29 @@ public class CreateAccount extends Component{
   render(){
     return (
       <div>
+        <div id = "registerAccountHeader">Register New Account</div>
+        <div className = "registerAccountSectionHeader">
         <div id = "registerUsername">
-            //style: text box
+            <input placeholder = "USERNAME" type = "text" id = "usernameInput" name = "username" className = "textInput"/>
         </div>
         <div id = "registerPassword">
-            //style: text box
+            <p>Password:</p>
+            <input type = "text" id = "passwordInput" name = "password" className = "textInput"/>
+        </div>
+        <div id = "confirmPassword">
+            <p>Confirm your password:</p>
+            <input type = "text" id = "passwordConfirmInput" name = "passwordConfirm" className = "textInput"/>
         </div>
         <div id = "firstName">
-            //style: text box
+            <p>First Name:</p>
+            <input type = "text" id = "firstNameInput" name = "firstName" className = "textInput"/>
         </div>
         <div id = "lastName">
-            //style: text box
+            <p>Last Name:</p>
+            <input type = "text" id = "lastNameInput"
         </div>
         <div id = "email">
-            //style: text box (optional)
+            <p>Email Address:</p>
         </div>
         <div id = "height">
             //style: slider
