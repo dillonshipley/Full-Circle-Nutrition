@@ -19,6 +19,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           persist-credentials: false
+      - name: Remove old documentation
+        run: rm -rf swagger-ui
       - name: Generate Swagger HTML File
         uses: Legion2/swagger-ui-action@v1
         with:
