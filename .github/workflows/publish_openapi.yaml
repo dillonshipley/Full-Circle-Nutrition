@@ -24,7 +24,7 @@ jobs:
       - name: Generate Swagger HTML File
         uses: Legion2/swagger-ui-action@v1
         with:
-          output: swagger-ui
+          output: docs
           spec-file: ${{ env.SWAGGER_PATH }}
       - name: Deploy to GitHub Pages Site
         uses: actions-js/push@v1.3
