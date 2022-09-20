@@ -2,6 +2,7 @@ import LogonBioForm from './user_forms/LogonBioForm';
 import NonLogonBioForm from './user_forms/NonLogonBioForm';
 import ScheduleInfo from './user_forms/ScheduleInfo'
 import React, { Component } from 'react';
+import ProgressBar from './utilities/ProgressBar';
 
 
 function Logon(props){
@@ -15,6 +16,7 @@ class FormController extends Component {
 
   constructor(props){
     super(props);
+    const progess = ["logon"]
     this.state = {
       logon: false,
       recipe_complete: true
@@ -32,10 +34,16 @@ class FormController extends Component {
 
   render(){
     return (
-      <div id = "logonDeterminer">
-        <Logon logon = {this.state.logon} />
-        <ScheduleInfo schedule_info = "x" />
-        {/*this.returnResults()*/}
+      <div>
+        <div id = "formControllerHeader">
+          <button className = "backButton" onClick = {this.props.back}>Back</button>
+          <ProgressBar className = "progressBar" progress = {this.state.progress} />
+        </div>
+        <div id = "formControllerBody">
+          <Logon logon = {this.state.logon} />
+          <ScheduleInfo schedule_info = "x" />
+          {/*this.returnResults()*/}
+        </div>
       </div>
       );
 

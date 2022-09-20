@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import FormController from '../FormController'
-import Results from '../Results'
+import FormController from '../FormController';
+import Results from '../Results';
+import Login from '../Login';
 
 class Body extends Component{
     constructor(props){
@@ -19,7 +20,7 @@ class Body extends Component{
       if(this.state.display === "forms"){
         return (
           <div>
-            <FormController linkToHome = {() => this.setState({display: "start"})} />
+            <FormController back = {() => this.setState({display: "start"})} />
           </div>
         )
       } else if (this.state.display === "start"){
@@ -30,16 +31,22 @@ class Body extends Component{
                     <div className = "card" id = "homePageCard1" onClick = {() => this.swapToForms()}>Build From the Ground Up</div>
                     <div className = "card" id = "homePageCard2">Use One of Our Tools</div>
                 </div>
-                <div className = "homepageLoginText">
+                <div className = "homepageLoginText" onClick = {() => this.setState({display: "login"})}>
                     Log in for the complete experience
                 </div>
                 <div className = "homepageRegisterText">
 
                 </div>
             </div>
-        )
+        );
       } else if (this.state.display === "results"){
           <Results />
+      } else if (this.state.display === "login"){
+        return(
+          <div>
+            <Login back = {() => this.setState({display: "start"})}/>
+          </div>
+        );
       }
     }
 }

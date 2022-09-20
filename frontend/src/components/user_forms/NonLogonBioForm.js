@@ -76,24 +76,27 @@ const heightArray = [
     return (
       <div id = "NLBioFormContainer">
         <form>
-          <div id = "height">
-          <Slider
-          size="medium"
-          min ={58}
-          max = {72}
-          defaultValue={70}
-          aria-label="Small"
-          valueLabelDisplay="on"
-          step = {null}
-          marks = {heightArray}
-          />
+          <div id = "currentWeight">
+            <p className = "InputLabel">Select your height:</p>
+            <div className = "heightSlider">
+              <Slider
+              size="medium"
+              min ={58}
+              max = {72}
+              defaultValue={70}
+              aria-label="Small"
+              valueLabelDisplay="off"
+              step = {null}
+              marks = {heightArray}
+              />
+            </div>
           </div>
           <div id = "currentWeight">
-              <p className = "textInputLabel">Please enter your current weight:</p>
+              <p className = "InputLabel">Please enter your current weight:</p>
               <input type = "text" id = "weightInput" name = "weight" className = "textInput"/>
           </div>
           <div id = "bodyFat">
-              <p className = "textInputLabel">Please enter your current body fat percentage:</p>
+              <p className = "InputLabel">Please enter your current body fat percentage:</p>
               <input type= "text" id = "fatpInput" name = "fat" className = "textInput"/>
           </div>
         </form>
