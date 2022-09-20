@@ -3,8 +3,8 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -713.3333413468448,
-    "scrollLeft": -22.000000397365564,
+    "scrollTop": -730.8437579472852,
+    "scrollLeft": 0,
     "zoomLevel": 1,
     "show": {
       "tableComment": true,
@@ -52,7 +52,7 @@
             "dataType": "text",
             "default": "",
             "option": {
-              "autoIncrement": true,
+              "autoIncrement": false,
               "primaryKey": true,
               "unique": true,
               "notNull": true
@@ -189,7 +189,7 @@
           "active": false,
           "left": 774.9199,
           "top": 1089.6893,
-          "zIndex": 14,
+          "zIndex": 11,
           "widthName": 60,
           "widthComment": 83.65625
         },
@@ -481,7 +481,7 @@
           "active": false,
           "left": 1274.8169,
           "top": 1088.3043,
-          "zIndex": 19,
+          "zIndex": 8,
           "widthName": 65.59716796875,
           "widthComment": 101.0107421875
         },
@@ -787,10 +787,10 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 193.6466,
           "top": 1070.4409,
-          "zIndex": 21,
+          "zIndex": 9,
           "widthName": 60,
           "widthComment": 70.63720703125
         },
@@ -1406,6 +1406,114 @@
         },
         "visible": true,
         "id": "b96d468b-0672-43a6-9c1a-2afa9285a44e"
+      },
+      {
+        "name": "recipe_notes",
+        "comment": "",
+        "columns": [
+          {
+            "name": "recipe_id",
+            "comment": "",
+            "dataType": "text",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": true,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "ec0ff454-5c75-47e5-831f-2e386d6b632e"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "63befa3c-a6f5-4b4b-838b-b451ad40c844"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "d0b2e9ce-9ed0-4e18-8834-0ac9d6ccc9a6"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "38084642-cd6e-450e-a2c6-fdf1d01d994d"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 726.6666,
+          "top": 1338.3383,
+          "zIndex": 10,
+          "widthName": 76.43896484375,
+          "widthComment": 60
+        },
+        "visible": true,
+        "id": "b6573863-64e7-4f06-b689-4532caeac76e"
       }
     ],
     "indexes": []
