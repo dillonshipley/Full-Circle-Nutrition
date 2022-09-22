@@ -34,6 +34,42 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Logging Config
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} [{asctime}] | {module} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "handlers": {
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'verbose',
+        },
+        
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            'level': env("DJANGO_LOG_LEVEL"),
+            'propagate': False,
+        }
+    },
+}
 
 # Application definition
 
@@ -44,7 +80,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'drf_yasg',
+    "drf_yasg",
     "recipes",
 ]
 
