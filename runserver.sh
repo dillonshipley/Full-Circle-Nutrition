@@ -4,5 +4,9 @@
 #
 # Start the server
 
-echo "[---] Starting server . . ."
-python3 manage.py runserver
+echo "[---] Starting front end ui . . ."
+npm start
+echo "[-+-] Started front end ui . . ."
+echo "[---] Starting back end api . . ."
+python3 macros-backend/manage.py runserver
+echo "[---] Started back end api . . ."

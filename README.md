@@ -1,39 +1,37 @@
-Macros
+Macros Application
 ===
 
-## Local development
+![License](https://img.shields.io/github/license/dillonshipley/macros)
+![Release](https://img.shields.io/github/v/release/dillonshipley/macros)
+![PRs](https://img.shields.io/github/issues-pr/dillonshipley/macros)
 
-1. Start virtual environment
-    ```bash
-    source env/bin/activate
-    ```
-1. Install required packages
-    ```bash
-    pip install -r requirements.txt
-    ```
-1. Start the server locally at http://127.0.0.1:8000/
-    ```bash
-    python3 manage.py runserver
-    ```
+## Starting apps for Local development
 
-    or
+### Backend
 
-    ```shell
-    ./runserver.sh
-    ```
+![Python3](https://img.shields.io/badge/Python-teal?style=flat&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-success?style=flat&logo=django&logoColor=white)
 
-## Environment Variables
+![Backend Build Status](https://img.shields.io/github/workflow/status/dillonshipley/macros/Build%20backend%20Django%20app?label=Backend%20Build)  
+> Requires connection to Postgres database instance  
+> http://127.0.0.1:8000/
 
-If it is your first time running the app locally, create a .env file in the macros-backend directory
-```bash
-touch macros-backend/.env
-```
-There is a `dist.env` file that has the keys already filled out, the values can be found in the GitHub secrets page. *DO NOT* fill in the values into the `dist.env` file, this file is tracked by version control, use the `.env` file instead.
+`python3 manage.py runserver`
 
-## Postgre
+This assumes that you have downloaded all required dependancies. See the [back end README](macros-backend/README.md) for more instructions.
 
-Since there is no production environment yet, we should use a Postgres Docker image. You can pull the image using this command:
-```bash
-docker pull postgres
-```
-Use/create the environment variables file at `macros-backend/.env` to store the user and password for the database instance you create. You will need to create your own username and password. I recommend using the default username and generating a random password and saving it in the `.env` file for now.
+---
+
+### Frontend
+
+![React](https://img.shields.io/badge/React-blue?style=flat&logo=react&logoColor=white)
+![Nodejs](https://img.shields.io/badge/-npm-black?style=flat&logo=npm)
+> http://127.0.0.1:3000/
+
+`npm start`
+
+See the [front end README](frontend/README.md) for more instructions.
+
+### Full application
+
+`./runserver.sh`
