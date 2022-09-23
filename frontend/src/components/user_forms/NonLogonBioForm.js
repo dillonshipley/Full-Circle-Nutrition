@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Slider from '@mui/material/Slider';
+import MacroCalculator from '../tools/MacroCalculator';
 
 const heightArray = [
   {
@@ -64,18 +65,46 @@ const heightArray = [
   }
 ]
 
- class NonLogonBioForm extends Component{
+class NonLogonBioForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      data: props.data
+      data: props.data,
+      macros: [],
+      loading: false
     }
+  }
+
+  calculateMacros(){
+    this.setState({loading: true});
+    const data = [
+      parseInt(document.getElementById("weightInput").value),
+      parseInt(document.getElementById("heightInput").value),
+      parseInt(document.getElementById("ageInput").value),
+      document.getElementById("sexInput").value,
+    ]
+    console.log(data);
+
+    var macroArray = MacroCalculator("y");
+    this.setState({macros: macroArray}, () => {
+        this.setState({loading: false});
+    });
+  }
+
+  storeMacros(){
+    console.log("works");
+      //this.setState({macros: macros});
   }
 
   render(){
     return (
       <div id = "NLBioFormContainer">
         <form>
+        <div id = "currentWeight">
+            <p className = "InputLabel">Please enter your current weight:</p>
+            <input type = "text" id = "weightInput" name = "weight" className = "textInput"/>
+            <p> TODO: KG / LBS </p>
+        </div>
           <div id = "currentWeight">
             <p className = "InputLabel">Select your height:</p>
             <div className = "heightSlider">
@@ -88,18 +117,24 @@ const heightArray = [
               valueLabelDisplay="off"
               step = {null}
               marks = {heightArray}
+              id = "heightInput"
               />
             </div>
           </div>
-          <div id = "currentWeight">
-              <p className = "InputLabel">Please enter your current weight:</p>
-              <input type = "text" id = "weightInput" name = "weight" className = "textInput"/>
+          <div id = "currentAge">
+              <p className = "InputLabel">Please enter your current age:</p>
+              <input type = "text" id = "ageInput" name = "age" className = "textInput"/>
           </div>
-          <div id = "bodyFat">
-              <p className = "InputLabel">Please enter your current body fat percentage:</p>
-              <input type= "text" id = "fatpInput" name = "fat" className = "textInput"/>
+          <div id = "sex">
+            <p className = "InputLabel">Please enter your sex:</p>
+            <select name = "sex" id = "sexInput" className = "textInput">
+              <option value = "M">Male</option>
+              <option value = "F">Female</option>
+            </select>
           </div>
         </form>
+        <button className = "SaveButton" onClick = {() => this.calculateMacros()}>Save</button>
+
       </div>
     );
   }

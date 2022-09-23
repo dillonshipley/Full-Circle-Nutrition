@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import FormController from '../FormController';
 import Results from '../Results';
 import Login from '../Login';
-import MacroCalculator from '../tools/MacroCalculator';
 
 //var cardTextOneTitle = "BUILD";
 //var cardTextOneDetail = "from the ground up"
@@ -64,8 +63,6 @@ class Body extends Component{
         );
       } else if (this.state.display === "results"){
           <Results />
-      } else if (this.state.display === "tools"){
-          <MacroCalculator />
       }else if (this.state.display === "login"){
         return(
           <div>

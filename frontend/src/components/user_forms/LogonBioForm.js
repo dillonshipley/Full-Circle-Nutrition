@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MacroCalculator from '../tools/MacroCalculator';
 
 class LogonBioForm extends Component{
 
