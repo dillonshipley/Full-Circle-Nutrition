@@ -1,18 +1,22 @@
 from django.db import models
+from django.utils.timezone import now
+
+import datetime
 
 
 class Recipe(models.Model):
     recipe_id = models.UUIDField(
-        max_length=12,
         primary_key=True,
+        null=False,
         unique=True,
         editable=False,
+        default="10000000-0000-0000-0000-000000000000",
     )
-    name = models.CharField(max_length=80, unique=True)
-    creator = models.CharField(max_length=80)
-    description = models.CharField(max_length=500)
-    create_date = models.DateTimeField()
-    modify_date = models.DateTimeField()
+    name = models.CharField(max_length=80, null=False, unique=True)
+    creator = models.CharField(max_length=80, null=True)
+    description = models.CharField(max_length=500, null=True)
+    create_date = models.DateTimeField(name="Creation date & time", default=now)
+    modify_date = models.DateTimeField(name="Last modified date & time", default=now)
 
 
 class Ingredient(models.Model):
@@ -34,9 +38,8 @@ class Ingredient(models.Model):
         unique=True,
         editable=False,
     )
-
-    name = models.CharField(max_length=80, unique=True)
-    vegetarian = models.BinaryField()
+    name = models.CharField(max_length=80, null=False, unique=True)
+    vegetarian = models.BinaryField(default=False)
     calories = models.SmallIntegerField()
     fat = models.SmallIntegerField()
     protein = models.SmallIntegerField()
@@ -44,11 +47,9 @@ class Ingredient(models.Model):
         choices=UNIT_CHOICES,
         max_length=3,
     )
-    amount = models.DecimalField(
-        decimal_places=2, max_digits=8
-    )
-    create_date = models.DateTimeField(name="Creation date & time")
-    modify_date = models.DateTimeField(name="Last modified date & time")
+    amount = models.DecimalField(decimal_places=2, max_digits=8)
+    create_date = models.DateTimeField(name="Creation date & time", default=now)
+    modify_date = models.DateTimeField(name="Last modified date & time", default=now)
 
 
 class User(models.Model):
@@ -65,9 +66,15 @@ class User(models.Model):
         editable=False,
     )
     user_name = models.CharField(max_length=25, unique=True)
-    height = models.DecimalField(decimal_places=2, max_digits=8)
-    weight = models.DecimalField(decimal_places=2, max_digits=8)
-    body_fat = models.DecimalField(decimal_places=2, max_digits=8)
-    goal = models.CharField(choices=GOAL_CHOICES, max_length=3)
-    create_date = models.DateTimeField(name="Creation date & time")
-    modify_date = models.DateTimeField(name="Last modified date & time")
+    height = models.DecimalField(
+        decimal_places=2, null=False, max_digits=8, default=0.00
+    )
+    weight = models.DecimalField(
+        decimal_places=2, null=False, max_digits=8, default=0.00
+    )
+    body_fat = models.DecimalField(
+        decimal_places=2, null=False, max_digits=8, default=0.00
+    )
+    goal = models.CharField(choices=GOAL_CHOICES, null=False, max_length=3)
+    create_date = models.DateTimeField(name="Creation date & time", default=now)
+    modify_date = models.DateTimeField(name="Last modified date & time", default=now)

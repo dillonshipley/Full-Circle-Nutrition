@@ -55,18 +55,17 @@ LOGGING = {
         },
     },
     "handlers": {
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': 'general.log',
-            'formatter': 'verbose',
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            "formatter": "verbose",
         },
-        
     },
     "loggers": {
         "django": {
-            "handlers": ["console"],
-            'level': env("DJANGO_LOG_LEVEL"),
-            'propagate': False,
+            "handlers": ["file"],
+            "level": env("DJANGO_LOG_LEVEL"),
+            "propagate": False,
         }
     },
 }
@@ -122,6 +121,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "recipes",
+        "TEST": {
+            "NAME": "testrecipes",
+            "MIRROR": "recipes"
+        },
         "USER": f"{env('DB_USER')}",
         "PASSWORD": f"{env('DB_PASSWORD')}",
         "HOST": "127.0.0.1",
