@@ -130,3 +130,29 @@
   margin-top: 25px;
   margin-bottom: 25px;
 }
+
+@keyframes fade {
+  0% {color: var(--violet-6);}
+  25% {color: var(--blue-6);}
+  50% {coolor: var(--teal-6);}
+  75% {color: var(--blue-6);}
+  100% {color: var(--violet-6);}
+}
+
+@keyframes border {
+  0% {text-shadow: 2px 2px 5px var(--blue-9);}
+  25% {text-shadow: 2px 2px 5px var(--teal-9);}
+  50% {text-shadow: 2px 2px 5px var(--blue-9);}
+  75% {text-shadow: 2px 2px 5px var(--violet-9);}
+  100% {text-shadow: 2px 2px 4px var(--blue-9);}
+  
+}
+
+.cardTitle {
+  font-weight: 700;
+  font-size: var(--font-size-7);
+  animation-name: fade, border;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+}
+

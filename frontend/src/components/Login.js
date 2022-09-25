@@ -16,7 +16,7 @@ class Login extends Component{
     return (
       <div>
           <button className = "backButton" onClick = {this.props.back}>Back</button>
-          <div id = "loginUsername"></div>
+          <div id = "user_name"></div>
           <div id = "loginPassword"></div>
       </div>
     );

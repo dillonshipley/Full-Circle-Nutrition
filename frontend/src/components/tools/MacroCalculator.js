@@ -24,6 +24,9 @@ function MacroCalculator(props) {
         REE = REE - 161;
 
       console.log("Resting Energy Expenditure: " + REE);
+
+
+
       return "x";
 }
 

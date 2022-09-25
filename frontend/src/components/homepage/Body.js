@@ -22,6 +22,7 @@ function Card(props){
       </div>
       <div>
         <div className = "cardSpacer"></div>
+        <div className = "cardTitle">{props.title}</div>
         <div className = "cardInfoText">{props.text}</div>
       </div>
     </div>
@@ -50,8 +51,8 @@ class Body extends Component{
             <div id = "mainBodyDiv">
                 <div id = "homePageTitle">Goal to Table Nutrition </div>
                 <div id = "homePageCardContainer">
-                    <Card onClick = {() => this.setState({display: "forms"})} text = "Build From the Ground Up"/>
-                    <Card onClick = {() => this.setState({display: "tools"})} text = "Use One of Our Tools"/>
+                    <Card onClick = {() => this.setState({display: "forms"})} title = "BUILD" text = "from the ground up"/>
+                    <Card onClick = {() => this.setState({display: "tools"})} title = "USE" text = "use one of our tools"/>
                 </div>
                 <div className = "homepageLoginText" onClick = {() => this.setState({display: "login"})}>
                     Log in for the complete experience
