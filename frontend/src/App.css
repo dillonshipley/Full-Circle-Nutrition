@@ -13,6 +13,8 @@
   text-align: center;
 }
 
+
+/* --- SECTION 1: HOMEPAGE --- */
 #mainBodyDiv {
   height: 80vh;
   width: 80vw;
@@ -22,7 +24,6 @@
 
   box-shadow: var(--shadow-6);
 }
-
 #homePageTitle{
   padding-top: 3vh;
   padding-bottom: 1vh; /*for commmit? */
@@ -30,7 +31,6 @@
   font-size: var(--font-size-7);
   font-weight: var(--font-weight-7)
 }
-
 #homePageCardContainer{
   margin-top: 10vh;
   margin-bottom: 10vh;
@@ -52,7 +52,8 @@
   width: 22vw;
   height: 50vh;
 
-  background-color: var(--indigo-1);
+  background-image: var(--gradient-29);
+
   box-shadow: var(--shadow-6);
   border-radius: var(--radius-3);
 
@@ -60,8 +61,12 @@
 
   display: grid;
   grid-template-rows: 30vh 25vh;
+  
 }
-
+.card:hover{
+  box-shadow: 10px 10px 30px 2px #F9F9FB;
+  transform: translate(-3px, -2px);
+}
 .cardSpacer {
   margin-left: 2vw;
   width: 18vw;
@@ -71,14 +76,42 @@
 
   background-color: var(--indigo-6);
 }
+.cardInfoText{
+  margin-top: 10px;
+  color: var(--gray-3);
+  -webkit-text-stroke: .4px var(--gray-7); /* width and color */
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: .2em;
+}
 
+.cardTitle {
+  font-weight: 700;
+  font-size: var(--font-size-8);
+
+  text-shadow: 1px 1px 2px black;
+  -webkit-text-stroke: 1px var(--gray-7); /* width and color */
+  animation-name: fade, border;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  letter-spacing: .1em
+}
+
+.homepageIcon {
+  margin-left: 100px;
+  margin-right: auto;
+  margin-top: 50px;
+
+  fill: var(--gradient-29) !important; 
+}
+
+/* --- SECTION 2: FORMS --- */
 #NLBioFormContainer {
   margin-left: 10px;
   background-color: grey;
 
   text-align: left;
 }
-
 .textInput{
   margin-top: 25px;
   margin-left: 50px;
@@ -95,7 +128,6 @@
 
   color: beige;
 }
-
 #formControllerHeader {
   width: 100%;
   display: inline-grid;
@@ -103,56 +135,37 @@
   border: 1px dotted red;
 }
 
+/*  --- SECTION 2: BIOFORM --- */
 .progressBar {
   display: grid;
   margin-right: 0;
   margin-left: auto;
 }
-
 .backButton {
   text-align: left;
   display: grid;
   margin-right: auto;
   margin-left: 0;
 }
-
 .heightSlider {
   width: 40vw;
   margin-left: 30vw;
 }
-
 .currentWeight {
   text-align: center;
 }
-
 .SaveButton {
   margin-left: 50px;
   margin-top: 25px;
   margin-bottom: 25px;
 }
 
+/*  --- SECTION 3: ANIMATIONS --- */
 @keyframes fade {
-  0% {color: var(--violet-6);}
-  25% {color: var(--blue-6);}
-  50% {coolor: var(--teal-6);}
-  75% {color: var(--blue-6);}
-  100% {color: var(--violet-6);}
+  0% {color: var(--indigo-1);}
+  50% {color: var(--indigo-2);}
+  100% {color: var(--indigo-1);}
 }
 
-@keyframes border {
-  0% {text-shadow: 2px 2px 5px var(--blue-9);}
-  25% {text-shadow: 2px 2px 5px var(--teal-9);}
-  50% {text-shadow: 2px 2px 5px var(--blue-9);}
-  75% {text-shadow: 2px 2px 5px var(--violet-9);}
-  100% {text-shadow: 2px 2px 4px var(--blue-9);}
-  
-}
 
-.cardTitle {
-  font-weight: 700;
-  font-size: var(--font-size-7);
-  animation-name: fade, border;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
-}
 

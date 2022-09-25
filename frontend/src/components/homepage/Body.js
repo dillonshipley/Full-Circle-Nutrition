@@ -4,6 +4,8 @@ import FormController from '../FormController';
 import Results from '../Results';
 import Login from '../Login';
 
+import calculator from './calculator.svg';
+
 //var cardTextOneTitle = "BUILD";
 //var cardTextOneDetail = "from the ground up"
 
@@ -18,7 +20,7 @@ function Card(props){
   return (
     <div className = "card" id = {"homepageCard" + props.num} onClick = {props.onClick}>
       <div className = "cardIcon">
-
+        <img className = "homepageIcon" src = {calculator} width="175" height="175"></img>
       </div>
       <div>
         <div className = "cardSpacer"></div>
