@@ -1,7 +1,7 @@
-from imghdr import tests
-from django.test import TestCase, Client
+import unittest
+from django.test import Client
 
-class GetRoutes(TestCase):
+class GetRoutes(unittest.TestCase):
     
     def getIndex(self):
         client = Client()

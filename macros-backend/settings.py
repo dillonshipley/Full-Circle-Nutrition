@@ -45,7 +45,7 @@ LOGGING = {
             "style": "{",
         },
         "simple": {
-            "format": "{levelname} {message}",
+            "format": "{levelname} [{asctime}] | {message}",
             "style": "{",
         },
     },
@@ -55,17 +55,32 @@ LOGGING = {
         },
     },
     "handlers": {
-        "file": {
+        'console': {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "django-app": {
             "class": "logging.FileHandler",
-            "filename": "general.log",
-            "formatter": "verbose",
+            "filename": "logs/django_app.log",
+            "formatter": "simple",
         },
     },
     "loggers": {
+        "": {
+            'level': 'WARNING',
+            'handlers': ['console'],
+            'formatter': "simple"
+        },
         "django": {
-            "handlers": ["file"],
+            "handlers": ["django-app"],
+            "filters": "require_debug_true",
             "level": env("DJANGO_LOG_LEVEL"),
             "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "filters": "require_debug_true",
+            "level": env("DJANGO_LOG_LEVEL"),
         }
     },
 }
