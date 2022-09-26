@@ -41,7 +41,7 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "{levelname} [{asctime}] | {module} {message}",
+            "format": "{levelname} [{asctime}] | {name} {module} {message}",
             "style": "{",
         },
         "simple": {
@@ -59,28 +59,42 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "simple",
         },
-        "django-app": {
-            "class": "logging.FileHandler",
-            "filename": "logs/django_app.log",
-            "formatter": "simple",
+        'recipes': {
+            'class': 'logging.FileHandler',
+            "filename": "logs/recipes.log",
+            'formatter': 'simple'
+        },
+        'migrations': {
+            'class': 'logging.FileHandler',
+            "filename": "logs/migrations.log",
+            'formatter': 'simple'
         },
     },
     "loggers": {
-        "": {
-            'level': 'WARNING',
-            'handlers': ['console'],
-            'formatter': "simple"
+        'recipes': {
+            'handlers': ['recipes'],
+            'level': "DEBUG",
+            "propagate": True
+        },
+        'migration_logs': {
+            'handlers': ['migrations'],
+            'level': "DEBUG",
+            "propagate": True
         },
         "django": {
-            "handlers": ["django-app"],
-            "filters": "require_debug_true",
-            "level": env("DJANGO_LOG_LEVEL"),
+            "handlers": ["console"],
+            "level": "INFO",
             "propagate": False,
+        },
+        "django.db.backends": {
+            "handlers": ["migrations"],
+            "level": "INFO",
+            "propagate": True,
         },
         "django.request": {
             "handlers": ["console"],
-            "filters": "require_debug_true",
-            "level": env("DJANGO_LOG_LEVEL"),
+            "level": "DEBUG",
+            "propagate": True,
         }
     },
 }
@@ -136,10 +150,6 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "recipes",
-        "TEST": {
-            "NAME": "testrecipes",
-            "MIRROR": "recipes"
-        },
         "USER": f"{env('DB_USER')}",
         "PASSWORD": f"{env('DB_PASSWORD')}",
         "HOST": "127.0.0.1",

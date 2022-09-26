@@ -153,9 +153,21 @@ components:
           description: User name
           type: string
           nullable: false
+        first_name:
+          description: User's first name
+          type: string
+          nullable: false
+        last_name:
+          description: User's last name
+          type: string
+          nullable: false
+        email:
+          description: User's email
+          type: string
+          nullable: false
         goal:
           description: User's fitness goal
-          type: string
+          type: integer
           nullable: false
         weight:
           description: User's weight
@@ -168,7 +180,7 @@ components:
         body_fat:
           description: User's body fat pecentage
           type: number
-          nullable: false
+          nullable: true
 
 paths:
   /v1/recipes/{recipe_id}:

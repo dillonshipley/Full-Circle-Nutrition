@@ -28,7 +28,6 @@ schema_view = get_schema_view(openapi.Info(
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
     path("docs/", schema_view.with_ui()),
     path("", include("recipes.urls"))
 ]

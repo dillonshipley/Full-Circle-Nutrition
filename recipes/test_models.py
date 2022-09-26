@@ -1,4 +1,5 @@
 from django.test import TestCase
 
 class RecipeTests(TestCase):
-    pass
+    def setUp(self) -> None:
+        return super().setUp()

@@ -33,3 +33,10 @@ This assumes that you have downloaded all required dependancies. See the [back e
 `npm start`
 
 See the [front end README](frontend/README.md) for more instructions.
+
+username
+password
+height
+weight
+firstname
+lastname
