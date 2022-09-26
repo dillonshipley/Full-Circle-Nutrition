@@ -34,6 +34,70 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Logging Config
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} [{asctime}] | {name} {module} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} [{asctime}] | {message}",
+            "style": "{",
+        },
+    },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "handlers": {
+        'console': {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        'recipes': {
+            'class': 'logging.FileHandler',
+            "filename": "logs/recipes.log",
+            'formatter': 'simple'
+        },
+        'migrations': {
+            'class': 'logging.FileHandler',
+            "filename": "logs/migrations.log",
+            'formatter': 'simple'
+        },
+    },
+    "loggers": {
+        'recipes': {
+            'handlers': ['recipes'],
+            'level': "DEBUG",
+            "propagate": True
+        },
+        'migration_logs': {
+            'handlers': ['migrations'],
+            'level': "DEBUG",
+            "propagate": True
+        },
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.db.backends": {
+            "handlers": ["migrations"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
+        }
+    },
+}
 
 # Application definition
 
@@ -44,7 +108,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'drf_yasg',
+    "drf_yasg",
     "recipes",
 ]
 

@@ -20,6 +20,8 @@ Macros Application
 
 This assumes that you have downloaded all required dependancies. See the [back end README](macros-backend/README.md) for more instructions.
 
+[API Docs](https://dillonshipley.github.io/macros/)
+
 ---
 
 ### Frontend
@@ -32,6 +34,9 @@ This assumes that you have downloaded all required dependancies. See the [back e
 
 See the [front end README](frontend/README.md) for more instructions.
 
-### Full application
-
-`./runserver.sh`
+username
+password
+height
+weight
+firstname
+lastname
