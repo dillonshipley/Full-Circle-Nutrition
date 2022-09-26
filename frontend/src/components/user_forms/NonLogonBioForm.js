@@ -89,6 +89,7 @@ class NonLogonBioForm extends Component{
     this.setState({macros: macroArray}, () => {
         this.setState({loading: false});
     });
+    this.props.back();
   }
 
   storeMacros(){

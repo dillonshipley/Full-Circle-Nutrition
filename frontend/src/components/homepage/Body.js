@@ -18,7 +18,7 @@ function Card(props){
   }
 
   return (
-    <div className = "card" id = {"homepageCard" + props.num} onClick = {props.onClick}>
+    <div className = "card homepageCard" id = {"homepageCard" + props.num} onClick = {props.onClick}>
       <div className = "cardIcon">
         <img className = "homepageIcon" src = {calculator} width="175" height="175"></img>
       </div>

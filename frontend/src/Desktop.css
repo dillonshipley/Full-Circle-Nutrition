@@ -32,7 +32,7 @@
   font-weight: var(--font-weight-7)
 }
 #homePageCardContainer{
-  margin-top: 10vh;
+  margin-top: 5vh;
   margin-bottom: 10vh;
   margin-left: 4vw;
   margin-right: 4vw;
@@ -58,10 +58,11 @@
   border-radius: var(--radius-3);
 
   border: 7px solid var(--gray-9);
+}
 
+.homepageCard {
   display: grid;
   grid-template-rows: 30vh 25vh;
-  
 }
 .card:hover{
   box-shadow: 10px 10px 30px 2px #F9F9FB;
@@ -73,15 +74,19 @@
   height: 4px;
 
   border: 1px solid black;
+  box-shadow: 0 0 4px black;
 
-  background-color: var(--indigo-6);
+  background-color: var(--indigo-5);
+
+  border-radius: 2px;
+
 }
 .cardInfoText{
   margin-top: 10px;
   color: var(--gray-3);
   -webkit-text-stroke: .4px var(--gray-7); /* width and color */
   font-size: 25px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: .2em;
 }
 
@@ -98,9 +103,11 @@
 }
 
 .homepageIcon {
-  margin-left: 100px;
+  margin-left: 6vw;
   margin-right: auto;
-  margin-top: 50px;
+  margin-top: 40px;
+
+  width: 10vw;
 
   fill: var(--gradient-29) !important; 
 }
@@ -129,13 +136,31 @@
   color: beige;
 }
 #formControllerHeader {
-  width: 100%;
+  width: 100vw;
   display: inline-grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 40vw 30vw 40vw;
   border: 1px dotted red;
 }
+.progressBarContainer {
+  text-align: center;
+}
+#progressBarSubdivider{
+  border: 5px solid navy;
+  height: 25px;
+  border-radius: 10px;
 
-/*  --- SECTION 2: BIOFORM --- */
+  display: grid;
+  grid-template-columns: 10vw 10vw 10vw;
+
+}
+.progressBarSegment{
+  margin-top: 0px;
+  border-right: 5px solid navy;
+  height: 15px;
+}
+
+
+/*  --- SECTION 3: BIOFORM --- */
 .progressBar {
   display: grid;
   margin-right: 0;
@@ -159,8 +184,24 @@
   margin-top: 25px;
   margin-bottom: 25px;
 }
+.inProgress{
+  background-color: var(--yellow-2);
+}
+.completed{
+  background-color: var(--green-8);
+}
 
-/*  --- SECTION 3: ANIMATIONS --- */
+/* --- SECTION 4: SCHEDULE INFO --- */
+.scheduleCardContainer {
+  margin-top: 5vh;
+  margin-left: 12.5vw;
+  
+  display: grid;
+  width: 75vw;
+  grid-template-columns: 25vw 25vw 25vw;
+}
+
+/*  --- SECTION 5: ANIMATIONS --- */
 @keyframes fade {
   0% {color: var(--indigo-1);}
   50% {color: var(--indigo-2);}

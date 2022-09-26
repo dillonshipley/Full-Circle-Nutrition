@@ -1,7 +1,8 @@
 import Header from './components/homepage/Header';
 import Body from './components/homepage/Body';
 
-import './App.css';
+import './Desktop.css';
+import './Mobile.css'
 
 function App() {
   return (
