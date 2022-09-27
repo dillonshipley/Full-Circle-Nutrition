@@ -12,6 +12,7 @@ class Recipe(models.Model):
     recipe_id = models.UUIDField(
         name="recipe_id",
         primary_key=True,
+        max_length=36,
         null=False,
         unique=True,
         editable=False,
@@ -25,9 +26,7 @@ class Recipe(models.Model):
     recipe_type = models.CharField(
         name="recipe_type", choices=type_choices, max_length=2, null=True
     )
-    description = models.CharField(
-        name="description", max_length=500, null=True
-    )
+    description = models.CharField(name="description", max_length=500, null=True)
     create_date = models.DateTimeField(name="create_date", default=now)
     modify_date = models.DateTimeField(name="modify_date", default=now)
 
@@ -47,10 +46,12 @@ class Ingredient(models.Model):
 
     ingredient_id = models.UUIDField(
         name="ingredient_id",
-        max_length=12,
+        max_length=36,
+        null=False,
         primary_key=True,
         unique=True,
         editable=False,
+        default="10000000-0000-0000-0000-000000000000",
     )
     name = models.CharField(name="name", max_length=80, null=False, unique=True)
     vegetarian = models.BinaryField(name="vegetarian", default=False)
@@ -58,13 +59,18 @@ class Ingredient(models.Model):
     fat = models.SmallIntegerField(name="fat")
     protein = models.SmallIntegerField(name="protein")
     units = models.CharField(
-        name="units", 
+        name="units",
         choices=UNIT_CHOICES,
         max_length=3,
     )
     amount = models.DecimalField(name="", decimal_places=2, max_digits=8)
     create_date = models.DateTimeField(name="create_date", default=now)
     modify_date = models.DateTimeField(name="modify_date", default=now)
+
+
+class UserManager(models.Manager):
+    def user_count(self, keyword) -> int:
+        return self.filter(user_id_icontain=keyword).count()
 
 
 class User(models.Model):
@@ -80,10 +86,12 @@ class User(models.Model):
 
     user_id = models.UUIDField(
         name="user_id",
-        max_length=12,
+        max_length=36,
         primary_key=True,
+        null=False,
         unique=True,
         editable=False,
+        default="10000000-0000-0000-0000-000000000000",
     )
     user_name = models.CharField(name="user_name", max_length=25, unique=True)
     age = models.IntegerField(name="age", null=False, default=25)
@@ -101,3 +109,8 @@ class User(models.Model):
     )
     create_date = models.DateTimeField(name="create_date", default=now)
     modify_date = models.DateTimeField(name="modify_date", default=now)
+
+    objects = UserManager()
+
+    def __str__(self) -> str:
+        return f"User({self.user_name}): {self.user_id}"

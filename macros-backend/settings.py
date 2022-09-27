@@ -55,31 +55,33 @@ LOGGING = {
         },
     },
     "handlers": {
-        'console': {
+        "console": {
             "class": "logging.StreamHandler",
             "formatter": "simple",
         },
-        'recipes': {
-            'class': 'logging.FileHandler',
-            "filename": "logs/recipes.log",
-            'formatter': 'simple'
+        "recipes_test": {
+            "class": "logging.FileHandler",
+            "filename": "logs/test.log",
+            "formatter": "simple",
         },
-        'migrations': {
-            'class': 'logging.FileHandler',
+        "recipes": {
+            "class": "logging.FileHandler",
+            "filename": "logs/recipes.log",
+            "formatter": "simple",
+        },
+        "migrations": {
+            "class": "logging.FileHandler",
             "filename": "logs/migrations.log",
-            'formatter': 'simple'
+            "formatter": "simple",
         },
     },
     "loggers": {
-        'recipes': {
-            'handlers': ['recipes'],
-            'level': "DEBUG",
-            "propagate": True
-        },
-        'migration_logs': {
-            'handlers': ['migrations'],
-            'level': "DEBUG",
-            "propagate": True
+        "recipes": {"handlers": ["recipes"], "level": "DEBUG", "propagate": True},
+        "test": {"handlers": ["recipes_test"], "level": "DEBUG", "propagate": True},
+        "migration_logs": {
+            "handlers": ["migrations"],
+            "level": "DEBUG",
+            "propagate": True,
         },
         "django": {
             "handlers": ["console"],
@@ -95,7 +97,7 @@ LOGGING = {
             "handlers": ["console"],
             "level": "DEBUG",
             "propagate": True,
-        }
+        },
     },
 }
 
