@@ -120,7 +120,7 @@
   text-align: left;
 }
 .textInput{
-  margin-top: 25px;
+  margin-top: 10px;
   margin-left: 50px;
   margin-bottom: 25px;
 
@@ -130,7 +130,7 @@
 }
 
 .InputLabel{
-  padding-top: 50px;
+  padding-top: 10px;
   margin-left: 50px;
 
   color: beige;

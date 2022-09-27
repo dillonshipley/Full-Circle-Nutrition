@@ -1,69 +1,14 @@
 import React, { Component } from 'react';
-import Slider from '@mui/material/Slider';
 import MacroCalculator from '../tools/MacroCalculator';
 
-const heightArray = [
-  {
-    value: 58,
-    label: "4'10"
-  },
-  {
-    value: 59,
-    label: "4'11"
-  },
-  {
-    value: 60,
-    label: "5'0"
-  },
-  {
-    value: 61,
-    label: "5'1"
-  },
-  {
-    value: 62,
-    label: "5'2"
-  },
-  {
-    value: 63,
-    label: "5'3"
-  },
-  {
-    value: 64,
-    label: "5'5"
-  },
-  {
-    value: 65,
-    label: "5'4"
-  },
-  {
-    value: 66,
-    label: "5'6"
-  },
-  {
-    value: 67,
-    label: "5'7"
-  },
-  {
-    value: 68,
-    label: "5'8"
-  },
-  {
-    value: 69,
-    label: "5'9"
-  },
-  {
-    value: 70,
-    label: "5'10"
-  },
-  {
-    value: 71,
-    label: "5'11"
-  },
-  {
-    value: 72,
-    label: "6'0"
-  }
-]
+function TextInput(props){
+  return (
+    <div id = {"current" + props.type}>
+    <p className = "InputLabel">Please enter your current {props.type}:</p>
+    <input type = "text" id = {props.type + "Input"} name = {props.type} className = "textInput"/>
+  </div>
+  );
+}
 
 class NonLogonBioForm extends Component{
   constructor(props){
@@ -75,8 +20,27 @@ class NonLogonBioForm extends Component{
     }
   }
 
+  error(){
+    var collection = document.getElementsByClassName("textInput")
+    for(const x of collection) {
+      if(x.value === ''){
+        x.style.backgroundColor = "#ffa7a7";
+        x.style.border = "1px solid black";
+      }
+    }
+  }
+
   calculateMacros(){
+    var weight = document.getElementById("weightInput").value;
+    var height = document.getElementById("heightInput").value;
+    var age = document.getElementById("ageInput").value
+    var sex = document.getElementById("sexInput").value;
+    if(weight === '' || height === '' || age === '' || sex === '') {
+      this.error();
+      return;
+    }
     this.setState({loading: true});
+    console.log(document.getElementById("weightInput").value);
     const data = [
       parseInt(document.getElementById("weightInput").value),
       parseInt(document.getElementById("heightInput").value),
@@ -85,7 +49,7 @@ class NonLogonBioForm extends Component{
     ]
     console.log(data);
 
-    var macroArray = MacroCalculator("y");
+    var macroArray = MacroCalculator(data);
     this.setState({macros: macroArray}, () => {
         this.setState({loading: false});
     });
@@ -101,34 +65,13 @@ class NonLogonBioForm extends Component{
     return (
       <div id = "NLBioFormContainer">
         <form>
-        <div id = "currentWeight">
-            <p className = "InputLabel">Please enter your current weight:</p>
-            <input type = "text" id = "weightInput" name = "weight" className = "textInput"/>
-            <p> TODO: KG / LBS </p>
-        </div>
-          <div id = "currentWeight">
-            <p className = "InputLabel">Select your height:</p>
-            <div className = "heightSlider">
-              <Slider
-              size="medium"
-              min ={58}
-              max = {72}
-              defaultValue={70}
-              aria-label="Small"
-              valueLabelDisplay="off"
-              step = {null}
-              marks = {heightArray}
-              id = "heightInput"
-              />
-            </div>
-          </div>
-          <div id = "currentAge">
-              <p className = "InputLabel">Please enter your current age:</p>
-              <input type = "text" id = "ageInput" name = "age" className = "textInput"/>
-          </div>
+          <TextInput type = "weight" />
+          <TextInput type = "height" />
+          <TextInput type = "age" />
           <div id = "sex">
             <p className = "InputLabel">Please enter your sex:</p>
             <select name = "sex" id = "sexInput" className = "textInput">
+              <option value = ""></option>
               <option value = "M">Male</option>
               <option value = "F">Female</option>
             </select>
