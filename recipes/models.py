@@ -25,9 +25,7 @@ class Recipe(models.Model):
     recipe_type = models.CharField(
         name="recipe_type", choices=type_choices, max_length=2, null=True
     )
-    description = models.CharField(
-        name="description", max_length=500, null=True
-    )
+    description = models.CharField(name="description", max_length=500, null=True)
     create_date = models.DateTimeField(name="create_date", default=now)
     modify_date = models.DateTimeField(name="modify_date", default=now)
 
@@ -58,7 +56,7 @@ class Ingredient(models.Model):
     fat = models.SmallIntegerField(name="fat")
     protein = models.SmallIntegerField(name="protein")
     units = models.CharField(
-        name="units", 
+        name="units",
         choices=UNIT_CHOICES,
         max_length=3,
     )
