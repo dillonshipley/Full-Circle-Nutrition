@@ -58,6 +58,11 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "simple",
         },
+        "recipes_test": {
+            "class": "logging.FileHandler",
+            "filename": "logs/test.log",
+            "formatter": "simple",
+        },
         "recipes": {
             "class": "logging.FileHandler",
             "filename": "logs/recipes.log",
@@ -71,6 +76,7 @@ LOGGING = {
     },
     "loggers": {
         "recipes": {"handlers": ["recipes"], "level": "DEBUG", "propagate": True},
+        "test": {"handlers": ["recipes_test"], "level": "DEBUG", "propagate": True},
         "migration_logs": {
             "handlers": ["migrations"],
             "level": "DEBUG",
