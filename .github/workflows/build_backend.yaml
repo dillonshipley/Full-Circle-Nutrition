@@ -44,7 +44,7 @@ jobs:
         env:
           DEBUG: "0"
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USER: postgres
+          DB_PASSWORD: postgres
         run: |
           python manage.py test
