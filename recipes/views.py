@@ -3,8 +3,10 @@ from django.http import JsonResponse
 from django.shortcuts import render
 import logging
 
+
 def index(request) -> JsonResponse:
     return JsonResponse(data={"response": "Thanks for hitting the recipes api index!"})
+
 
 def health() -> JsonResponse:
     response = dict()
