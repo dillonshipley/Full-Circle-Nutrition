@@ -21,13 +21,9 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 
-schema_view = get_schema_view(openapi.Info(
-    title="Macros recipe api",
-    default_version="0.1.0"
-))
+schema_view = get_schema_view(
+    openapi.Info(title="Macros recipe api", default_version="0.1.0")
+)
 
 
-urlpatterns = [
-    path("docs/", schema_view.with_ui()),
-    path("", include("recipes.urls"))
-]
+urlpatterns = [path("docs/", schema_view.with_ui()), path("", include("recipes.urls"))]
