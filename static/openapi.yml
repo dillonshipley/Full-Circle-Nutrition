@@ -24,6 +24,67 @@ servers:
 
 components:
   schemas:
+
+    HealthResponse:
+      description: Response body for health endpoint
+      type: object
+      properties:
+        services:
+          description: Container for all queried services
+          type: object
+          properties:
+            macros_back_end:
+              description: Back end status
+              type: object
+              properties:
+                status:
+                  description: Response status from the service
+                  type: string
+                  enum: [UP, DOWN]
+                timestamp:
+                  description: Response timestamp
+                  type: number
+                uptime:
+                  description: Uptime of application
+                  type: number
+                message:
+                  description: Response from the application
+                  type: string
+            macros_front_end:
+              description: Front end status
+              type: object
+              properties:
+                status:
+                  description: Response status from the service
+                  type: string
+                  enum: [ UP, DOWN ]
+                timestamp:
+                  description: Response timestamp
+                  type: number
+                uptime:
+                  description: Uptime of service
+                  type: number
+                message:
+                  description: Response from the service
+                  type: string
+            macros_db:
+              description: Backend status
+              type: object
+              properties:
+                status:
+                  description: Response status from the service
+                  type: string
+                  enum: [ UP, DOWN ]
+                timestamp:
+                  description: Response timestamp
+                  type: number
+                uptime:
+                  description: Uptime of service
+                  type: number
+                message:
+                  description: Response from the service
+                  type: string
+
     Recipe:
       description: Request body for creating a new recipe object
       type: object
@@ -367,4 +428,4 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HealthReponse'
+                $ref: '#/components/schemas/HealthResponse'

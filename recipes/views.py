@@ -5,24 +5,20 @@ import time
 import requests
 
 import environ
-import logging
 
 # Initialize environment variables
 env = environ.Env()
 environ.Env.read_env()
 
-# Initialize logger
-logger = logging.getLogger("")
-
 
 def index(request) -> JsonResponse:
 	"""
-	Return a response that describes the status of the application, and other related services
+	Return a generic response
 
 	Returns
 	--------
 	JsonResponse
-		Health response describing status of the application
+		Generic response
 	"""
 	return JsonResponse(data={"response": "Thanks for hitting the recipes api index!"})
 
@@ -36,21 +32,21 @@ def health(request) -> JsonResponse:
 	JsonResponse
 		Health response describing status of the application
 	"""
-	response = dict()
+	response_content = dict()
 
 	# Add information about the current application
-	response.setdefault(
+	response_content.setdefault(
 		"macros_back_end",
 		{
-			"status": "DOWN",
+			"status": "UP",
 			"timestamp": time.perf_counter(),
-			"uptime": f"{time.perf_counter() - START_TIME}",
+			"uptime": time.perf_counter() - START_TIME,
 			"message": "Backend service running",
 		},
 	)
 
 	# TODO Ping the database to see if its up
-	response.setdefault(
+	response_content.setdefault(
 		"macros_db",
 		{
 			"status": "DOWN",
@@ -63,7 +59,7 @@ def health(request) -> JsonResponse:
 	try:
 		res = requests.get(env("FRONT_END_URL"), timeout=0.1)
 		# Got a response from the front end, add field to response noting the service is up
-		response.setdefault(
+		response_content.setdefault(
 			"macros_front_end",
 			{
 				"status": "UP",
@@ -72,7 +68,7 @@ def health(request) -> JsonResponse:
 		)
 	except requests.exceptions.ConnectionError:
 		# No response from the front end, add field to response noting the service is down
-		response.setdefault(
+		response_content.setdefault(
 			"macros_front_end",
 			{
 				"status": "DOWN",
@@ -81,4 +77,5 @@ def health(request) -> JsonResponse:
 			},
 		)
 
+	response = {'services': response_content}
 	return JsonResponse(data=response)
