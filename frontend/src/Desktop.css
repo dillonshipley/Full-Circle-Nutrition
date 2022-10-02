@@ -124,6 +124,7 @@
   margin-left: 50px;
   margin-bottom: 25px;
 
+  display: inline-block;
 
   border-radius: 2px;
   border: 2px solid lightblue;
@@ -170,7 +171,9 @@
   text-align: left;
   display: grid;
   margin-right: auto;
-  margin-left: 0;
+  margin-left: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 .heightSlider {
   width: 40vw;
@@ -189,6 +192,29 @@
 }
 .completed{
   background-color: var(--green-8);
+}
+.selectorContainer{
+  margin-left: 25px;
+  
+  width: 105px;
+  display: inline-grid;
+
+  grid-template-columns: 50px 50px;
+  border-radius: 5px;
+
+  border: 3px solid #444444;
+}
+.selectorOption{  
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: #dddddd;
+
+  font-weight: 700px;
+
+  border-left: 2px solid #444444;
+  border-right: 2px solid #444444;
+  
 }
 
 /* --- SECTION 4: SCHEDULE INFO --- */

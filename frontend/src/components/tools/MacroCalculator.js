@@ -1,7 +1,7 @@
-const fat = 9;
-const protein = 4;
-const carb = 4;
-const alc = 7;
+const fatCals = 9;
+const proteinCals = 4;
+const carbCals = 4;
+const alcCals = 7;
 
 const studyURL = "https://pubmed.ncbi.nlm.nih.gov/2305711/";
 
@@ -27,7 +27,23 @@ function MacroCalculator(props) {
 
       console.log("Resting Energy Expenditure: " + REE);
 
+       var TDEE = REE * activity;
 
+       console.log("TDEE: " + TDEE);
+
+       var protein = weight;
+       var calsFromProtein = 4 * weight;
+
+       var carbRatio = 45;
+       var fatRatio = 25;
+
+       var calsFromCarbs = (TDEE - calsFromProtein) / 100 * carbRatio;
+       var calsFromFats = TDEE - calsFromProtein - calsFromCarbs;
+
+      var carbs = calsFromCarbs / carbCals;
+      var fats = calsFromFats / fatCals;
+       
+      console.log("protein: " + protein + " fats: " + fats + " carbs: " + carbs);
 
       return "x";
 }

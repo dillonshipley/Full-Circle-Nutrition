@@ -16,8 +16,8 @@ class FormController extends Component {
 
   constructor(props){
     super(props);
-    const progess = ["logon"]
-    this.state = {
+    const progess = ["logon"];
+    this.state = JSON.parse(localStorage.getItem('formState')) || {
       logon: false,
       recipe_complete: true, 
       step: 1
@@ -33,19 +33,19 @@ class FormController extends Component {
     document.getElementById("PB" + current).classList.remove("inProgress");
     document.getElementById("PB" + current).classList.add("completed");
     this.setState({step: current + 1});
+    localStorage.setItem('formState', JSON.stringify(this.state));
     document.getElementById("PB" + (current + 1)).classList.add("inProgress");
   }
 
-  display(){
-    if(this.state.step === 1)
-      return <BioForm logon = {this.state.logon} back = {() => this.advance()}/>
-    else if(this.state.step === 2)
-      return <ScheduleInfo schedule_info = "x" />
-    else if(this.state.step === 3)
-      return <Results bio_info = "X" schedule_info = "y" />
-
-    //TODO --- include preferences bit
-    
+  display(){  
+    switch(this.state.step){
+      case 1:
+        return <BioForm logon = {this.state.logon} back = {() => this.advance()}/>;
+      case 2:
+        return <ScheduleInfo schedule_info = "x" />;
+      case 3:
+        return <Results bio_info = "X" schedule_info = "y" />
+    }
   }
 
   render(){
