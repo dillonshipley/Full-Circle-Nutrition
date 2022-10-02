@@ -105,6 +105,19 @@ class NonLogonBioForm extends Component{
               <option value = {1.9}>Very Active</option>
             </select>
           </div>
+          <div id = "goal">
+            <p className = "InputLabel">Please enter your goal:</p>
+            <select name = "activity" id = "activityInput" className = "textInput">
+              <option value = ""></option>
+              <option value = "rloss">Rapid Loss</option>
+              <option value = "mloss">Moderate Loss</option>
+              <option value = "sloss">Slight Loss</option>
+              <option value = "neutral">Neutral</option>
+              <option value = "sgain">Slight Gain</option>
+              <option value = "mgain">Moderate Gain</option>
+              <option value = "rgain">Rapid Gain</option>
+            </select>
+          </div>
         </form>
         <button className = "SaveButton" onClick = {() => this.calculateMacros()}>Save</button>
 
