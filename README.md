@@ -18,7 +18,7 @@ Macros Application
 
 `python3 manage.py runserver`
 
-This assumes that you have downloaded all required dependancies. See the [back end README](macros-backend/README.md) for more instructions.
+This assumes that you have downloaded all required dependencies. See the [back end README](macros_backend/README.md) for more instructions.
 
 [API Docs](https://dillonshipley.github.io/macros/)
 

@@ -26,7 +26,7 @@ Macros Backend
 
 If it is your first time running the app locally, create a .env file in the macros-backend directory
 ```bash
-touch macros-backend/.env
+touch macros_backend/.env
 ```
 There is a `dist.env` file that has the keys already filled out, the values can be found in the GitHub secrets page. *DO NOT* fill in the values into the `dist.env` file, this file is tracked by version control, use the `.env` file instead.
 

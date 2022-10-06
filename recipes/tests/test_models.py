@@ -1,12 +1,12 @@
-from django.test import TestCase
+import logging
+import time
+
 from django.core.exceptions import ValidationError
+from django.test import TestCase
+
 from recipes.models import User
 
-import time
-import logging
-
 log = logging.getLogger("test")
-
 
 
 class RecipeTests(TestCase):

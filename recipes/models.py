@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils.timezone import now
 
@@ -16,7 +18,7 @@ class Recipe(models.Model):
 		null=False,
 		unique=True,
 		editable=False,
-		default="10000000-0000-0000-0000-000000000000",
+		default=uuid.uuid4(),
 	)
 	name = models.CharField(name="name", max_length=80, null=False, unique=True)
 	creator = models.CharField(name="creator", max_length=80, null=True)
@@ -51,7 +53,7 @@ class Ingredient(models.Model):
 		primary_key=True,
 		unique=True,
 		editable=False,
-		default="10000000-0000-0000-0000-000000000000",
+		default=uuid.uuid4(),
 	)
 	name = models.CharField(name="name", max_length=80, null=False, unique=True)
 	vegetarian = models.BinaryField(name="vegetarian", default=False)
@@ -91,7 +93,7 @@ class User(models.Model):
 		null=False,
 		unique=True,
 		editable=False,
-		default="10000000-0000-0000-0000-000000000000",
+		default=uuid.uuid4(),
 	)
 	user_name = models.CharField(name="user_name", max_length=25, unique=True)
 	age = models.IntegerField(name="age", null=False, default=25)

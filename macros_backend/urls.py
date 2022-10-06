@@ -1,4 +1,4 @@
-"""macros-backend URL Configuration
+"""macros_backend URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -16,14 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-#   Swagger generator code
+#   Swagger generator dependancies
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-
 schema_view = get_schema_view(
-    openapi.Info(title="Macros recipe api", default_version="0.1.0")
+	openapi.Info(title="Macros recipe api", default_version="0.1.0")
 )
-
 
 urlpatterns = [path("docs/", schema_view.with_ui()), path("", include("recipes.urls"))]
