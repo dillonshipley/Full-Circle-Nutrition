@@ -3,7 +3,7 @@ from time import time
 import environ
 import requests
 from django.http import JsonResponse
-from recipes.models import User
+from users.models import User
 
 import frontend
 import macros_backend
