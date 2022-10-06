@@ -73,6 +73,16 @@ LOGGING = {
 			"filename": "logs/recipes.log",
 			"formatter": "simple",
 		},
+		"users": {
+			"class": "logging.FileHandler",
+			"filename": "logs/users.log",
+			"formatter": "simple",
+		},
+		"ingredients": {
+			"class": "logging.FileHandler",
+			"filename": "logs/ingredients.log",
+			"formatter": "simple",
+		},
 		"migrations": {
 			"class": "logging.FileHandler",
 			"filename": "logs/migrations.log",
@@ -81,6 +91,8 @@ LOGGING = {
 	},
 	"loggers": {
 		"recipes": {"handlers": ["recipes"], "level": "DEBUG", "propagate": True},
+		"users": {"handlers": ["users"], "level": "DEBUG", "propagate": True},
+		"ingredients": {"handlers": ["ingredients"], "level": "DEBUG", "propagate": True},
 		"test": {"handlers": ["recipes_test"], "level": "DEBUG", "propagate": True},
 		"recipe_admin": {
 			"handlers": ["recipes_admin"],
@@ -121,6 +133,8 @@ INSTALLED_APPS = [
 	"django.contrib.staticfiles",
 	"drf_yasg",
 	"recipes",
+	"users",
+	"ingredients"
 ]
 
 MIDDLEWARE = [
