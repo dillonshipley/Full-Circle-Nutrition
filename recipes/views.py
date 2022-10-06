@@ -1,10 +1,12 @@
-from django.http import JsonResponse
-from manage import START_TIME
-
-import time
-import requests
+from time import time
 
 import environ
+import requests
+from django.http import JsonResponse
+from recipes.models import User
+
+import frontend
+import macros_backend
 
 # Initialize environment variables
 env = environ.Env()
@@ -12,25 +14,23 @@ environ.Env.read_env()
 
 
 def index(request) -> JsonResponse:
-	"""
-	Return a generic response
+	"""Return a generic response
 
 	Returns
 	--------
 	JsonResponse
 		Generic response
 	"""
-	return JsonResponse(data={"response": "Thanks for hitting the recipes api index!"})
+	return JsonResponse(
+		data={"response": "Thanks for hitting the recipes api index!"}
+	)
 
 
 def health(request) -> JsonResponse:
-	"""
-	Return a response that describes the status of the application, and other related services
+	"""Return a response that describes the status of the application, and other related services
 
 	Returns
-	--------
-	JsonResponse
-		Health response describing status of the application
+		JsonResponse: Health response describing status of the application
 	"""
 	response_content = dict()
 
@@ -39,8 +39,9 @@ def health(request) -> JsonResponse:
 		"macros_back_end",
 		{
 			"status": "UP",
-			"timestamp": time.perf_counter(),
-			"uptime": time.perf_counter() - START_TIME,
+			"version": macros_backend.VERSION,
+			"timestamp": time(),
+			"uptime": time() - macros_backend.START_TIME,
 			"message": "Backend service running",
 		},
 	)
@@ -50,7 +51,8 @@ def health(request) -> JsonResponse:
 		"macros_db",
 		{
 			"status": "DOWN",
-			"timestamp": time.perf_counter(),
+			"version": macros_backend.VERSION,
+			"timestamp": time(),
 			"message": "No response from the database. Has the service been started? Is the cluster active?",
 		},
 	)
@@ -63,7 +65,8 @@ def health(request) -> JsonResponse:
 			"macros_front_end",
 			{
 				"status": "UP",
-				"timestamp": time.perf_counter(),
+				"version": frontend.VERSION,
+				"timestamp": time(),
 			},
 		)
 	except requests.exceptions.ConnectionError:
@@ -72,10 +75,47 @@ def health(request) -> JsonResponse:
 			"macros_front_end",
 			{
 				"status": "DOWN",
-				"timestamp": time.perf_counter(),
+				"version": frontend.VERSION,
+				"timestamp": time(),
 				"message": "No response from the front end. Has the service been started?",
 			},
 		)
 
-	response = {'services': response_content}
+	response = {"services": response_content}
 	return JsonResponse(data=response)
+
+
+"""
+Request methods for CRUD operations on the User model
+"""
+
+
+def create_user(request) -> JsonResponse:
+	"""Create user and persist it to the database
+
+	Args:
+		request: Request containing the new user's data
+
+	Returns:
+		JsonResponse:
+			201:
+			400:
+			404:
+
+	"""
+	User.c
+	return JsonResponse(data={})
+
+
+def get_user_by_id(request) -> JsonResponse:
+	"""Retrieve user by the user ID
+
+	Args:
+		request: Request for the User's data.
+
+	Returns:
+		JsonResponse:
+	"""
+
+	user = User.get_next_in_order()
+	return JsonResponse(data={})
