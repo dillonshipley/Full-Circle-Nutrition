@@ -46,6 +46,10 @@ LOGGING = {
             "format": "{levelname} [{asctime}] | {message}",
             "style": "{",
         },
+        "test": {
+            "format": "{levelname} [{asctime}] | Filename: {module} Test method: {funcName} Output: {message}",
+            "style": "{",
+        },
     },
     "filters": {
         "require_debug_true": {
@@ -57,10 +61,10 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "simple",
         },
-        "recipes_test": {
+        "test": {
             "class": "logging.FileHandler",
             "filename": "logs/test.log",
-            "formatter": "simple",
+            "formatter": "test",
         },
         "recipes_admin": {
             "class": "logging.FileHandler",
@@ -96,7 +100,7 @@ LOGGING = {
             "level": "DEBUG",
             "propagate": True,
         },
-        "test": {"handlers": ["recipes_test"], "level": "DEBUG", "propagate": True},
+        "test": {"handlers": ["test"], "level": "DEBUG", "propagate": True},
         "recipe_admin": {
             "handlers": ["recipes_admin"],
             "level": "DEBUG",

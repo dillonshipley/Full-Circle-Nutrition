@@ -17,7 +17,7 @@ def index(request) -> JsonResponse:
     """Return a generic response
 
     Returns
-                    JsonResponse: Generic response
+        JsonResponse: Generic response
     """
     return JsonResponse(data={"response": "Thanks for hitting the recipes api index!"})
 
@@ -26,7 +26,7 @@ def health(request) -> JsonResponse:
     """Return a response that describes the status of the application, and other related services
 
     Returns
-                    JsonResponse: Health response describing status of the application
+        JsonResponse: Health response describing status of the application
     """
     response_content = dict()
 

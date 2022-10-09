@@ -2,7 +2,6 @@ import uuid
 
 from django.db import models
 from django.utils.timezone import now
-from rest_framework import serializers
 
 
 class UserManager(models.Manager):
@@ -23,6 +22,7 @@ class User(models.Model):
 
     user_id = models.UUIDField(
         name="user_id",
+        verbose_name="user model unique identifier",
         max_length=36,
         primary_key=True,
         null=False,
@@ -48,6 +48,13 @@ class User(models.Model):
     modify_date = models.DateTimeField(name="modify_date", default=now)
 
     objects = UserManager()
+
+    @property
+    def id(self) -> uuid:
+        return self.user_id
+
+    def describe(self) -> str:
+        pass
 
     def __str__(self) -> str:
         return f"User({self.user_name}): {self.user_id}"
