@@ -42,7 +42,7 @@ jobs:
 
       - name: Run tests
         env:
-          DEBUG: "0"
+          DEBUG_MODE: "0"
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           DB_USER: postgres
           DB_PASSWORD: postgres
