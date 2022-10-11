@@ -1,4 +1,5 @@
 import logging
+from uuid import uuid4
 
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
@@ -18,13 +19,15 @@ def create_user(request) -> JsonResponse:
 	Returns:
 		JsonResponse:
 	"""
+	# TODO Post user method
 	logger.info(f"{request.body}")
 	return JsonResponse(status=201, data={})
 
 
-@api_view(["GET"])
-def get_user_by_id(request) -> JsonResponse:
-	"""Retrieve a user from the database using the user_id as a key
+@api_view(["GET", "POST", "PATCH"])
+def user_interactions_by_id(request) -> JsonResponse:
+	"""Handles interactions against the user object using the user_id as a key.
+	Uses the request body to 
 
 	Args:
 		request (django.http.request): HTTP request body
@@ -32,33 +35,33 @@ def get_user_by_id(request) -> JsonResponse:
 	Returns:
 		JsonResponse: Reponse containing the queried user information
 	"""
+	# TODO Check that the user exists before trying to send the request further
+	logger.info(f"{request.body}")
+
+	user_id = uuid4()
+
+	if request.GET:
+		return get_user_by_id(user_id=user_id) 
+
+	if request.PATCH:
+		# TODO Patch user by id method
+		pass		
+
+	if request.DELETE:
+		# TODO Delete user by id method
+		pass
+
 	logger.info(f"{request.body}")
 	return JsonResponse(data={})
 
-
-@api_view(["PATCH"])
-def patch_user_by_id(request) -> JsonResponse:
-	"""_summary_
+def get_user_by_id(user_id: uuid4) -> JsonResponse:
+	"""Return a user's data 
 
 	Args:
-		request (django.http.request): _description_
+		request (uuid4): _description_
 
 	Returns:
 		JsonResponse: _description_
 	"""
-	logger.info(f"{request.body}")
-
-
-@api_view(["DELETE"])
-def delete_user_by_id(request) -> JsonResponse:
-	"""_summary_
-
-	Args:
-		request (django.http.request): _description_
-
-	Returns:
-		JsonResponse: _description_
-	"""
-
-	logger.info(f"{request.body}")
+	result = User.objects.get(pk=user_id)
 	return JsonResponse(data={})
