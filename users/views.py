@@ -3,20 +3,24 @@ import logging
 from uuid import uuid4
 
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 from users.models import User
 
 logger = logging.getLogger("users")
 
-
+# TODO Set up CSRF tokens 
+@csrf_exempt
+@require_http_methods(['POST'])
 def create_user(request) -> JsonResponse:
     """Create user and persist it to the database
 
     Args:
-            request(django.http.request): Request containing the new user's data
+        request(django.http.request): Request containing the new user's data
 
-    Returns:
-            JsonResponse:
+    Returnsuser_id:
+        JsonResponse:
     """
     # TODO Post user method
     body = json.loads(request.body.decode("utf-8"))
@@ -31,20 +35,20 @@ def create_user(request) -> JsonResponse:
     return JsonResponse(status=201, data={"status": "SUCCESS"})
 
 
+@csrf_exempt
+@require_http_methods(["GET", "PATCH", "DELETE"])
 def user_interactions_by_id(request, user_id) -> JsonResponse:
     """Handles interactions against the user object using the user_id as a key.
     Uses the request body to
 
     Args:
-            request (django.http.request): HTTP request body
+        request (django.http.request): HTTP request body
 
     Returns:
-            JsonResponse: Reponse containing the queried user information
+        JsonResponse: Reponse containing the queried user information
     """
     # TODO Check that the user exists before trying to send the request further
     logger.info(f"{request.path}")
-
-    user_id = uuid4()
 
     if request.method == "GET":
         return get_user_by_id(user_id=user_id)
@@ -71,9 +75,8 @@ def get_user_by_id(user_id: uuid4) -> JsonResponse:
         JsonResponse: _description_
     """
     try:
-        print(f"{user_id}")
-        result = User.objects.get(pk=user_id)
-        return JsonResponse(status=200, data={})
+        result = User.objects.get_user_by_id(user_id=user_id)
+        return JsonResponse(status=200, data={"result": result.to_dict()})
     except User.DoesNotExist:
         return JsonResponse(status=404, data={'status': "DOES NOT EXIST"})
 

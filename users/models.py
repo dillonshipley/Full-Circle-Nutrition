@@ -56,5 +56,23 @@ class User(models.Model):
     def describe(self) -> str:
         pass
 
+    def to_dict(self) -> dict:
+        """Serialize the User model into a JSON(ish) response. Replaces the default Django serializer since it can't
+        handle datetimes properly
+
+        Returns:
+            dict: Serialized User object
+        """
+        return {
+            "user_id": self.user_id,
+            "user_name": self.user_name,
+            "age": self.age,
+            "height": float(self.height),
+            "weight": float(self.weight),
+            "goal": self.get_goal_display(),
+            "create_date": self.create_date,
+            "modify_date": self.modify_date,
+        }
+
     def __str__(self) -> str:
         return f"User({self.user_name}): {self.user_id}"
