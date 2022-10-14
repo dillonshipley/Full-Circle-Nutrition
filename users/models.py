@@ -53,10 +53,7 @@ class User(models.Model):
     def id(self) -> uuid:
         return self.user_id
 
-    def describe(self) -> str:
-        pass
-
-    def to_dict(self) -> dict:
+    def serialize(self) -> dict:
         """Serialize the User model into a JSON(ish) response. Replaces the default Django serializer since it can't
         handle datetimes properly
 

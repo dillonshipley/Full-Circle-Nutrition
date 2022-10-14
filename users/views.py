@@ -10,19 +10,17 @@ from users.models import User
 
 logger = logging.getLogger("users")
 
-# TODO Set up CSRF tokens 
+# TODO Set up CSRF tokens
 @csrf_exempt
-@require_http_methods(['POST'])
+@require_http_methods(["POST"])
 def create_user(request) -> JsonResponse:
     """Create user and persist it to the database
 
     Args:
         request(django.http.request): Request containing the new user's data
-
     Returnsuser_id:
         JsonResponse:
     """
-    # TODO Post user method
     body = json.loads(request.body.decode("utf-8"))
     new_user = User(
         user_name=body["user_name"],
@@ -43,13 +41,9 @@ def user_interactions_by_id(request, user_id) -> JsonResponse:
 
     Args:
         request (django.http.request): HTTP request body
-
     Returns:
         JsonResponse: Reponse containing the queried user information
     """
-    # TODO Check that the user exists before trying to send the request further
-    logger.info(f"{request.path}")
-
     if request.method == "GET":
         return get_user_by_id(user_id=user_id)
 
@@ -69,15 +63,45 @@ def get_user_by_id(user_id: uuid4) -> JsonResponse:
     """Return a user's data
 
     Args:
-        user_id (uuid4): _description_
+        user_id (uuid4): UUID of the user that should be retrieved from the database
+    Returns:
+        JsonResponse: Serialized user object
+    """
+    try:
+        result = User.objects.get_user_by_id(user_id=user_id)
+        return JsonResponse(
+            status=200, data={"result": "SUCCESS", "user": result.serialize()}
+        )
+    except User.DoesNotExist as e:
+        return JsonResponse(
+            status=404, data={"status": "FAILURE", "user_id": user_id, "reason": e}
+        )
+
+
+def patch_user_by_id(user_id: uuid4) -> JsonResponse:
+    """_summary_
+
+    Args:
+        user_id (uuid): _description_
 
     Returns:
         JsonResponse: _description_
     """
-    try:
-        result = User.objects.get_user_by_id(user_id=user_id)
-        return JsonResponse(status=200, data={"result": result.to_dict()})
-    except User.DoesNotExist:
-        return JsonResponse(status=404, data={'status': "DOES NOT EXIST"})
+    pass
 
-    
+
+def delete_user_by_id(user_id: uuid4) -> JsonResponse:
+    """Delete a user from the database using the user id as a key
+
+    Args:
+        user_id (uuid4): _description_
+    Returns:
+        JsonResponse: _description_
+    """
+    try:
+        result = User.objects.filter(user_id=user_id).delete()
+        return JsonResponse(status=204, data={"result": "SUCCESS", "user_id": user_id, 'data': result})
+    except User.DoesNotExist as e:
+        return JsonResponse(
+            status=404, data={"result": "FAILURE", "user_ud": user_id, "reason": e}
+        )
