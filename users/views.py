@@ -10,6 +10,7 @@ from users.models import User
 
 logger = logging.getLogger("users")
 
+
 # TODO Set up CSRF tokens
 @csrf_exempt
 @require_http_methods(["POST"])
