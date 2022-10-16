@@ -3,8 +3,7 @@ import time
 
 from django.test import RequestFactory, TestCase
 from django.test import Client
-from django.utils import timezone
-from users.models import User
+from defaults import UserDefaults
 
 log = logging.getLogger("test")
 
@@ -16,10 +15,17 @@ class UserViewTests(TestCase):
         return super().setUp()
 
     def test_create_user_method(self):
-        response = self.client.post('')
+        start_time = time.perf_counter()
+        response = self.client.post('', data=UserDefaults.USER_POST_REQUEST)
+
+        elapsed_time = time.perf_counter() - start_time
+        log.info(f"[+] Completed in {elapsed_time:.5f} seconds")
 
     def test_get_by_id(self):  
-        response = self.client.get(f"/v1/users/{}")
+        start_time = time.perf_counter()
+        response = self.client.get(f"/v1/users/")
+        elapsed_time = time.perf_counter() - start_time
+        log.info(f"[+] Completed in {elapsed_time:.5f} seconds")
 
     def test_patch_by_id(self):
         pass    

@@ -5,6 +5,26 @@ from django.utils.timezone import now
 
 
 class UserManager(models.Manager):
+    def create_user(
+        self,
+        user_name: str,
+        age: int,
+        height: float,
+        weight: float,
+        body_fat: float,
+        goal: int,
+    ) -> uuid:
+        new_user = self.create(
+            user_name=user_name,
+            age=age,
+            height=height,
+            weight=weight,
+            body_fat=body_fat,
+            goal=goal,
+        ).clean().save()
+        
+        return new_user.user_id
+
     def user_count(self, keyword) -> int:
         return self.filter(user_id_icontain=keyword).count()
 

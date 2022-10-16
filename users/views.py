@@ -23,6 +23,7 @@ def create_user(request) -> JsonResponse:
         JsonResponse:
     """
     body = json.loads(request.body.decode("utf-8"))
+    
     new_user = User(
         user_name=body["user_name"],
         age=body["age"],
@@ -30,8 +31,8 @@ def create_user(request) -> JsonResponse:
         weight=body["weight"],
         body_fat=body["body_fat"],
         goal=body["goal"],
-    ).save()
-    return JsonResponse(status=201, data={"status": "SUCCESS"})
+    ).clean()
+    return JsonResponse(status=201, data={"status": "SUCCESS", "user_id": new_user.id})
 
 
 @csrf_exempt
@@ -101,7 +102,9 @@ def delete_user_by_id(user_id: uuid4) -> JsonResponse:
     """
     try:
         result = User.objects.filter(user_id=user_id).delete()
-        return JsonResponse(status=204, data={"result": "SUCCESS", "user_id": user_id, 'data': result})
+        return JsonResponse(
+            status=204, data={"result": "SUCCESS", "user_id": user_id, "data": result}
+        )
     except User.DoesNotExist as e:
         return JsonResponse(
             status=404, data={"result": "FAILURE", "user_ud": user_id, "reason": e}

@@ -11,14 +11,18 @@ class UserDefaults:
 
     USER_POST_SUCCESS_MESSAGE = {
         "result": "SUCCESS", 
-        "user_id": user_id, 
-        'data': result
+        "user_id": USER_ID, 
     }
 
     USER_POST_FAILURE_MESSAGE = {
-        
+       'result': "FAILURE" 
     }
 
     USER_POST_REQUEST = {
-
+        'user_name': USER_NAME,
+        'age': AGE,
+        "height": HEIGHT,
+        "weight": WEIGHT,
+        "body_fat": BODY_FAT,
+        'goal': GOAL
     }
