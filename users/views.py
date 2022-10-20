@@ -51,7 +51,7 @@ def user_interactions_by_id(request, user_id) -> JsonResponse:
 
     if request.method == "PATCH":
         # TODO Patch user by id method
-        pass
+        return patch_user_by_id(user_id=user_id, response=response)
 
     if request.method == "DELETE":
         # TODO Delete user by id method
