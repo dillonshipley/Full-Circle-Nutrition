@@ -1,6 +1,7 @@
 import uuid
 
 class UserDefaults:
+    BASE_URL = "/v0/users/"
     USER_ID = uuid.UUID('{f81ee084-9cef-49cc-a68c-51f17e548725}')
     USER_NAME = 'TESTUSER'
     AGE = 22
@@ -10,12 +11,12 @@ class UserDefaults:
     GOAL = 0
 
     USER_POST_SUCCESS_MESSAGE = {
-        "result": "SUCCESS", 
+        "status": "SUCCESS", 
         "user_id": USER_ID, 
     }
 
     USER_POST_FAILURE_MESSAGE = {
-       'result': "FAILURE" 
+       'status': "FAILURE" 
     }
 
     USER_POST_REQUEST = {

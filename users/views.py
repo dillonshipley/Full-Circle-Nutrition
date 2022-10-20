@@ -23,16 +23,16 @@ def create_user(request) -> JsonResponse:
         JsonResponse:
     """
     body = json.loads(request.body.decode("utf-8"))
-    
-    new_user = User(
+
+    new_user_id = User.objects.create_user(
         user_name=body["user_name"],
         age=body["age"],
         height=body["height"],
         weight=body["weight"],
         body_fat=body["body_fat"],
         goal=body["goal"],
-    ).clean()
-    return JsonResponse(status=201, data={"status": "SUCCESS", "user_id": new_user.id})
+    )
+    return JsonResponse(status=201, data={"status": "SUCCESS", "user_id": new_user_id})
 
 
 @csrf_exempt

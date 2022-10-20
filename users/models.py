@@ -14,6 +14,19 @@ class UserManager(models.Manager):
         body_fat: float,
         goal: int,
     ) -> uuid:
+        """Creates and validates new user entries to the database. Returns the UUID of the new user
+
+        Args:
+            user_name (str): _description_
+            age (int): _description_
+            height (float): _description_
+            weight (float): _description_
+            body_fat (float): _description_
+            goal (int): _description_
+
+        Returns:
+            uuid: _description_
+        """
         new_user = self.create(
             user_name=user_name,
             age=age,
@@ -21,9 +34,8 @@ class UserManager(models.Manager):
             weight=weight,
             body_fat=body_fat,
             goal=goal,
-        ).clean().save()
-        
-        return new_user.user_id
+        ).clean()
+        return self.last().user_id
 
     def user_count(self, keyword) -> int:
         return self.filter(user_id_icontain=keyword).count()
