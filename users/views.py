@@ -2,7 +2,7 @@ import json
 import logging
 from uuid import uuid4
 
-from django.http import JsonResponse
+from django.http import JsonResponse, request
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
@@ -50,15 +50,11 @@ def user_interactions_by_id(request, user_id) -> JsonResponse:
         return get_user_by_id(user_id=user_id)
 
     if request.method == "PATCH":
-        # TODO Patch user by id method
-        return patch_user_by_id(user_id=user_id, response=response)
+        return patch_user_by_id(user_id=user_id, request=request.body)
 
     if request.method == "DELETE":
         # TODO Delete user by id method
         pass
-
-    logger.info(f"{request.body}")
-    return JsonResponse(data={})
 
 
 def get_user_by_id(user_id: uuid4) -> JsonResponse:
@@ -80,16 +76,26 @@ def get_user_by_id(user_id: uuid4) -> JsonResponse:
         )
 
 
-def patch_user_by_id(user_id: uuid4) -> JsonResponse:
-    """_summary_
+def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
+    """Update a user using the user_id
 
     Args:
-        user_id (uuid): _description_
+        user_id (uuid4): The user who should be updated
+        request (request): Request body from the PATCH request
 
     Returns:
-        JsonResponse: _description_
+        JsonResponse: Response indicating the result of the operation
+            200: User was updated successfully
+            400: An error prevented the user from being updated
+            404: User could not be found
     """
-    pass
+    try:
+        result = User.objects.update_user_by_id()
+        return JsonResponse(status=200, data={"result": "SUCCESS", "user_id": user_id})
+    except User.DoesNotExist as e:
+        return JsonResponse(
+            status=404, data={"result": "FAILURE", "user_id": user_id, "reason": e}
+        )
 
 
 def delete_user_by_id(user_id: uuid4) -> JsonResponse:

@@ -37,8 +37,11 @@ class UserManager(models.Manager):
         ).clean()
         return self.last().user_id
 
-    def user_count(self, keyword) -> int:
-        return self.filter(user_id_icontain=keyword).count()
+    def update_user_by_id(self, user_id: uuid) -> None:
+        self.filter(user_id=user_id).update()
+
+    def delete_user_by_id(self, user_id: uuid) -> None:
+        self.delet
 
 
 class User(models.Model):
