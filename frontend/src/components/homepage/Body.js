@@ -45,9 +45,7 @@ class Body extends Component{
     changeDisplay(display){
       console.log("display: " + display);
       this.setState({display: display}, () => {
-        console.log(this.state.display);
         localStorage.setItem('navState', JSON.stringify(this.state));
-        console.log(JSON.parse(localStorage.getItem('navState')));
       });
     }
 
