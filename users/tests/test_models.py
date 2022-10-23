@@ -4,32 +4,22 @@ import time
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
+from users.tests.defaults import UserDefaults
 from users.models import User
 
 log = logging.getLogger("test")
 
 
 class UserTests(TestCase):
-    USER_DEFAULTS = {
-        "default_valid_user": {
-            "user_id": "10000000-0000-0000-0000-000000000000",
-            "user_name": "user",
-            "age": 1,
-            "height": 64.5,
-            "weight": 64.5,
-            "body_fat": 0.05,
-            "goal": "0",
-        },
-        "invalid_user_id": {
-            "user_id": "1",
-        },
-    }
 
     def setUp(self) -> None:
         return super().setUp()
 
     def test_create_valid_user_with_only_required_fields(self) -> None:
         start_time = time.perf_counter()
+        new_user = User(user_id=self.USER_DEFAULTS)
+        new_user.clean()
+        new_user.save()
         elapsed_time = time.perf_counter() - start_time
         log.info(f"[+] Completed in {elapsed_time:.3f} seconds")
 
@@ -37,7 +27,7 @@ class UserTests(TestCase):
         start_time = time.perf_counter()
 
         new_user = User(
-            user_id=self.USER_DEFAULTS["default_valid_user"]["user_id"],
+            user_id=UserDefaults["default_valid_user"]["user_id"],
             user_name=self.USER_DEFAULTS["default_valid_user"]["user_name"],
             age=self.USER_DEFAULTS["default_valid_user"]["age"],
             height=self.USER_DEFAULTS["default_valid_user"]["height"],
@@ -67,6 +57,7 @@ class UserTests(TestCase):
         )
 
         new_user.clean()
+        new_user.save()
 
         elapsed_time = time.perf_counter() - start_time
         log.info(f"{new_user}")

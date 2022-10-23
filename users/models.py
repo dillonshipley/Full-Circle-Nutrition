@@ -79,7 +79,7 @@ class User(models.Model):
     goal = models.CharField(
         name="goal", choices=goal_choices, max_length=2, null=False, default="0"
     )
-    create_date = models.DateTimeField(name="create_date", default=now)
+    create_date = models.DateTimeField(name="create_date", editable=False, default=now)
     modify_date = models.DateTimeField(name="modify_date", default=now)
 
     objects = UserManager()

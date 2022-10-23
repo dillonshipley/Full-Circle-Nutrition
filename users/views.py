@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from users.models import User
+from users.serializers import UserSerializer
 
 logger = logging.getLogger("users")
 
@@ -90,7 +91,10 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
             404: User could not be found
     """
     try:
-        result = User.objects.update_user_by_id()
+        user = User.objects.get(user_id=user_id)
+        validated_data = UserSerializer(user)
+        if not validated_data.is_valid():
+            return JsonResponse(status=400, data={"result": "FAILURE", "user_id": user_id, "reason": })
         return JsonResponse(status=200, data={"result": "SUCCESS", "user_id": user_id})
     except User.DoesNotExist as e:
         return JsonResponse(

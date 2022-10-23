@@ -1,9 +1,10 @@
-from rest_framework.serializers import ModelSerializer
+from os import set_inheritable
+from rest_framework import serializers
 
 from users.models import User
 
 
-class UserSerializer(ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
@@ -17,3 +18,5 @@ class UserSerializer(ModelSerializer):
             "create_date",
             "modify_date",
         )
+
+class PatchRequestSerializer
