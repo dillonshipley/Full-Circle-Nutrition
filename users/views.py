@@ -34,6 +34,20 @@ def get_user_by_id(request) -> JsonResponse:
     Returns:
             JsonResponse: Reponse containing the queried user information
     """
+<<<<<<< Updated upstream
+=======
+    try:
+        user = User.objects.get(user_id=user_id)
+        validated_data = UserSerializer(user)
+        if not validated_data.is_valid():
+            return JsonResponse(status=400, data={"result": "FAILURE", "user_id": user_id, "reason": "Invalid parameters"})
+        return JsonResponse(status=200, data={"result": "SUCCESS", "user_id": user_id})
+    except User.DoesNotExist as e:
+        return JsonResponse(
+            status=404, data={"result": "FAILURE", "user_id": user_id, "reason": e}
+        )
+
+>>>>>>> Stashed changes
 
     logger.info(f"{request.body}")
     return JsonResponse(data={})
