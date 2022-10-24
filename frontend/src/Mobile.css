@@ -10,14 +10,21 @@
       line-height: 40px;
     }
 
+    .cardSpacer {
+      margin-left: 10px;
+      width: 250px;
+      height: 4px;
+
+    }
+
     .homepageIcon {
         margin-left: 80;
         margin-right: auto;
         margin-top: 40px;
-      
+
         width: 160px;
-      
-        fill: var(--gradient-29) !important; 
+
+        fill: var(--gradient-29) !important;
       }
 
     #homePageCardContainer{
@@ -25,12 +32,12 @@
         margin-bottom: 10vh;
         margin-left: 4vw;
         margin-right: 4vw;
-      
+
         width: 72vw;
         height: 55vh;
-      
+
         display: grid;
         grid-template-rows: 50vh 50vh;
-      
+
       }
   }

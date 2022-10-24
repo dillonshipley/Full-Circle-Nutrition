@@ -1,26 +1,59 @@
 import React, { Component } from 'react';
 
-class ScheduleInfo extends Component{
-  render(){
+function Card(props){
     return (
-      <div className = "scheduleCardContainer">
-        <div className = "card" id = "standardScheduleCard">
-          <div className = "cardSpacer"></div>
-          <div className = "cardTitle">STANDARD</div>
-          <div className = "cardInfoText">3 meals, 1 snack. Like clockwork.</div>
-        </div>
-        <div className = "card" id = "templateScheduleCard">
-          <div className = "cardSpacer"></div>
-          <div className = "cardTitle">SOME REPEATS</div>
-          <div className = "cardInfoText">Build a template used over a few days. Customize the rest.</div>
-        </div>
-        <div className = "card" id = "funkyScheduleCard">
-        <div className = "cardSpacer"></div>
-          <div className = "cardTitle">100% CUSTOM</div>
-          <div className = "cardInfoText">So your life's chaotic, huh?</div>
-        </div>
+    <div className = "card scheduleCard" id = {"scheduleCard" + props.num} onClick = {props.onClick}>
+      <div className = "cardIcon">
+        //insert icon here
       </div>
-    );
+      <div>
+        <div className = "cardSpacer"></div>
+        <div className = "cardTitle">{props.title}</div>
+        <div className = "cardInfoText">{props.text}</div>
+      </div>
+    </div>
+  );
+}
+
+class ScheduleInfo extends Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      display: "start",
+      macros: props.macros
+    }
+  }
+
+  setScheduleType(type){
+    switch(type){
+      case 1:
+        this.state.meals = [14, 7, 7];
+        this.props.forward(this.state.meals);
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+    }
+    return;
+  }
+
+  render(){
+    switch(this.state.display){
+      case "start":
+        return (
+          <div className = "scheduleCardContainer">
+            <Card onClick = {(e) => this.setScheduleType(1)} title = "STANDARD" text = "3 meals, 1 snack. Like clockwork."/>
+            <Card onClick = {(e) => this.setScheduleType(2)} title = "SOME REPEATS" text = "Build a template used over a few days. Customize the rest."/>
+            <Card onClick = {(e) => this.setScheduleType(3)} title = "100% CUSTOM" text = "Every day is different-ish"/>
+          </div>
+        );
+      default:
+        break;
+    }
+
+
   }
 }
 

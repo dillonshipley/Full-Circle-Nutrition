@@ -70,6 +70,7 @@
 }
 .cardSpacer {
   margin-left: 2vw;
+  margin-bottom: 20px;
   width: 18vw;
   height: 4px;
 
@@ -109,7 +110,7 @@
 
   width: 10vw;
 
-  fill: var(--gradient-29) !important; 
+  fill: var(--gradient-29) !important;
 }
 
 /* --- SECTION 2: FORMS --- */
@@ -207,7 +208,7 @@
 }
 .selectorContainer{
   margin-left: 25px;
-  
+
   width: 105px;
   display: inline-grid;
 
@@ -216,17 +217,18 @@
 
   border: 3px solid #444444;
 }
-.selectorOption{  
+.selectorOption{
   height: 30px;
   line-height: 30px;
   text-align: center;
   background: #dddddd;
 
+  color: #222222;
   font-weight: 700px;
 
   border-left: 2px solid #444444;
   border-right: 2px solid #444444;
-  
+
 }
 
 .selected{
@@ -237,7 +239,7 @@
 .scheduleCardContainer {
   margin-top: 5vh;
   margin-left: 12.5vw;
-  
+
   display: grid;
   width: 75vw;
   grid-template-columns: 25vw 25vw 25vw;
@@ -249,6 +251,3 @@
   50% {color: var(--indigo-2);}
   100% {color: var(--indigo-1);}
 }
-
-
-

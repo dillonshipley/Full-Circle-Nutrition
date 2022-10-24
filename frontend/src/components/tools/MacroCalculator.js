@@ -1,3 +1,4 @@
+
 const fatCals = 9;
 const proteinCals = 4;
 const carbCals = 4;
@@ -9,16 +10,29 @@ function LBTOKG(lb){
   return lb * .453592;
 }
 
-function MacroCalculator(props) {
-      const weight = props[0];
-      const weightType = props[1];
-      const height = props[2];
-      const age = props[3];
-      const sex = props[4];
-      const activity = props[5];
-      const goal = props[6];
+function KGTOLB(kg){
+  return kg / .453592;
+}
 
-      console.log("GOT " + weightType);
+function INTOCM(inches){
+  return inches * 2.54;
+}
+
+function MacroCalculator(valueData, typeData) {
+      let weight = valueData[0];
+      const weightType = typeData[0];
+      let height = valueData[1];
+      const heightType = typeData[1];
+      const age = valueData[2];
+      const sex = valueData[3];
+      const activity = valueData[4];
+      const goal = valueData[5];
+
+      console.log(weightType);
+      if(weightType == "LB")
+        weight = LBTOKG(weight)
+      if(heightType === "IN")
+        height = INTOCM(height)
 
       //weight in kg
       //height in cm
@@ -29,11 +43,7 @@ function MacroCalculator(props) {
       else
         REE = REE - 161;
 
-      console.log("Resting Energy Expenditure: " + REE);
-
-      console.log("activity: " + activity);
-       var TDEE = REE * activity;
-
+       var TDEE = Math.round(REE * activity);
        console.log("TDEE: " + TDEE);
 
       switch(goal){
@@ -61,13 +71,13 @@ function MacroCalculator(props) {
 
       console.log("new TDEE: " + TDEE);
 
-       var protein = weight;
+       var protein = Math.round(KGTOLB(weight));
        var calsFromProtein = 4 * weight;
 
-       var carbRatio = 45;
-       var fatRatio = 25;
+       //ratio of carbs : remaining calories after protein
+       var carbRatio = .5;
 
-       var calsFromCarbs = (TDEE - calsFromProtein) / 100 * carbRatio;
+       var calsFromCarbs = Math.round((TDEE - calsFromProtein) * carbRatio);
        var calsFromFats = TDEE - calsFromProtein - calsFromCarbs;
 
       var carbs = calsFromCarbs / carbCals;
@@ -75,7 +85,7 @@ function MacroCalculator(props) {
 
       console.log("protein: " + protein + " fats: " + fats + " carbs: " + carbs);
 
-      return "x";
+      return [protein, fats, carbs, TDEE];
 }
 
 export default MacroCalculator

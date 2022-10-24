@@ -1,5 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import MacroCalculator from '../tools/MacroCalculator';
+import Selector from '../utilities/Selector'
 
 const sexOptions = [{value: '', text: ''}, {value: 'M', text: 'Male'}, {value:'F', text: 'Female'}];
 const activityOptions = [{value: '', text: ''}, {value: "1.2", text: "Sedentary"}, {value: "1.375", text: "Lightly Active"}, {value: "1.55", text: "Moderately Active"}, {value: "1.725", text: "Active"}, {value: "1.9", text: "Very Active"}];
@@ -14,31 +15,8 @@ const goalOptions = [
   {value:'rgain', text: 'Rapid Gain'}
 ];
 
-function Selector(props){
-  const [optionSelected, setOptionSelected] = useState("");
+const ids = ["weightInput", "heightInput", "ageInput", "sexInput", "activityInput", "goalInput"]
 
-  function setSelectedWrapper(value){
-    if(optionSelected != null)
-      document.getElementById(optionSelected).classList.remove("selected");
-    if(optionSelected = value + "Option"){
-      setOptionSelected = null;
-      return;
-    }
-    document.getElementById(value + "Option").classList.add("selected");
-    setOptionSelected(value + "Option");
-    props.setType({type: props.type + "Type", option: value})
-    console.log(value);
-    console.log(optionSelected);
-  }
-
-  return (
-    <div className = "selectorContainer">
-        {props.options?.map(option => (
-          <div id = {option + "Option"} className = "selectorOption" key = {option} onClick = {(e) => setSelectedWrapper(option)}>{option}</div>
-        ))}
-    </div>
-  );
-}
 
 function TextInput(props){
   if(props.options === null){
@@ -90,14 +68,14 @@ function Option(props){
   );
 }
 
-class NonLogonBioForm extends Component{
+class BioForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      data: props.data,
-
       macros: [],
-      loading: false
+      loading: false,
+      weightType: "LB",
+      heightType: "IN"
     }
   }
 
@@ -134,25 +112,30 @@ class NonLogonBioForm extends Component{
   }
 
   calculateMacros(){
-    var weight = [document.getElementById("weightInput").value, this.state.weightType];
-    var height = document.getElementById("heightInput").value;
-    var age = document.getElementById("ageInput").value
-    var sex = document.getElementById("sexInput").value;
-    var activity = document.getElementById("activityInput").value;
-    var goal = document.getElementById("goalInput").value;
-    if(weight[0] === '' || height === '' || age === '' || sex === '' || activity === '' || goal === '') {
-      this.error();
-      return;
+    const valueData = [];
+    for(let i = 0; i < ids.length; i++){
+      let element = document.getElementById(ids[i]);
+      if(element.value === ''){
+        this.error();
+        return;
+      } else {
+        if(isNaN(element.value))
+          valueData.push(element.value);
+        else
+          valueData.push(parseInt(element.value));
+      }
     }
-    this.setState({loading: true});
-    console.log(document.getElementById("weightInput").value);
-    const data = [parseInt(weight[0]), weight[1], parseInt(height), parseInt(age), sex, parseFloat(activity), goal]
 
-    var macroArray = MacroCalculator(data);
+    const typeData = [];
+    typeData.push(this.state.weightType);
+    typeData.push(this.state.heightType);
+
+    this.setState({loading: true});
+    var macroArray = MacroCalculator(valueData, typeData);
     this.setState({macros: macroArray}, () => {
         this.setState({loading: false});
     });
-    this.props.back();
+    this.props.forward(macroArray);
   }
 
   render(){
@@ -173,4 +156,4 @@ class NonLogonBioForm extends Component{
   }
 }
 
-export default NonLogonBioForm;
+export default BioForm;
