@@ -107,7 +107,6 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
         data={
             "result": "FAILURE",
             "user_id": user_id,
-            "reason": "Invalid parameters",
         },
     )
 
