@@ -1,15 +1,15 @@
 from django.urls import path
 
 import users
-from users.views import create_user, get_user_by_id
+from users.views import create_user, user_interactions_by_id
 
 API_VERSION = f"{users.API_VERSION}"
 
 urlpatterns = [
+    path(API_VERSION + "/users/", create_user, name="create_user"),
     path(
         API_VERSION + "/users/<uuid:user_id>/",
-        get_user_by_id,
-        name="get_by_id",
+        user_interactions_by_id,
+        name="user_interactions_by_id",
     ),
-    path(API_VERSION + "/users/", create_user),
 ]
