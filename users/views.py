@@ -110,7 +110,6 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
         },
     )
 
-
 def delete_user_by_id(user_id: uuid4) -> JsonResponse:
     """Delete a user from the database using the user id as a key
 
