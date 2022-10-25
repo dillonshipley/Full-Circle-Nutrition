@@ -1,8 +1,8 @@
 import uuid
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils.timezone import now
-
 
 class UserManager(models.Manager):
     def create_user(
@@ -27,7 +27,7 @@ class UserManager(models.Manager):
         Returns:
             uuid: _description_
         """
-        new_user = self.create(
+        self.create(
             user_name=user_name,
             age=age,
             height=height,
@@ -37,12 +37,19 @@ class UserManager(models.Manager):
         ).clean()
         return self.last().user_id
 
-    def update_user_by_id(self, user_id: uuid) -> None:
-        self.filter(user_id=user_id).update()
+    def get_user_by_id(self, user_id: uuid):    
+        try:
+            return self.get(user_id=user_id)
+        except ObjectDoesNotExist:
+            return None
 
-    def delete_user_by_id(self, user_id: uuid) -> None:
-        self.delet
-
+    def delete_user_by_id(self, user_id: uuid) -> bool:
+        try:
+            user_to_delete = self.get(user_id=user_id)
+            user_to_delete.delete()
+            return True
+        except ObjectDoesNotExist:
+            return False
 
 class User(models.Model):
     goal_choices = (

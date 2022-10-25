@@ -18,5 +18,3 @@ class UserSerializer(serializers.ModelSerializer):
             "create_date",
             "modify_date",
         )
-
-class PatchRequestSerializer

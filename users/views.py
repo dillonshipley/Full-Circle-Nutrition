@@ -1,15 +1,16 @@
+from datetime import datetime
 import json
 import logging
 from uuid import uuid4
 
-from django.http import JsonResponse, request
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from users.models import User
 from users.serializers import UserSerializer
 
-logger = logging.getLogger("users")
+log = logging.getLogger("users")
 
 
 # TODO Set up CSRF tokens
@@ -45,17 +46,18 @@ def user_interactions_by_id(request, user_id) -> JsonResponse:
     Args:
         request (django.http.request): HTTP request body
     Returns:
-        JsonResponse: Reponse containing the queried user information
+        JsonResponse: Reponse object from the completed request
     """
     if request.method == "GET":
         return get_user_by_id(user_id=user_id)
 
     if request.method == "PATCH":
-        return patch_user_by_id(user_id=user_id, request=request.body)
+        body = json.loads(request.body.decode("utf-8"))
+        return patch_user_by_id(user_id=user_id, request=body)
 
     if request.method == "DELETE":
         # TODO Delete user by id method
-        pass
+        return delete_user_by_id(user_id=user_id)
 
 
 def get_user_by_id(user_id: uuid4) -> JsonResponse:
@@ -65,16 +67,15 @@ def get_user_by_id(user_id: uuid4) -> JsonResponse:
         user_id (uuid4): UUID of the user that should be retrieved from the database
     Returns:
         JsonResponse: Serialized user object
+            200: Found the user object
+            404: User could not be found
     """
-    try:
-        result = User.objects.get_user_by_id(user_id=user_id)
+    result = User.objects.get_user_by_id(user_id=user_id)
+    if result is not None:
         return JsonResponse(
             status=200, data={"result": "SUCCESS", "user": result.serialize()}
         )
-    except User.DoesNotExist as e:
-        return JsonResponse(
-            status=404, data={"status": "FAILURE", "user_id": user_id, "reason": e}
-        )
+    return JsonResponse(status=404, data={"status": "FAILURE", "user_id": user_id})
 
 
 def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
@@ -82,7 +83,7 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
 
     Args:
         user_id (uuid4): The user who should be updated
-        request (request): Request body from the PATCH request
+        request (dict): Request body from the PATCH request
 
     Returns:
         JsonResponse: Response indicating the result of the operation
@@ -90,16 +91,25 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
             400: An error prevented the user from being updated
             404: User could not be found
     """
-    try:
-        user = User.objects.get(user_id=user_id)
-        validated_data = UserSerializer(user)
-        if not validated_data.is_valid():
-            return JsonResponse(status=400, data={"result": "FAILURE", "user_id": user_id, "reason": })
+    user = User.objects.get_user_by_id(user_id=user_id)
+    if user is None:
+        return JsonResponse(status=404, data={"result": "FAILURE", "user_id": user_id})
+
+    validated_data = UserSerializer(user, data=request, partial=True)
+    if validated_data.is_valid():
+        # Update the last modified timestamp to the current time
+        user.modify_date = datetime.now()
+        validated_data.save()
         return JsonResponse(status=200, data={"result": "SUCCESS", "user_id": user_id})
-    except User.DoesNotExist as e:
-        return JsonResponse(
-            status=404, data={"result": "FAILURE", "user_id": user_id, "reason": e}
-        )
+
+    return JsonResponse(
+        status=400,
+        data={
+            "result": "FAILURE",
+            "user_id": user_id,
+            "reason": "Invalid parameters",
+        },
+    )
 
 
 def delete_user_by_id(user_id: uuid4) -> JsonResponse:
@@ -108,14 +118,14 @@ def delete_user_by_id(user_id: uuid4) -> JsonResponse:
     Args:
         user_id (uuid4): _description_
     Returns:
-        JsonResponse: _description_
+        JsonResponse: Response indicating the success of the operation
+            204: User was deleted successfully
+            400: An error prevented the user from being deleted
+            404: User could not be found
     """
-    try:
-        result = User.objects.filter(user_id=user_id).delete()
-        return JsonResponse(
-            status=204, data={"result": "SUCCESS", "user_id": user_id, "data": result}
-        )
-    except User.DoesNotExist as e:
-        return JsonResponse(
-            status=404, data={"result": "FAILURE", "user_ud": user_id, "reason": e}
-        )
+    result = User.objects.delete_user_by_id(user_id=user_id)
+    return (
+        JsonResponse(status=204, data={"result": "SUCCESS", "user_id": user_id})
+        if result
+        else JsonResponse(status=404, data={"result": "FAILURE", "user_ud": user_id})
+    )
