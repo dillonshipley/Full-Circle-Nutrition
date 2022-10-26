@@ -1,8 +1,9 @@
+import json
+import logging
 from datetime import datetime
 from time import time
 from uuid import uuid4
 
-import environ
 import frontend
 import macros_backend
 import requests
@@ -12,20 +13,19 @@ from django.views.decorators.http import require_http_methods
 
 from recipes.models import Recipe
 
-# Initialize environment variables
-env = environ.Env()
-environ.Env.read_env()
+log = logging.getLogger("recipes")
+
 
 # TODO Set up CSRF tokens
 @csrf_exempt
 @require_http_methods(["GET", "PATCH", "DELETE"])
-def user_interactions_by_id(request: HttpRequest, recipe_id: uuid4) -> JsonResponse:
-    """Handles interactions against the recipes model using the recipe_id as a key. 
+def recipe_interactions_by_id(request: HttpRequest, recipe_id: uuid4) -> JsonResponse:
+    """Handles interactions against the recipes model using the recipe_id as a key.
     Uses the request method to determine how the object should be manipulated.
 
     Args:
         request (HttpRequest): Request recieved by the application
-        recipe_id (uuid4): Recipe id of the recipe model that should be retrieved/altered 
+        recipe_id (uuid4): Recipe id of the recipe model that should be retrieved/altered
     Returns:
         JsonResponse: Response object from the completed request
     """
@@ -41,11 +41,38 @@ def user_interactions_by_id(request: HttpRequest, recipe_id: uuid4) -> JsonRespo
     else:
         return JsonResponse(status=405, data={})
 
+
 @csrf_exempt
 @require_http_methods(["POST"])
-def create_recipe(request: HttpRequest) -> JsonResponse: 
-    pass
+def create_recipe(request: HttpRequest) -> JsonResponse:
+    body = json.loads(request.body.decode("utf-8"))
 
+    new_recipe_id = Recipe.objects.create_recipe(
+        recipe_name=body["recipe_name"],
+        creator=body["creator"],
+        price=body["price"],
+        meal_type=body["meal_type"],
+        description=body["description"],
+    )
+    return JsonResponse(
+        status=201, data={"status": "SUCCESS", "recipe_id": new_recipe_id}
+    )
+
+def get_recipe_by_id(recipe_id: uuid4) -> JsonResponse:
+    result = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
+    if result is None:
+        return JsonResponse(
+            status=200, data={'result': "SUCCESS", 'recipe': result.serialize()}
+        )
+    return JsonResponse(status=404, data={"status": "FAILURE", "recipe_id": recipe_id})
+
+
+def patch_recipe_by_id(recipe_id: uuid4) -> JsonResponse:
+    recipe = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
+    if recipe is None:
+        return JsonResponse(status=404, data={"result": "FAILURE", "recipe_id": recipe_id})
+
+    return JsonResponse 
 
 def health(request) -> JsonResponse:
     """Return a response that describes the status of the application, and other related services

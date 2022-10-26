@@ -12,7 +12,7 @@ class RecipeManager(models.Manager):
         creator: str,
         price: float,
         meal_type: str,
-        description: str
+        description: str,
     ) -> uuid:
         """Creates and validates new recipe entries to the database. Returns the UUID of the new recipe
 
@@ -31,14 +31,24 @@ class RecipeManager(models.Manager):
             creator=creator,
             price=price,
             meal_type=meal_type,
-            description=description
+            description=description,
         ).clean()
         return self.last().user_id
+
     def get_recipe_by_id(self, recipe_id: uuid):
         try:
             return self.get(recipe_id=recipe_id)
         except ObjectDoesNotExist:
             return None
+
+    def delete_recipe_by_id(self, recipe_id: uuid) -> bool:
+        try:
+            recipe_to_delete = self.get(recipe_id=recipe_id)
+            recipe_to_delete.delete()
+            return True
+        except ObjectDoesNotExist:
+            return False
+
 
 class Recipe(models.Model):
     meal_type_options = (
@@ -57,7 +67,9 @@ class Recipe(models.Model):
         editable=False,
         default=uuid.uuid4(),
     )
-    recipe_name = models.CharField(name="recipe_name", max_length=80, null=False, unique=True)
+    recipe_name = models.CharField(
+        name="recipe_name", max_length=80, null=False, unique=True
+    )
     creator = models.CharField(name="creator", max_length=80, null=True)
     price = models.DecimalField(
         name="price", decimal_places=2, max_digits=10, default=0.00
@@ -68,3 +80,23 @@ class Recipe(models.Model):
     description = models.CharField(name="description", max_length=500, null=True)
     create_date = models.DateTimeField(name="create_date", editable=False, default=now)
     modify_date = models.DateTimeField(name="modify_date", default=now)
+
+    objects = RecipeManager()
+
+    @property
+    def id(self) -> uuid:
+        return self.recipe_id
+
+    def serialize(self) -> dict:
+        return {
+            'recipe_id': self.recipe_id,
+            'recipe_name': self.recipe_name,
+            'creator': self.creator,
+            "price": self.price,
+            'meal_type': self.get_meal_type_display(),
+            "create_date": self.create_date,
+            "modify_date": self.modify_date,
+        }
+
+    def __str__(self) -> str:
+        return f"Recipe({self.recipe_name}, {self.creator}): {self.recipe_id}"
