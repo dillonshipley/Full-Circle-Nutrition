@@ -1,25 +1,49 @@
+from datetime import datetime
 from time import time
-
+from uuid import uuid4
 import environ
-import requests
-from django.http import JsonResponse
-from users.models import User
-
 import frontend
 import macros_backend
+import requests
+from django.http import HttpRequest, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+
+from recipes.models import Recipe
 
 # Initialize environment variables
 env = environ.Env()
 environ.Env.read_env()
 
+# TODO Set up CSRF tokens
+@csrf_exempt
+@require_http_methods(["GET", "PATCH", "DELETE"])
+def user_interactions_by_id(request: HttpRequest, recipe_id: uuid4) -> JsonResponse:
+    """Handles interactions against the recipes model using the recipe_id as a key. 
+    Uses the request method to determine how the object should be manipulated.
 
-def index(request) -> JsonResponse:
-    """Return a generic response
-
-    Returns
-        JsonResponse: Generic response
+    Args:
+        request (HttpRequest): Request recieved by the application
+        recipe_id (uuid4): Recipe id of the recipe model that should be retrieved/altered 
+    Returns:
+        JsonResponse: Response object from the completed request
     """
-    return JsonResponse(data={"response": "Thanks for hitting the recipes api index!"})
+    if request.method == "GET":
+        pass
+
+    if request.method == "PATCH":
+        pass
+
+    if request.method == "DELETE":
+        pass
+
+    else:
+        return JsonResponse(status=405, data={})
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def create_recipe(request: HttpRequest) -> JsonResponse: 
+    pass
 
 
 def health(request) -> JsonResponse:

@@ -3,7 +3,7 @@ import json
 import logging
 from uuid import uuid4
 
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
@@ -16,13 +16,15 @@ log = logging.getLogger("users")
 # TODO Set up CSRF tokens
 @csrf_exempt
 @require_http_methods(["POST"])
-def create_user(request) -> JsonResponse:
+def create_user(request: HttpRequest) -> JsonResponse:
     """Create user and persist it to the database
 
     Args:
-        request(django.http.request): Request containing the new user's data
-    Returnsuser_id:
-        JsonResponse:
+        request(HttpRequest): Request containing the new user's data
+    Returns:
+        JsonResponse: Response object from the completed request
+            201: Successfully created the User object
+            400: 
     """
     body = json.loads(request.body.decode("utf-8"))
 
@@ -39,12 +41,13 @@ def create_user(request) -> JsonResponse:
 
 @csrf_exempt
 @require_http_methods(["GET", "PATCH", "DELETE"])
-def user_interactions_by_id(request, user_id) -> JsonResponse:
+def user_interactions_by_id(request: HttpRequest, user_id: uuid4) -> JsonResponse:
     """Handles interactions against the user object using the user_id as a key.
-    Uses the request body to
+    Uses the request method to determine how the object should be manipulated.
 
     Args:
-        request (django.http.request): HTTP request body
+        request (HttpRequest): Request recieved by the application
+        user_id (uuid4): User id of the user model that should be retrieved/altered
     Returns:
         JsonResponse: Reponse object from the completed request
     """
@@ -97,7 +100,7 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
 
     validated_data = UserSerializer(user, data=request, partial=True)
     if validated_data.is_valid():
-        # Update the last modified timestamp to the current time
+        # TODO Update the last modified timestamp to the current time (using timezone)
         user.modify_date = datetime.now()
         validated_data.save()
         return JsonResponse(status=200, data={"result": "SUCCESS", "user_id": user_id})
@@ -109,6 +112,7 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
             "user_id": user_id,
         },
     )
+
 
 def delete_user_by_id(user_id: uuid4) -> JsonResponse:
     """Delete a user from the database using the user id as a key

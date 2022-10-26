@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils.timezone import now
 
+
 class UserManager(models.Manager):
     def create_user(
         self,
@@ -23,7 +24,6 @@ class UserManager(models.Manager):
             weight (float): _description_
             body_fat (float): _description_
             goal (int): _description_
-
         Returns:
             uuid: _description_
         """
@@ -64,9 +64,8 @@ class User(models.Model):
 
     user_id = models.UUIDField(
         name="user_id",
-        verbose_name="user model unique identifier",
-        max_length=36,
         primary_key=True,
+        max_length=36,
         null=False,
         unique=True,
         editable=False,
