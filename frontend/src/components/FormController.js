@@ -35,10 +35,6 @@ class FormController extends Component {
         this.setState({step: current + 1});
         break;
     }
-    document.getElementById("PB" + current).classList.remove("inProgress");
-    document.getElementById("PB" + current).classList.add("completed");
-    localStorage.setItem('formState', JSON.stringify(this.state));
-    document.getElementById("PB" + (current + 1)).classList.add("inProgress");
   }
 
   display(){
@@ -57,7 +53,7 @@ class FormController extends Component {
       <div>
         <div id = "formControllerHeader">
           <button className = "backButton" onClick = {this.props.back}>Back</button>
-          <ProgressBar className = "progressBar" progress = {this.state.progress} />
+          <ProgressBar className = "progressBar" step = {this.state.step} />
         </div>
         <div id = "formControllerBody">
           {this.display()}

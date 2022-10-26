@@ -49,6 +49,10 @@ class Body extends Component{
       });
     }
 
+    reset(){
+      localStorage.clear();
+    }
+
     render(){
       if(this.state.display === "forms"){
         return (
@@ -67,6 +71,7 @@ class Body extends Component{
                 <div className = "homepageLoginText" onClick = {() => this.changeDisplay("login")}>
                     Log in for the complete experience
                 </div>
+                <button onClick = {() => this.reset()}>Reset</button>
                 <div className = "homepageRegisterText">
 
                 </div>

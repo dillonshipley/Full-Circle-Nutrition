@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ScheduleTemplateBuilder from './ScheduleTemplateBuilder';
+import ScheduleCustomBuilder from './ScheduleCustomBuilder';
 
 function Card(props){
     return (
@@ -32,8 +34,14 @@ class ScheduleInfo extends Component{
         this.props.forward(this.state.meals);
         break;
       case 2:
+        this.setState({
+          display: "template"
+        });
         break;
       case 3:
+        this.setState({
+          display: "custom"
+        });
         break;
     }
     return;
@@ -41,6 +49,14 @@ class ScheduleInfo extends Component{
 
   render(){
     switch(this.state.display){
+      case "template":
+        return (
+          <ScheduleTemplateBuilder />
+        );
+      case "custom":
+          return (
+            <ScheduleCustomBuilder />  
+          );
       case "start":
         return (
           <div className = "scheduleCardContainer">

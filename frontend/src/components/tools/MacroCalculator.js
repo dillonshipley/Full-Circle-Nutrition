@@ -28,7 +28,7 @@ function MacroCalculator(valueData, typeData) {
       const activity = valueData[4];
       const goal = valueData[5];
 
-      console.log(weightType);
+      //console.log(weightType);
       if(weightType == "LB")
         weight = LBTOKG(weight)
       if(heightType === "IN")
@@ -37,7 +37,7 @@ function MacroCalculator(valueData, typeData) {
       //weight in kg
       //height in cm
       var REE = (10 * weight) + (6.25 * height) + (5 * age);
-      console.log(REE);
+      //console.log(REE);
       if(sex === "M")
         REE = REE + 5;
       else
@@ -69,7 +69,7 @@ function MacroCalculator(valueData, typeData) {
           break;
       }
 
-      console.log("new TDEE: " + TDEE);
+      //console.log("new TDEE: " + TDEE);
 
        var protein = Math.round(KGTOLB(weight));
        var calsFromProtein = 4 * weight;
@@ -83,7 +83,7 @@ function MacroCalculator(valueData, typeData) {
       var carbs = calsFromCarbs / carbCals;
       var fats = calsFromFats / fatCals;
 
-      console.log("protein: " + protein + " fats: " + fats + " carbs: " + carbs);
+      //console.log("protein: " + protein + " fats: " + fats + " carbs: " + carbs);
 
       return [protein, fats, carbs, TDEE];
 }
