@@ -245,6 +245,37 @@
   grid-template-columns: 25vw 25vw 25vw;
 }
 
+.counterContainer {
+  width: 500px;
+  display: inline;
+
+  
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+#daySelectorCB{
+  display: inline;
+}
+
+.counterDiv {
+  display: inline-block;
+
+  width: 25px;
+  height: 25px;
+  line-height: 20px;
+
+  font-size: 20px;
+  text-align: center;
+}
+
+.counterDivSymbol{
+  border-radius: 100%;
+  background-color: #444444;
+  font-weight: 900;
+  color: #ffffff;
+}
+
 /*  --- SECTION 5: ANIMATIONS --- */
 @keyframes fade {
   0% {color: var(--indigo-1);}
