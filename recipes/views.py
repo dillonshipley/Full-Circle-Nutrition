@@ -4,15 +4,21 @@ from datetime import datetime
 from time import time
 from uuid import uuid4
 
+import environ
 import frontend
 import macros_backend
-import requests
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from recipes.models import Recipe
+from recipes.serializers import RecipeSerializer
 
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env()
+
+# Initialize logging helper
 log = logging.getLogger("recipes")
 
 
@@ -58,21 +64,51 @@ def create_recipe(request: HttpRequest) -> JsonResponse:
         status=201, data={"status": "SUCCESS", "recipe_id": new_recipe_id}
     )
 
+
 def get_recipe_by_id(recipe_id: uuid4) -> JsonResponse:
     result = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
     if result is None:
         return JsonResponse(
-            status=200, data={'result': "SUCCESS", 'recipe': result.serialize()}
+            status=200, data={"result": "SUCCESS", "recipe": result.serialize()}
         )
     return JsonResponse(status=404, data={"status": "FAILURE", "recipe_id": recipe_id})
 
 
-def patch_recipe_by_id(recipe_id: uuid4) -> JsonResponse:
+def patch_recipe_by_id(recipe_id: uuid4, request: dict) -> JsonResponse:
     recipe = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
     if recipe is None:
-        return JsonResponse(status=404, data={"result": "FAILURE", "recipe_id": recipe_id})
+        return JsonResponse(
+            status=404, data={"result": "FAILURE", "recipe_id": recipe_id}
+        )
 
-    return JsonResponse 
+    recipe.modify_date = datetime.now()
+    validated_data = RecipeSerializer(recipe, data=request, partial=True)
+    if validated_data.is_valid():
+        # TODO Update the last modified timestamp to the current time (using timezone)
+        validated_data.save()
+        return JsonResponse(
+            status=200, data={"result": "SUCCESS", "recipe_id": recipe_id}
+        )
+
+    return JsonResponse(
+        status=400,
+        data={
+            "result": "FAILURE",
+            "recipe_id": recipe_id,
+        },
+    )
+
+
+def delete_recipe_by_id(recipe_id: uuid4) -> JsonResponse:
+    result = Recipe.objects.delete_recipe_by_id(recipe_id=recipe_id)
+    return (
+        JsonResponse(status=204, data={"result": "SUCCESS", "recipe_id": recipe_id})
+        if result
+        else JsonResponse(
+            status=404, data={"result": "FAILURE", "recipe_id": recipe_id}
+        )
+    )
+
 
 def health(request) -> JsonResponse:
     """Return a response that describes the status of the application, and other related services

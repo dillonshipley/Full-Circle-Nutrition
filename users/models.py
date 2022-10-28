@@ -37,7 +37,7 @@ class UserManager(models.Manager):
         ).clean()
         return self.last().user_id
 
-    def get_user_by_id(self, user_id: uuid):    
+    def get_user_by_id(self, user_id: uuid):
         try:
             return self.get(user_id=user_id)
         except ObjectDoesNotExist:
@@ -50,6 +50,7 @@ class UserManager(models.Manager):
             return True
         except ObjectDoesNotExist:
             return False
+
 
 class User(models.Model):
     goal_choices = (

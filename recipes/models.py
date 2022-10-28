@@ -17,14 +17,14 @@ class RecipeManager(models.Manager):
         """Creates and validates new recipe entries to the database. Returns the UUID of the new recipe
 
         Args:
-            recipe_name (str): _description_
-            creator (str): _description_
-            price (float): _description_
-            meal_type (str): _description_
-            description (str): _description_
+            recipe_name (str): Name of the recipe that should be created
+            creator (str): Creator of the new recipe
+            price (float): Total price of the recipe
+            meal_type (str): Meal type enum value
+            description (str): Description of the new meal
 
         Returns:
-            uuid: _description_
+            uuid: UUID of the newly created object
         """
         self.create(
             recipe_name=recipe_name,
@@ -68,7 +68,7 @@ class Recipe(models.Model):
         default=uuid.uuid4(),
     )
     recipe_name = models.CharField(
-        name="recipe_name", max_length=80, null=False, unique=True
+        name="recipe_name", max_length=80, null=False, unique=True, default="Recipe"
     )
     creator = models.CharField(name="creator", max_length=80, null=True)
     price = models.DecimalField(
@@ -89,11 +89,11 @@ class Recipe(models.Model):
 
     def serialize(self) -> dict:
         return {
-            'recipe_id': self.recipe_id,
-            'recipe_name': self.recipe_name,
-            'creator': self.creator,
+            "recipe_id": self.recipe_id,
+            "recipe_name": self.recipe_name,
+            "creator": self.creator,
             "price": self.price,
-            'meal_type': self.get_meal_type_display(),
+            "meal_type": self.get_meal_type_display(),
             "create_date": self.create_date,
             "modify_date": self.modify_date,
         }

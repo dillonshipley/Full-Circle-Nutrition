@@ -24,7 +24,7 @@ def create_user(request: HttpRequest) -> JsonResponse:
     Returns:
         JsonResponse: Response object from the completed request
             201: Successfully created the User object
-            400: 
+            400:
     """
     body = json.loads(request.body.decode("utf-8"))
 
@@ -98,10 +98,10 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
     if user is None:
         return JsonResponse(status=404, data={"result": "FAILURE", "user_id": user_id})
 
+    user.modify_date = datetime.now()
     validated_data = UserSerializer(user, data=request, partial=True)
     if validated_data.is_valid():
         # TODO Update the last modified timestamp to the current time (using timezone)
-        user.modify_date = datetime.now()
         validated_data.save()
         return JsonResponse(status=200, data={"result": "SUCCESS", "user_id": user_id})
 
@@ -129,5 +129,5 @@ def delete_user_by_id(user_id: uuid4) -> JsonResponse:
     return (
         JsonResponse(status=204, data={"result": "SUCCESS", "user_id": user_id})
         if result
-        else JsonResponse(status=404, data={"result": "FAILURE", "user_ud": user_id})
+        else JsonResponse(status=404, data={"result": "FAILURE", "user_id": user_id})
     )

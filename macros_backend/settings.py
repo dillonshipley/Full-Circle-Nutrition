@@ -184,7 +184,7 @@ WSGI_APPLICATION = "macros_backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "macros",
+        "NAME": "postgres",
         "USER": f"{env('DB_USER')}",
         "PASSWORD": f"{env('DB_PASSWORD')}",
         "HOST": "localhost",
