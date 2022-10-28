@@ -1,5 +1,6 @@
 import BioForm from './user_forms/BioForm';
-import ScheduleInfo from './user_forms/ScheduleInfo'
+import ScheduleForm from './user_forms/ScheduleForm'
+import PreferencesForm from './user_forms/PreferencesForm'
 import React, { Component } from 'react';
 import ProgressBar from './utilities/ProgressBar';
 import Results from './Results'
@@ -42,9 +43,11 @@ class FormController extends Component {
       case 1:
         return <BioForm forward = {(e) => this.advance(e)}/>
       case 2:
-        return <ScheduleInfo macros = {this.state.macros} forward = {(e) => this.advance(e)}/>;
+        return <ScheduleForm macros = {this.state.macros} forward = {(e) => this.advance(e)}/>;
       case 3:
-        return <Results macros = {this.state.macros} schedule_info = "y" />
+        return <PreferencesForm forward = {(e) => this.advance(e)}/>
+      case 4:
+        return <Results />
     }
   }
 
