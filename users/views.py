@@ -24,7 +24,7 @@ def create_user(request: HttpRequest) -> JsonResponse:
     Returns:
         JsonResponse: Response object from the completed request
             201: Successfully created the User object
-            400:
+            400: Bad request
     """
     body = json.loads(request.body.decode("utf-8"))
 

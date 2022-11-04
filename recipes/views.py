@@ -1,4 +1,5 @@
 import json
+import requests
 import logging
 from datetime import datetime
 from time import time
