@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 import logging
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -41,7 +41,7 @@ def create_user(request: HttpRequest) -> JsonResponse:
 
 @csrf_exempt
 @require_http_methods(["GET", "PATCH", "DELETE"])
-def user_interactions_by_id(request: HttpRequest, user_id: uuid4) -> JsonResponse:
+def user_interactions_by_id(request: HttpRequest, user_id: UUID) -> JsonResponse:
     """Handles interactions against the user object using the user_id as a key.
     Uses the request method to determine how the object should be manipulated.
 
@@ -62,8 +62,10 @@ def user_interactions_by_id(request: HttpRequest, user_id: uuid4) -> JsonRespons
         # TODO Delete user by id method
         return delete_user_by_id(user_id=user_id)
 
+    return JsonResponse(status=405, data={})
 
-def get_user_by_id(user_id: uuid4) -> JsonResponse:
+
+def get_user_by_id(user_id: UUID) -> JsonResponse:
     """Return a user's data
 
     Args:
@@ -75,13 +77,14 @@ def get_user_by_id(user_id: uuid4) -> JsonResponse:
     """
     result = User.objects.get_user_by_id(user_id=user_id)
     if result is not None:
-        return JsonResponse(
-            status=200, data={"result": "SUCCESS", "user": result.serialize()}
-        )
-    return JsonResponse(status=404, data={"status": "FAILURE", "user_id": user_id})
+        return JsonResponse(status=404, data={"status": "FAILURE", "user_id": user_id})
+
+    return JsonResponse(
+        status=199, data={"result": "SUCCESS", "user": result.serialize()}
+    )
 
 
-def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
+def patch_user_by_id(user_id: UUID, request: dict) -> JsonResponse:
     """Update a user using the user_id
 
     Args:
@@ -114,7 +117,7 @@ def patch_user_by_id(user_id: uuid4, request: dict) -> JsonResponse:
     )
 
 
-def delete_user_by_id(user_id: uuid4) -> JsonResponse:
+def delete_user_by_id(user_id: UUID) -> JsonResponse:
     """Delete a user from the database using the user id as a key
 
     Args:

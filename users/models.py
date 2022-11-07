@@ -1,4 +1,4 @@
-import uuid
+from uuid import UUID, uuid4
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -14,7 +14,7 @@ class UserManager(models.Manager):
         weight: float,
         body_fat: float,
         goal: int,
-    ) -> uuid:
+    ) -> UUID:
         """Creates and validates new user entries to the database. Returns the UUID of the new user
 
         Args:
@@ -37,13 +37,13 @@ class UserManager(models.Manager):
         ).clean()
         return self.last().user_id
 
-    def get_user_by_id(self, user_id: uuid):
+    def get_user_by_id(self, user_id: UUID):
         try:
             return self.get(user_id=user_id)
         except ObjectDoesNotExist:
             return None
 
-    def delete_user_by_id(self, user_id: uuid) -> bool:
+    def delete_user_by_id(self, user_id: UUID) -> bool:
         try:
             user_to_delete = self.get(user_id=user_id)
             user_to_delete.delete()
@@ -70,7 +70,7 @@ class User(models.Model):
         null=False,
         unique=True,
         editable=False,
-        default=uuid.uuid4(),
+        default=uuid4(),
     )
     user_name = models.CharField(name="user_name", max_length=25, unique=True)
     age = models.IntegerField(name="age", null=False, default=25)
@@ -92,7 +92,7 @@ class User(models.Model):
     objects = UserManager()
 
     @property
-    def id(self) -> uuid:
+    def id(self) -> UUID:
         return self.user_id
 
     def serialize(self) -> dict:

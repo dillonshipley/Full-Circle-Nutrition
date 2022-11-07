@@ -3,7 +3,7 @@ import requests
 import logging
 from datetime import datetime
 from time import time
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import environ
 import frontend
@@ -26,7 +26,7 @@ log = logging.getLogger("recipes")
 # TODO Set up CSRF tokens
 @csrf_exempt
 @require_http_methods(["GET", "PATCH", "DELETE"])
-def recipe_interactions_by_id(request: HttpRequest, recipe_id: uuid4) -> JsonResponse:
+def recipe_interactions_by_id(request: HttpRequest, recipe_id: UUID) -> JsonResponse:
     """Handles interactions against the recipes model using the recipe_id as a key.
     Uses the request method to determine how the object should be manipulated.
 
@@ -37,16 +37,16 @@ def recipe_interactions_by_id(request: HttpRequest, recipe_id: uuid4) -> JsonRes
         JsonResponse: Response object from the completed request
     """
     if request.method == "GET":
-        pass
+        return get_recipe_by_id(recipe_id=recipe_id)
 
     if request.method == "PATCH":
-        pass
+        body = json.loads(request.body.decode("utf-8"))
+        return patch_recipe_by_id(recipe_id=recipe_id, request=body)
 
     if request.method == "DELETE":
-        pass
+        return delete_recipe_by_id(recipe_id=recipe_id)
 
-    else:
-        return JsonResponse(status=405, data={})
+    return JsonResponse(status=405, data={})
 
 
 @csrf_exempt
@@ -66,16 +66,19 @@ def create_recipe(request: HttpRequest) -> JsonResponse:
     )
 
 
-def get_recipe_by_id(recipe_id: uuid4) -> JsonResponse:
+def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     result = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
     if result is None:
         return JsonResponse(
-            status=200, data={"result": "SUCCESS", "recipe": result.serialize()}
+            status=404, data={"status": "FAILURE", "recipe_id": recipe_id}
         )
-    return JsonResponse(status=404, data={"status": "FAILURE", "recipe_id": recipe_id})
+
+    return JsonResponse(
+        status=200, data={"result": "SUCCESS", "recipe": result.serialize()}
+    )
 
 
-def patch_recipe_by_id(recipe_id: uuid4, request: dict) -> JsonResponse:
+def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
     recipe = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
     if recipe is None:
         return JsonResponse(
@@ -100,7 +103,7 @@ def patch_recipe_by_id(recipe_id: uuid4, request: dict) -> JsonResponse:
     )
 
 
-def delete_recipe_by_id(recipe_id: uuid4) -> JsonResponse:
+def delete_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     result = Recipe.objects.delete_recipe_by_id(recipe_id=recipe_id)
     return (
         JsonResponse(status=204, data={"result": "SUCCESS", "recipe_id": recipe_id})

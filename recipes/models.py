@@ -1,4 +1,4 @@
-import uuid
+from uuid import UUID, uuid4
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -13,7 +13,7 @@ class RecipeManager(models.Manager):
         price: float,
         meal_type: str,
         description: str,
-    ) -> uuid:
+    ) -> UUID:
         """Creates and validates new recipe entries to the database. Returns the UUID of the new recipe
 
         Args:
@@ -33,15 +33,15 @@ class RecipeManager(models.Manager):
             meal_type=meal_type,
             description=description,
         ).clean()
-        return self.last().user_id
+        return self.last().recipe_id
 
-    def get_recipe_by_id(self, recipe_id: uuid):
+    def get_recipe_by_id(self, recipe_id: UUID):
         try:
             return self.get(recipe_id=recipe_id)
         except ObjectDoesNotExist:
             return None
 
-    def delete_recipe_by_id(self, recipe_id: uuid) -> bool:
+    def delete_recipe_by_id(self, recipe_id: UUID) -> bool:
         try:
             recipe_to_delete = self.get(recipe_id=recipe_id)
             recipe_to_delete.delete()
@@ -65,7 +65,7 @@ class Recipe(models.Model):
         null=False,
         unique=True,
         editable=False,
-        default=uuid.uuid4(),
+        default=uuid4(),
     )
     recipe_name = models.CharField(
         name="recipe_name", max_length=80, null=False, unique=True, default="Recipe"
@@ -84,7 +84,7 @@ class Recipe(models.Model):
     objects = RecipeManager()
 
     @property
-    def id(self) -> uuid:
+    def id(self) -> UUID:
         return self.recipe_id
 
     def serialize(self) -> dict:
@@ -94,6 +94,7 @@ class Recipe(models.Model):
             "creator": self.creator,
             "price": self.price,
             "meal_type": self.get_meal_type_display(),
+            "description": self.description,
             "create_date": self.create_date,
             "modify_date": self.modify_date,
         }

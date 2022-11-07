@@ -12,7 +12,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             "creator",
             "price",
             "meal_type",
-            "description"
+            "description",
             "create_date",
             "modify_date",
         )
