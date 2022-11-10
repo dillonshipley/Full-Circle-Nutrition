@@ -66,7 +66,7 @@ def user_interactions_by_id(request: HttpRequest, user_id: UUID) -> JsonResponse
 
 
 def get_user_by_id(user_id: UUID) -> JsonResponse:
-    """Return a user's data
+    """Return a user's data using the user_id as a query
 
     Args:
         user_id (uuid4): UUID of the user that should be retrieved from the database
@@ -80,7 +80,7 @@ def get_user_by_id(user_id: UUID) -> JsonResponse:
         return JsonResponse(status=404, data={"status": "FAILURE", "user_id": user_id})
 
     return JsonResponse(
-        status=199, data={"result": "SUCCESS", "user": result.serialize()}
+        status=200, data={"result": "SUCCESS", "user": result.serialize()}
     )
 
 
@@ -88,9 +88,8 @@ def patch_user_by_id(user_id: UUID, request: dict) -> JsonResponse:
     """Update a user using the user_id
 
     Args:
-        user_id (uuid4): The user who should be updated
+        user_id (UUID): The user who should be updated
         request (dict): Request body from the PATCH request
-
     Returns:
         JsonResponse: Response indicating the result of the operation
             200: User was updated successfully
@@ -121,7 +120,7 @@ def delete_user_by_id(user_id: UUID) -> JsonResponse:
     """Delete a user from the database using the user id as a key
 
     Args:
-        user_id (uuid4): _description_
+        user_id (uuid4): The user that should be updated
     Returns:
         JsonResponse: Response indicating the success of the operation
             204: User was deleted successfully

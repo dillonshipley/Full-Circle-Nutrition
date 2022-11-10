@@ -17,7 +17,7 @@ class UserViewTests(TestCase):
         self.client = Client()
         return super().setUp()
 
-    def test_create_user_method(self):
+    def test_create_user_endpoint(self):
         start_time = time.perf_counter()
         response = self.client.post(
             UserDefaults.BASE_URL,
@@ -33,14 +33,14 @@ class UserViewTests(TestCase):
         elapsed_time = time.perf_counter() - start_time
         log.info(f"[+] Completed in {elapsed_time:.5f} seconds")
 
-    def test_get_by_id(self):
+    def test_get_by_id_endpoint(self):
         start_time = time.perf_counter()
         response = self.client.get(UserDefaults.BASE_URL + f"{UserDefaults.USER_ID}")
         elapsed_time = time.perf_counter() - start_time
         log.info(f"[+] Completed in {elapsed_time:.5f} seconds")
 
-    def test_patch_by_id(self):
+    def test_patch_by_id_endpoint(self):
         pass
 
-    def test_delete_by_id(self):
+    def test_delete_by_id_endpoint(self):
         pass

@@ -27,6 +27,7 @@ class RecipeManager(models.Manager):
             uuid: UUID of the newly created object
         """
         self.create(
+            recipe_id=uuid4(),
             recipe_name=recipe_name,
             creator=creator,
             price=price,

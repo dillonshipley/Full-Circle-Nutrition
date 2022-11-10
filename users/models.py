@@ -28,6 +28,7 @@ class UserManager(models.Manager):
             uuid: _description_
         """
         self.create(
+            user_id=uuid4(),
             user_name=user_name,
             age=age,
             height=height,

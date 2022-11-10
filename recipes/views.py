@@ -52,6 +52,15 @@ def recipe_interactions_by_id(request: HttpRequest, recipe_id: UUID) -> JsonResp
 @csrf_exempt
 @require_http_methods(["POST"])
 def create_recipe(request: HttpRequest) -> JsonResponse:
+    """Create a new recipe object and persist it to the database
+
+    Args:
+        request (HttpRequest): Request containing the new recipe's information
+    Returns: Json object containing the status of the request and recipe id of the created recipe
+        JsonResponse: 
+            201: Created new user
+            400: Bad request
+    """
     body = json.loads(request.body.decode("utf-8"))
 
     new_recipe_id = Recipe.objects.create_recipe(
@@ -67,6 +76,15 @@ def create_recipe(request: HttpRequest) -> JsonResponse:
 
 
 def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
+    """Retrieve a recipe's data using the recipe_id as a query
+
+    Args:
+        recipe_id (UUID): UUID of the recipe that should be retrieved from the database
+    Returns:
+        JsonResponse: Serialized recipe object
+            200: Found the recipe object
+            404: Recipe could not be found
+    """
     result = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
     if result is None:
         return JsonResponse(
@@ -79,6 +97,17 @@ def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
 
 
 def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
+    """Update a recipe using the recipe_id
+
+    Args:
+        recipe_id (UUID): The recipe who should be updated
+        request (dict): Request body from the PATCH request
+    Returns:
+        JsonResponse: Response indicating the result of the operation
+            200: Recipe was update successfully
+            400: An error prevented the recipe from being updated
+            404: Recipe could not be found
+    """
     recipe = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
     if recipe is None:
         return JsonResponse(
@@ -104,6 +133,16 @@ def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
 
 
 def delete_recipe_by_id(recipe_id: UUID) -> JsonResponse:
+    """Delete a recipe from the database using the recipe id as a key
+
+    Args:
+        recipe_id (UUID): The recipe that should be updated
+    Returns:
+        JsonResponse: Response indicating the succes of the delete operation
+            204: Recipe was deleted successfully
+            400: An error prevented the recipe from being deleted
+            404: Recipe could not be found
+    """
     result = Recipe.objects.delete_recipe_by_id(recipe_id=recipe_id)
     return (
         JsonResponse(status=204, data={"result": "SUCCESS", "recipe_id": recipe_id})
