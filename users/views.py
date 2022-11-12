@@ -1,6 +1,6 @@
-from datetime import datetime
 import json
 import logging
+from datetime import datetime
 from uuid import UUID, uuid4
 
 from django.http import HttpRequest, JsonResponse
@@ -80,7 +80,7 @@ def get_user_by_id(user_id: UUID) -> JsonResponse:
         return JsonResponse(status=404, data={"status": "FAILURE", "user_id": user_id})
 
     return JsonResponse(
-        status=200, data={"result": "SUCCESS", "user": result.serialize()}
+        status=200, data={"status": "SUCCESS", "user": result.serialize()}
     )
 
 
@@ -98,19 +98,19 @@ def patch_user_by_id(user_id: UUID, request: dict) -> JsonResponse:
     """
     user = User.objects.get_user_by_id(user_id=user_id)
     if user is None:
-        return JsonResponse(status=404, data={"result": "FAILURE", "user_id": user_id})
+        return JsonResponse(status=404, data={"status": "FAILURE", "user_id": user_id})
 
     user.modify_date = datetime.now()
     validated_data = UserSerializer(user, data=request, partial=True)
     if validated_data.is_valid():
         # TODO Update the last modified timestamp to the current time (using timezone)
         validated_data.save()
-        return JsonResponse(status=200, data={"result": "SUCCESS", "user_id": user_id})
+        return JsonResponse(status=200, data={"status": "SUCCESS", "user_id": user_id})
 
     return JsonResponse(
         status=400,
         data={
-            "result": "FAILURE",
+            "status": "FAILURE",
             "user_id": user_id,
         },
     )
@@ -129,7 +129,7 @@ def delete_user_by_id(user_id: UUID) -> JsonResponse:
     """
     result = User.objects.delete_user_by_id(user_id=user_id)
     return (
-        JsonResponse(status=204, data={"result": "SUCCESS", "user_id": user_id})
+        JsonResponse(status=204, data={"status": "SUCCESS", "user_id": user_id})
         if result
-        else JsonResponse(status=404, data={"result": "FAILURE", "user_id": user_id})
+        else JsonResponse(status=404, data={"status": "FAILURE", "user_id": user_id})
     )

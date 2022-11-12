@@ -27,3 +27,7 @@ class UserDefaults:
         "body_fat": BODY_FAT,
         'goal': GOAL
     }
+
+    USER_PATCH_REQUEST = {
+        "goal": 1
+    }

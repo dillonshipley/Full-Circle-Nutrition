@@ -1,17 +1,17 @@
 import json
-import requests
 import logging
 from datetime import datetime
 from time import time
 from uuid import UUID, uuid4
 
 import environ
-import frontend
-import macros_backend
+import requests
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
+import frontend
+import macros_backend
 from recipes.models import Recipe
 from recipes.serializers import RecipeSerializer
 
@@ -57,23 +57,28 @@ def create_recipe(request: HttpRequest) -> JsonResponse:
     Args:
         request (HttpRequest): Request containing the new recipe's information
     Returns: Json object containing the status of the request and recipe id of the created recipe
-        JsonResponse: 
+        JsonResponse:
             201: Created new user
             400: Bad request
     """
     body = json.loads(request.body.decode("utf-8"))
 
-    new_recipe_id = Recipe.objects.create_recipe(
+    status, result = Recipe.objects.create_recipe(
         recipe_name=body["recipe_name"],
         creator=body["creator"],
         price=body["price"],
         meal_type=body["meal_type"],
         description=body["description"],
     )
-    return JsonResponse(
-        status=201, data={"status": "SUCCESS", "recipe_id": new_recipe_id}
-    )
 
+    if status:
+        return JsonResponse(
+            status=201, data={"status": "SUCCESS", "recipe_id": result}
+        )
+
+    return JsonResponse(
+        status=409, data={"status": "FAILURE", "error": str(result)}
+    )
 
 def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     """Retrieve a recipe's data using the recipe_id as a query
@@ -85,14 +90,15 @@ def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
             200: Found the recipe object
             404: Recipe could not be found
     """
-    result = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
-    if result is None:
+    status, result = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
+    if status:
+        serialized_recipe = RecipeSerializer(result)
         return JsonResponse(
-            status=404, data={"status": "FAILURE", "recipe_id": recipe_id}
+            status=200, data={"status": "SUCCESS", "recipe": serialized_recipe.data}
         )
 
     return JsonResponse(
-        status=200, data={"result": "SUCCESS", "recipe": result.serialize()}
+        status=404, data={"status": "FAILURE", "recipe_id": recipe_id, "error": str(result)}
     )
 
 
@@ -111,7 +117,7 @@ def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
     recipe = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
     if recipe is None:
         return JsonResponse(
-            status=404, data={"result": "FAILURE", "recipe_id": recipe_id}
+            status=404, data={"status": "FAILURE", "recipe_id": recipe_id}
         )
 
     recipe.modify_date = datetime.now()
@@ -120,13 +126,13 @@ def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
         # TODO Update the last modified timestamp to the current time (using timezone)
         validated_data.save()
         return JsonResponse(
-            status=200, data={"result": "SUCCESS", "recipe_id": recipe_id}
+            status=200, data={"status": "SUCCESS", "recipe_id": recipe_id}
         )
 
     return JsonResponse(
         status=400,
         data={
-            "result": "FAILURE",
+            "status": "FAILURE",
             "recipe_id": recipe_id,
         },
     )
@@ -145,10 +151,10 @@ def delete_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     """
     result = Recipe.objects.delete_recipe_by_id(recipe_id=recipe_id)
     return (
-        JsonResponse(status=204, data={"result": "SUCCESS", "recipe_id": recipe_id})
+        JsonResponse(status=204, data={"status": "SUCCESS", "recipe_id": recipe_id})
         if result
         else JsonResponse(
-            status=404, data={"result": "FAILURE", "recipe_id": recipe_id}
+            status=404, data={"status": "FAILURE", "recipe_id": recipe_id}
         )
     )
 
