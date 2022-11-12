@@ -94,7 +94,7 @@ def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     if status:
         serialized_recipe = RecipeSerializer(result)
         return JsonResponse(
-            status=200, data={"status": "SUCCESS", "recipe": serialized_recipe.data}
+            status=200, data={"status": "SUCCESS", "recipe": serialized_recipe.}
         )
 
     return JsonResponse(
