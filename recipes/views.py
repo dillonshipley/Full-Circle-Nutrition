@@ -7,6 +7,7 @@ from uuid import UUID, uuid4
 import environ
 import requests
 from django.http import HttpRequest, JsonResponse
+from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
@@ -72,13 +73,10 @@ def create_recipe(request: HttpRequest) -> JsonResponse:
     )
 
     if status:
-        return JsonResponse(
-            status=201, data={"status": "SUCCESS", "recipe_id": result}
-        )
+        return JsonResponse(status=201, data={"status": "SUCCESS", "recipe_id": result})
 
-    return JsonResponse(
-        status=409, data={"status": "FAILURE", "error": str(result)}
-    )
+    return JsonResponse(status=409, data={"status": "FAILURE", "error": str(result)})
+
 
 def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     """Retrieve a recipe's data using the recipe_id as a query
@@ -92,13 +90,13 @@ def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     """
     status, result = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
     if status:
-        serialized_recipe = RecipeSerializer(result)
         return JsonResponse(
-            status=200, data={"status": "SUCCESS", "recipe": serialized_recipe.data}
+            status=200, data={"status": "SUCCESS", "recipe": result.serialize()}
         )
 
     return JsonResponse(
-        status=404, data={"status": "FAILURE", "recipe_id": recipe_id, "error": str(result)}
+        status=404,
+        data={"status": "FAILURE", "recipe_id": recipe_id, "error": str(result)},
     )
 
 
@@ -114,14 +112,19 @@ def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
             400: An error prevented the recipe from being updated
             404: Recipe could not be found
     """
-    recipe = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
-    if recipe is None:
+    exists, recipe_or_error = Recipe.objects.get_recipe_by_id(recipe_id=recipe_id)
+    if not exists:
         return JsonResponse(
-            status=404, data={"status": "FAILURE", "recipe_id": recipe_id}
+            status=404,
+            data={
+                "status": "FAILURE",
+                "recipe_id": recipe_id,
+                "reason": recipe_or_error,
+            },
         )
 
-    recipe.modify_date = datetime.now()
-    validated_data = RecipeSerializer(recipe, data=request, partial=True)
+    recipe_or_error.update_modified_date()
+    validated_data = RecipeSerializer(recipe_or_error, data=request, partial=True)
     if validated_data.is_valid():
         # TODO Update the last modified timestamp to the current time (using timezone)
         validated_data.save()
@@ -131,10 +134,7 @@ def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
 
     return JsonResponse(
         status=400,
-        data={
-            "status": "FAILURE",
-            "recipe_id": recipe_id,
-        },
+        data={"status": "FAILURE", "recipe_id": recipe_id, "reason": "Bad request"},
     )
 
 

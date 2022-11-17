@@ -8,6 +8,7 @@ class RecipeDefaults:
     CREATOR = "TESTUSER"
     PRICE = 1.01
     MEAL_TYPE = "SK"
+    MEAL_TYPE_VERBOSE = "Snack"
     DESCRIPTION = "TEST DESCRIPTION"
 
     RECIPE_POST_SUCCESS_MESSAGE = {
@@ -34,7 +35,7 @@ class RecipeDefaults:
             "recipe_name": RECIPE_NAME,
             "creator": CREATOR,
             "price": PRICE,
-            "meal_type": MEAL_TYPE,
+            "meal_type": MEAL_TYPE_VERBOSE,
             "description": DESCRIPTION,
         },
     }
