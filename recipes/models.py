@@ -102,10 +102,6 @@ class Recipe(models.Model):
 
     objects = RecipeManager()
 
-    def update_modified_date(self) -> None:
-        """Updates the modified date of the object"""
-        self.modify_date = now
-
     def serialize(self) -> dict:
         """Custom serializer for the Recipe class
 

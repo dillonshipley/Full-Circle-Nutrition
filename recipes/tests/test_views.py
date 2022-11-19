@@ -122,5 +122,34 @@ class TestInformationRoutes(TestCase):
     def delete_by_id_endpoint(self) -> None:
         start_time = time.perf_counter()
 
+        # Persist the user to the DB and assert the success of the operation
+        post_response = self.client.post(
+            RecipeDefaults.BASE_URL,
+            data=json.dumps(RecipeDefaults.RECIPE_POST_REQUEST),
+            content_type="application/json",
+        )
+        post_response_body = json.loads(post_response.content)
+        post_recipe_id = post_response_body["recipe_id"]
+        self.assertEqual(
+            post_response.status_code,
+            RecipeDefaults.RECIPE_POST_SUCCESS_MESSAGE["status_code"],
+        )
+        
+        # Assert the delete response body matches what's expected
+        delete_response = self.client.delete(
+            RecipeDefaults.BASE_URL+f"{post_recipe_id}/",
+        )
+        delete_response_body = json.loads(delete_response.content)
+        self.assertEqual(
+            delete_response.status_code,
+            RecipeDefaults.RECIPE_DELETE_SUCCESS_MESSAGE['status_code']
+        )
+        self.assertEqual(delete_response_body['status'], RecipeDefaults.RECIPE_DELETE_SUCCESS_MESSAGE['status'])
+        self.assertEqual(delete_response_body['recipe_id'], post_recipe_id)
+
+        # Assert that the recipe doesn't exist in the db anymore
+        result, altered_recipe_or_error = Recipe.objects.get_recipe_by_id(post_recipe_id)
+        self.assertFalse(result)
+
         elasped_time = time.perf_counter() - start_time
         log.info(f"[+] Completed in {elasped_time:.3f} seconds")

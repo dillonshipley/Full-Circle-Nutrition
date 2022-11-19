@@ -123,7 +123,7 @@ def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
             },
         )
 
-    recipe_or_error.update_modified_date()
+    recipe_or_error.modify_date = now()
     validated_data = RecipeSerializer(recipe_or_error, data=request, partial=True)
     if validated_data.is_valid():
         # TODO Update the last modified timestamp to the current time (using timezone)
