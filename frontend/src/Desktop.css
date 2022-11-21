@@ -1,0 +1,304 @@
+@import "open-props/style";
+
+@import "open-props/normalize";
+@import "open-props/buttons";
+
+@import "open-props/indigo";
+@import "open-props/easings";
+@import "open-props/animations";
+@import "open-props/sizes";
+@import "open-props/gradients";
+
+.App {
+  text-align: center;
+}
+
+
+/* --- SECTION 1: HOMEPAGE --- */
+#mainBodyDiv {
+  height: 80vh;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  background-color: var(--gray-7);
+
+  box-shadow: var(--shadow-6);
+}
+#homePageTitle{
+  padding-top: 3vh;
+  padding-bottom: 1vh; /*for commmit? */
+  font-family: var(--font-sans);
+  font-size: var(--font-size-7);
+  font-weight: var(--font-weight-7)
+}
+#homePageCardContainer{
+  margin-top: 5vh;
+  margin-bottom: 10vh;
+  margin-left: 4vw;
+  margin-right: 4vw;
+
+  width: 72vw;
+  height: 55vh;
+
+  display: grid;
+  grid-template-columns: 36vw 36vw;
+
+}
+
+.card{
+  margin-left: 4vw;
+  margin-right: 4vw;
+
+  width: 22vw;
+  height: 50vh;
+
+  background-image: var(--gradient-29);
+
+  box-shadow: var(--shadow-6);
+  border-radius: var(--radius-3);
+
+  border: 7px solid var(--gray-9);
+}
+
+.homepageCard {
+  display: grid;
+  grid-template-rows: 30vh 25vh;
+}
+.card:hover{
+  box-shadow: 10px 10px 30px 2px #F9F9FB;
+  transform: translate(-3px, -2px);
+}
+.cardSpacer {
+  margin-left: 2vw;
+  margin-bottom: 20px;
+  width: 18vw;
+  height: 4px;
+
+  border: 1px solid black;
+  box-shadow: 0 0 4px black;
+
+  background-color: var(--indigo-5);
+
+  border-radius: 2px;
+
+}
+.cardInfoText{
+  margin-top: 10px;
+  color: var(--gray-3);
+  -webkit-text-stroke: .4px var(--gray-7); /* width and color */
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: .2em;
+}
+
+.cardTitle {
+  font-weight: 700;
+  font-size: var(--font-size-8);
+
+  text-shadow: 1px 1px 2px black;
+  -webkit-text-stroke: 1px var(--gray-7); /* width and color */
+  animation-name: fade, border;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  letter-spacing: .1em
+}
+
+.homepageIcon {
+  margin-left: 6vw;
+  margin-right: auto;
+  margin-top: 40px;
+
+  width: 10vw;
+
+  fill: var(--gradient-29) !important;
+}
+
+/* --- SECTION 2: FORMS --- */
+#NLBioFormContainer {
+  margin-left: 10px;
+  background-color: grey;
+
+  text-align: left;
+}
+.textInput{
+  margin-top: 10px;
+  margin-left: 50px;
+  margin-bottom: 25px;
+
+  display: inline-block;
+
+  border-radius: 2px;
+  border: 2px solid lightblue;
+}
+
+.InputLabel{
+  padding-top: 10px;
+  margin-left: 50px;
+
+  color: beige;
+}
+#formControllerHeader {
+  width: 100vw;
+  display: inline-grid;
+  grid-template-columns: 40vw 30vw 40vw;
+  border: 1px dotted red;
+}
+.progressBarContainer {
+  text-align: center;
+}
+#progressBarSubdivider{
+  height: 22px;
+  border-radius: 10px;
+
+  display: grid;
+  grid-template-columns: 10vw 10vw 10vw;
+
+}
+#PB1{
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+  border-left: 3px solid navy;
+  border-right: 3px solid navy;
+}
+#PB3{
+  border-bottom-right-radius: 7px;
+  border-top-right-radius: 7px;
+  border-left: 3px solid navy;
+  border-right: 3px solid navy;
+}
+.progressBarSegment{
+  margin-top: 0px;
+  border-top: 3px solid navy;
+  border-bottom: 3px solid navy;
+  height: 20px;
+}
+
+
+/*  --- SECTION 3: BIOFORM --- */
+.progressBar {
+  display: grid;
+  margin-right: 0;
+  margin-left: auto;
+}
+.backButton {
+  text-align: left;
+  display: grid;
+  margin-right: auto;
+  margin-left: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.heightSlider {
+  width: 40vw;
+  margin-left: 30vw;
+}
+.currentWeight {
+  text-align: center;
+}
+.SaveButton {
+  margin-left: 50px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.inProgress{
+  background-color: var(--yellow-2);
+}
+.completed{
+  background-color: var(--green-8);
+}
+.selectorContainer{
+  margin-left: 25px;
+
+  width: 105px;
+  display: inline-grid;
+
+  grid-template-columns: 50px 50px;
+  border-radius: 5px;
+
+  border: 3px solid #444444;
+}
+.selectorOption{
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: #dddddd;
+
+  color: #222222;
+  font-weight: 700px;
+
+  border-left: 2px solid #444444;
+  border-right: 2px solid #444444;
+
+}
+
+.selected{
+  background-color: #444444;
+}
+
+/* --- SECTION 4: SCHEDULE INFO --- */
+.scheduleContainer {
+  margin-top: 5vh;
+  margin-left: 12.5vw;
+
+  display: grid;
+  width: 75vw;
+  grid-template-columns: 25vw 25vw 25vw;
+  grid-template-rows: 25vh;
+}
+
+.scheduleGridLabel {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.scheduleGrid {
+
+}
+
+.counterContainer {
+  width: 20vw;
+  display: inline;
+
+
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+#daySelectorCB{
+  display: block;
+  margin-top: 20px;
+  margin-left: 25vw;
+  width: 50vw;
+
+
+}
+
+.counterDiv {
+  display: inline-block;
+
+  width: 25px;
+  height: 25px;
+  line-height: 20px;
+
+  font-size: 20px;
+  text-align: center;
+}
+
+.dayLabel {
+  display: inline-block;
+  width: 10vw;
+}
+
+.counterDivSymbol{
+  border-radius: 100%;
+  background-color: #444444;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+/*  --- SECTION 5: ANIMATIONS --- */
+@keyframes fade {
+  0% {color: var(--indigo-1);}
+  50% {color: var(--indigo-2);}
+  100% {color: var(--indigo-1);}
+}

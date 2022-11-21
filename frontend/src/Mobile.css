@@ -1,0 +1,43 @@
+@media only screen and (max-width: 600px) {
+    #mainBodyDiv {
+      background-color: lightblue;
+    }
+  }
+
+  @media only screen and (max-width: 1621px) {
+    .card {
+      width: 320px;
+      line-height: 40px;
+    }
+
+    .cardSpacer {
+      margin-left: 10px;
+      width: 250px;
+      height: 4px;
+
+    }
+
+    .homepageIcon {
+        margin-left: 80;
+        margin-right: auto;
+        margin-top: 40px;
+
+        width: 160px;
+
+        fill: var(--gradient-29) !important;
+      }
+
+    #homePageCardContainer{
+        margin-top: 10vh;
+        margin-bottom: 10vh;
+        margin-left: 4vw;
+        margin-right: 4vw;
+
+        width: 72vw;
+        height: 55vh;
+
+        display: grid;
+        grid-template-rows: 50vh 50vh;
+
+      }
+  }

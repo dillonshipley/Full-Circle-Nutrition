@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import FormController from '../FormController';
 import Results from '../Results';
 import Login from '../Login';
-import MacroCalculator from '../tools/MacroCalculator';
+import Tools from '../tools/Tools';
+
+import { ReactComponent as CalculatorImg} from './calculator.svg';
+import { ReactComponent as ToolsImg} from './tools.svg';
 
 //var cardTextOneTitle = "BUILD";
 //var cardTextOneDetail = "from the ground up"
@@ -11,39 +14,50 @@ import MacroCalculator from '../tools/MacroCalculator';
 //var cardTextOneTitle = "EXPERIMENT";
 
 function Card(props){
-
-  if(props.text === "build"){
-
-  }
+  let mysrc;
+  if(props.title === "BUILD")
+    mysrc = <CalculatorImg className ="homepageIcon"/>;
+  else
+    mysrc = <ToolsImg className ="homepageIcon"/>;
 
   return (
-    <div className = "card" id = {"homepageCard" + props.num} onClick = {props.onClick}>
+    <div className = "card homepageCard" id = {"homepageCard" + props.num} onClick = {props.onClick}>
       <div className = "cardIcon">
-
+        {mysrc}
       </div>
       <div>
         <div className = "cardSpacer"></div>
+        <div className = "cardTitle">{props.title}</div>
         <div className = "cardInfoText">{props.text}</div>
       </div>
     </div>
-
   );
 }
 
 class Body extends Component{
     constructor(props){
       super(props);
-      this.state = {
-        display: "start"
+      this.state = JSON.parse(localStorage.getItem('navState')) || {
+          display: "start"
       }
     }
 
+    changeDisplay(display){
+      console.log("display: " + display);
+      this.setState({display: display}, () => {
+        localStorage.setItem('navState', JSON.stringify(this.state));
+      });
+    }
+
+    reset(){
+      localStorage.clear();
+    }
 
     render(){
       if(this.state.display === "forms"){
         return (
           <div>
-            <FormController back = {() => this.setState({display: "start"})} />
+            <FormController back = {() => this.changeDisplay("start")} />
           </div>
         )
       } else if (this.state.display === "start"){
@@ -51,12 +65,13 @@ class Body extends Component{
             <div id = "mainBodyDiv">
                 <div id = "homePageTitle">Goal to Table Nutrition </div>
                 <div id = "homePageCardContainer">
-                    <Card onClick = {() => this.setState({display: "forms"})} text = "Build From the Ground Up"/>
-                    <Card onClick = {() => this.setState({display: "tools"})} text = "Use One of Our Tools"/>
+                    <Card onClick = {(e) => this.changeDisplay("forms", e)} title = "BUILD" text = "from the ground up"/>
+                    <Card onClick = {(e) => this.changeDisplay("tools", e)} title = "USE" text = "use one of our tools"/>
                 </div>
-                <div className = "homepageLoginText" onClick = {() => this.setState({display: "login"})}>
+                <div className = "homepageLoginText" onClick = {() => this.changeDisplay("login")}>
                     Log in for the complete experience
                 </div>
+                <button onClick = {() => this.reset()}>Reset</button>
                 <div className = "homepageRegisterText">
 
                 </div>
@@ -64,13 +79,13 @@ class Body extends Component{
         );
       } else if (this.state.display === "results"){
           <Results />
-      } else if (this.state.display === "tools"){
-          <MacroCalculator />
       }else if (this.state.display === "login"){
         return(
-          <div>
-            <Login back = {() => this.setState({display: "start"})}/>
-          </div>
+          <Login back = {() =>this.changeDisplay("start")}/>
+        );
+      } else if (this.state.display === "tools"){
+        return(
+            <Tools back = {() =>this.changeDisplay("start")}/>
         );
       }
     }

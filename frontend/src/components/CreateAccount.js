@@ -1,4 +1,22 @@
-public class CreateAccount extends Component{
+class CreateAccount extends Component{
+
+  save(){
+    var data = [
+      document.getElementById("usernameInput").value,
+      document.getElementById("passWordInput").value,
+      document.getElementById("emailInput").value,
+      document.getElementById("heightInput").value,
+      document.getElementById("weightInput").value,
+      document.getElementById("bodyfatInput").value,
+      document.getElementById("bodyfatInput").value
+    ]
+
+    //async function createUser(this.state.data){
+    //  var query =
+    //  `?data`
+    //}
+  }
+
   render(){
     return (
       <div>
@@ -9,32 +27,34 @@ public class CreateAccount extends Component{
         </div>
         <div id = "registerPassword">
             <p>Password:</p>
-            <input type = "text" id = "passwordInput" name = "password" className = "textInput"/>
+            <input placeholder = "PASSWORD" type = "text" id = "passwordInput" name = "password" className = "textInput"/>
         </div>
         <div id = "confirmPassword">
             <p>Confirm your password:</p>
             <input type = "text" id = "passwordConfirmInput" name = "passwordConfirm" className = "textInput"/>
         </div>
-        <div id = "firstName">
-            <p>First Name:</p>
-            <input type = "text" id = "firstNameInput" name = "firstName" className = "textInput"/>
-        </div>
-        <div id = "lastName">
-            <p>Last Name:</p>
-            <input type = "text" id = "lastNameInput"
-        </div>
         <div id = "email">
             <p>Email Address:</p>
+            <input type = "text" id = "emailInput" name = "email" className = "textInput"/>
         </div>
         <div id = "height">
-            //style: slider
+            <p>Height:</p>
+            <input type = "text" id = "heightInput" name = "height" className = "textInput"/>
+        </div>
         </div>
         <div id = "currentWeight">
-            //style: text box
+          <p>Height:</p>
+          <input type = "text" id = "weightInput" name = "currentWeight" className = "textInput"/>
         </div>
         <div id = "bodyFat">
-            //style: dropdown (optional, rough estimate)
+        <p>Height:</p>
+        <input type = "combobox" id = "bodyfatInput" name = "bodyFat" className = "textInput"/>
         </div>
+        <div id = "goalVector">
+          <p>Goal Direction:</p>
+          <input type = "text" id = "goalInput" name = "goal" className = "textInput"/>
+      </div>
+        <div></div>
       </div>
     );
   }
