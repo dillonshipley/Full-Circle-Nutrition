@@ -16,7 +16,7 @@ tags:
   - name: Ingredients
     description: Ingredient Operations
   - name: User
-    description: User operations
+    description: User Operations
 
 servers:
   - url: http://127.0.0.1:8000
@@ -24,6 +24,67 @@ servers:
 
 components:
   schemas:
+
+    HealthResponse:
+      description: Response body for health endpoint
+      type: object
+      properties:
+        services:
+          description: Container for all queried services
+          type: object
+          properties:
+            macros_back_end:
+              description: Back end status
+              type: object
+              properties:
+                status:
+                  description: Response status from the service
+                  type: string
+                  enum: [UP, DOWN]
+                timestamp:
+                  description: Response timestamp
+                  type: number
+                uptime:
+                  description: Uptime of application
+                  type: number
+                message:
+                  description: Response from the application
+                  type: string
+            macros_front_end:
+              description: Front end status
+              type: object
+              properties:
+                status:
+                  description: Response status from the service
+                  type: string
+                  enum: [ UP, DOWN ]
+                timestamp:
+                  description: Response timestamp
+                  type: number
+                uptime:
+                  description: Uptime of service
+                  type: number
+                message:
+                  description: Response from the service
+                  type: string
+            macros_db:
+              description: Backend status
+              type: object
+              properties:
+                status:
+                  description: Response status from the service
+                  type: string
+                  enum: [ UP, DOWN ]
+                timestamp:
+                  description: Response timestamp
+                  type: number
+                uptime:
+                  description: Uptime of service
+                  type: number
+                message:
+                  description: Response from the service
+                  type: string
+
     Recipe:
       description: Request body for creating a new recipe object
       type: object
@@ -71,17 +132,62 @@ components:
       description: GET response for a queried user response
       type: object
       properties:
-        user_id:
-          description: Unique identifier for the user
+        result:
+          description: Result of GET operation
           type: string
-        user_name:
-          description: User name for the user
-          type: string
-        health_metrics:
-          description: User's health metrics used for tracking macros
+        user:
+          description: Resulting user object
           type: object
-          
-      
+          properties:    
+            user_id:
+              description: Unique identifier for the user
+              type: string
+              format: uuid
+            user_name:
+              description: User name for the user
+              type: string
+            age:
+              description: User's age
+              type: integer
+            height:
+              description: User's height
+              type: number
+            weight:
+              description: User's weight
+              type: number
+            body_fat:
+              description: User's body fat percentage
+              type: number
+            goal:
+              description: User's nutrition goal. Represented using an enum to match 7 different options from [-3, 3]
+              type: integer
+
+    UserFailedRequest:
+      description: Generic response for failed GET, PATCH, or DELETE requests for the User API
+      type: object
+      properties:
+        result:
+          description: Result of the operation (FAILED)
+          type: string
+          example: FAILED
+        user_id:
+          description: User id that was inputted
+          type: string
+          format: uuid
+  
+    UserCompletedRequest:
+      description: Generic response for completed PATCH, or DELETE request for the User API
+      type: object
+      properties:
+        result:
+          description: Result of the operation (SUCCESS)
+          type: string
+          example: SUCCESS
+        user_id:
+          description: User id that was inputted
+          type: string
+          format: uuid
+  
     PostRecipeNoIngredientsResponse:
       description: POST response after successfully creating a new recipe. This response is for the creation of a recipe with no ingredients as of yet.
       type: object
@@ -134,16 +240,6 @@ components:
           items:
             type: string
           example: {'flavor_profile': "Salty"}
-
-    HealthReponse:
-      type: object
-      properties:
-        timestamp:
-          description: UTC time on the application server
-          type: number
-        status:
-          description: Status of the application
-          type: string
         
     User:
       description: Request body for creating a new user object
@@ -153,9 +249,9 @@ components:
           description: User name
           type: string
           nullable: false
-        goal:
-          description: User's fitness goal
-          type: string
+        age:
+          description: User's age
+          type: integer
           nullable: false
         weight:
           description: User's weight
@@ -168,10 +264,14 @@ components:
         body_fat:
           description: User's body fat pecentage
           type: number
+          nullable: true
+        goal:
+          description: User's fitness goal
+          type: integer
           nullable: false
 
 paths:
-  /v1/recipes/{recipe_id}:
+  /v0/recipes/{recipe_id}:
     get: 
       summary: Get recipe by recipe_id
       description: Find recipes based off of inputted recipe ID
@@ -231,7 +331,7 @@ paths:
         '204':
           description: Recipe deleted
   
-  /v1/recipes/:
+  /v0/recipes/:
     post:
       summary: Create new recipe
       description: Create new recipe with no ingredients
@@ -251,7 +351,7 @@ paths:
               schema: 
                 $ref: '#/components/schemas/PostRecipeNoIngredientsResponse'
 
-  /v1/user/{user_id}:
+  /v0/users/{user_id}:
     get:
       summary: Get user by user_id
       description: Find a user in the database using the user_id
@@ -265,14 +365,25 @@ paths:
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/GetUserResponse'
       responses:
         '200':
-          description: Found user
+          description: User found
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/GetUserResponse'
+        '400':
+          description: Invalid parameters
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserFailedRequest"
+        '404':
+          description: User does not exist
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserFailedRequest"
     
     patch:
       summary: Patch user by user_id
@@ -288,6 +399,7 @@ paths:
           schema:
             type: string
       requestBody:
+        description: Fields that should be updated in the user object
         content:
           'application/json':
             schema:
@@ -295,6 +407,22 @@ paths:
       responses:
         '200':
           description: User updated
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserCompletedRequest"
+        '400':
+          description: Invalid parameters
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserFailedRequest"
+        '404':
+          description: User does not exist
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserFailedRequest"
 
     delete:
       summary: Delete user
@@ -312,8 +440,24 @@ paths:
       responses:
         '204':
           description: Deleted user
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserCompletedRequest"
+        '400':
+          description: Invalid parameters
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserFailedRequest"
+        '404':
+          description: User does not exist
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/UserFailedRequest"
 
-  /v1/user/:
+  /v0/users/:
     post:
       summary: Create new user
       description: Create new user with goals and metrics
@@ -332,6 +476,12 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/PostUserResponse'
+        '400':
+          description: Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserFailedRequest'
 
   /:
     get:
@@ -355,4 +505,4 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HealthReponse'
+                $ref: '#/components/schemas/HealthResponse'

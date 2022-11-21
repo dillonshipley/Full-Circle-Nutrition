@@ -1,73 +1,38 @@
+import uuid
+
 from django.db import models
+from django.utils.timezone import now
+
+
+class RecipeManager(models.Manager):
+    def recipe_count(self, keyword) -> int:
+        return self.filter(user_id_icontain=keyword).count()
 
 
 class Recipe(models.Model):
+    recipe_category_options = (
+        ("BF", "Breakfast"),
+        ("SK", "Snack"),
+        ("SM", "Standard Meal"),
+    )
+
     recipe_id = models.UUIDField(
-        max_length=12,
+        name="recipe_id",
         primary_key=True,
+        max_length=36,
+        null=False,
         unique=True,
         editable=False,
+        default=uuid.uuid4(),
     )
-    name = models.CharField(max_length=80, unique=True)
-    creator = models.CharField(max_length=80)
-    description = models.CharField(max_length=500)
-    create_date = models.DateTimeField()
-    modify_date = models.DateTimeField()
-
-
-class Ingredient(models.Model):
-    UNIT_CHOICES = (
-        ("CUP", "cups"),
-        ("TBP", "table spoon"),
-        ("TSP", "tea spoon"),
-        ("DSH", "dash"),
-        ("PCH", "pinch"),
-        ("LBS", "pound"),
-        ("OZS", "ounce"),
-        ("GRM", "gram"),
-        ("SLC", "slice"),
+    name = models.CharField(name="name", max_length=80, null=False, unique=True)
+    creator = models.CharField(name="creator", max_length=80, null=True)
+    price = models.DecimalField(
+        name="price", decimal_places=2, max_digits=10, default=0.00
     )
-
-    ingredient_id = models.UUIDField(
-        max_length=12,
-        primary_key=True,
-        unique=True,
-        editable=False,
+    recipe_category = models.CharField(
+        name="recipe_type", choices=recipe_category_options, max_length=2, null=True
     )
-
-    name = models.CharField(max_length=80, unique=True)
-    vegetarian = models.BinaryField()
-    calories = models.SmallIntegerField()
-    fat = models.SmallIntegerField()
-    protein = models.SmallIntegerField()
-    units = models.CharField(
-        choices=UNIT_CHOICES,
-        max_length=3,
-    )
-    amount = models.DecimalField(
-        decimal_places=2, max_digits=8
-    )
-    create_date = models.DateTimeField(name="Creation date & time")
-    modify_date = models.DateTimeField(name="Last modified date & time")
-
-
-class User(models.Model):
-    GOAL_CHOICES = (
-        ("LGN", "low gain"),
-        ("MGN", "meduim gain"),
-        ("HGN", "high gain"),
-    )
-
-    user_id = models.UUIDField(
-        max_length=12,
-        primary_key=True,
-        unique=True,
-        editable=False,
-    )
-    user_name = models.CharField(max_length=25, unique=True)
-    height = models.DecimalField(decimal_places=2, max_digits=8)
-    weight = models.DecimalField(decimal_places=2, max_digits=8)
-    body_fat = models.DecimalField(decimal_places=2, max_digits=8)
-    goal = models.CharField(choices=GOAL_CHOICES, max_length=3)
-    create_date = models.DateTimeField(name="Creation date & time")
-    modify_date = models.DateTimeField(name="Last modified date & time")
+    description = models.CharField(name="description", max_length=500, null=True)
+    create_date = models.DateTimeField(name="create_date", default=now)
+    modify_date = models.DateTimeField(name="modify_date", default=now)

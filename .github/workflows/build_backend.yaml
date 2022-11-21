@@ -14,7 +14,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DB_NAME: workflow_test
       PYTHON_VERSION: "3.10"
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -22,16 +21,11 @@ jobs:
       postgres_main:
         image: postgres:12
         env:
-          POSTGRES_DB: ${{ env.DB_NAME }}
-          POSTGRES_USER: ${{ env.DB_USER }}
-          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd pg_isready 
-          --health-interval 10s 
-          --health-timeout 5s 
-          --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -48,10 +42,9 @@ jobs:
 
       - name: Run tests
         env:
-          DEBUG: "0"
+          DEBUG_MODE: "0"
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DB_NAME: workflow_test
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USER: postgres
+          DB_PASSWORD: postgres
         run: |
           python manage.py test

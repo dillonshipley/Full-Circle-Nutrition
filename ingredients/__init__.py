@@ -1,4 +1,4 @@
-__api_version__ = "v0"
+__api_version__ = "v1"
 __version__ = "0.1.0"
 
 VERSION = __version__
