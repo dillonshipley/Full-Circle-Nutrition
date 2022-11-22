@@ -15,7 +15,8 @@ class RecipeManager(models.Manager):
         meal_type: str,
         description: str,
     ) -> tuple:
-        """Creates and validates new recipe entries to the database. Returns the UUID of the new recipe
+        """Creates and validates new recipe entries to the database. Returns the UUID of the
+        new recipe
 
         Args:
             recipe_name (str): Name of the recipe that should be created
@@ -24,8 +25,7 @@ class RecipeManager(models.Manager):
             meal_type (str): Meal type enum value
             description (str): Description of the new meal
         Returns:
-            tuple: Result of the operation and the UUID of the newly created object,
-            or an error message
+            tuple: Result of the operation and the UUID of the new recipe, or an error message
         """
         try:
             self.create(
@@ -41,12 +41,13 @@ class RecipeManager(models.Manager):
             return False, e
 
     def get_recipe_by_id(self, recipe_id: UUID) -> tuple:
-        """_summary_
+        """Retrieve a recipe using the recipe_id as a query
 
         Args:
-            recipe_id (UUID): _description_
+            recipe_id (UUID): Recipe id of the Recipe model that should be restored
         Returns:
-            tuple: _description_
+            tuple(bool, [Recipe | Error]): Tuple containing the success of the operation,
+            and the resulting recipe or error
         """
         try:
             return True, self.get(recipe_id=recipe_id)
@@ -54,12 +55,12 @@ class RecipeManager(models.Manager):
             return False, e
 
     def delete_recipe_by_id(self, recipe_id: UUID) -> bool:
-        """_summary_
+        """Remove a recipe from the db using the recipe_id as a query
 
         Args:
-            recipe_id (UUID): _description_
+            recipe_id (UUID): UUID of the recipe that should be delete
         Returns:
-            bool: _description_
+            bool: True if the object was successfully removed from the db, False otherwise
         """
         try:
             recipe_to_delete = self.get(recipe_id=recipe_id)

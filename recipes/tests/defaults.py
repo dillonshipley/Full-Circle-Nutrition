@@ -40,4 +40,4 @@ class RecipeDefaults:
         },
     }
 
-    RECIPE_DELETE_SUCCESS_MESSAGE = {"status": "SUCCESS", "status_code": 204}
+    RECIPE_DELETE_SUCCESS_MESSAGE = {"status": "SUCCESS", "status_code": 200}

@@ -106,15 +106,25 @@ class TestInformationRoutes(TestCase):
             content_type="application/json",
         )
         patch_response_body = json.loads(patch_response.content)
-        patch_recipe_id = patch_response_body['recipe_id']
+        patch_recipe_id = patch_response_body["recipe_id"]
+
+        self.assertEqual(patch_recipe_id, post_recipe_id)
 
         # Retrieve the object again for comparison
-        result, altered_recipe_or_error = Recipe.objects.get_recipe_by_id(patch_recipe_id)
+        exists, altered_recipe_or_error = Recipe.objects.get_recipe_by_id(
+            patch_recipe_id
+        )
 
-        self.assertEqual(patch_response_body['status'], "SUCCESS")
-        self.assertEqual(patch_recipe_id, post_recipe_id)
-        self.assertEqual(RecipeDefaults.RECIPE_PATCH_REQUEST["meal_type"], altered_recipe_or_error.meal_type)
-        self.assertNotEqual(RecipeDefaults.RECIPE_POST_REQUEST['meal_type'], altered_recipe_or_error.meal_type)
+        self.assertTrue(exists)
+        self.assertEqual(patch_response_body["status"], "SUCCESS")
+        self.assertEqual(
+            RecipeDefaults.RECIPE_PATCH_REQUEST["meal_type"],
+            altered_recipe_or_error.meal_type,
+        )
+        self.assertNotEqual(
+            RecipeDefaults.RECIPE_POST_REQUEST["meal_type"],
+            altered_recipe_or_error.meal_type,
+        )
 
         elasped_time = time.perf_counter() - start_time
         log.info(f"[+] Completed in {elasped_time:.3f} seconds")
@@ -122,7 +132,7 @@ class TestInformationRoutes(TestCase):
     def delete_by_id_endpoint(self) -> None:
         start_time = time.perf_counter()
 
-        # Persist the user to the DB and assert the success of the operation
+        # Persist the recipe to the DB and assert the success of the operation
         post_response = self.client.post(
             RecipeDefaults.BASE_URL,
             data=json.dumps(RecipeDefaults.RECIPE_POST_REQUEST),
@@ -134,21 +144,26 @@ class TestInformationRoutes(TestCase):
             post_response.status_code,
             RecipeDefaults.RECIPE_POST_SUCCESS_MESSAGE["status_code"],
         )
-        
+
         # Assert the delete response body matches what's expected
         delete_response = self.client.delete(
-            RecipeDefaults.BASE_URL+f"{post_recipe_id}/",
+            RecipeDefaults.BASE_URL + f"{post_recipe_id}/",
         )
         delete_response_body = json.loads(delete_response.content)
         self.assertEqual(
             delete_response.status_code,
-            RecipeDefaults.RECIPE_DELETE_SUCCESS_MESSAGE['status_code']
+            RecipeDefaults.RECIPE_DELETE_SUCCESS_MESSAGE["status_code"],
         )
-        self.assertEqual(delete_response_body['status'], RecipeDefaults.RECIPE_DELETE_SUCCESS_MESSAGE['status'])
-        self.assertEqual(delete_response_body['recipe_id'], post_recipe_id)
+        self.assertEqual(
+            delete_response_body["status"],
+            RecipeDefaults.RECIPE_DELETE_SUCCESS_MESSAGE["status"],
+        )
+        self.assertEqual(delete_response_body["recipe_id"], post_recipe_id)
 
         # Assert that the recipe doesn't exist in the db anymore
-        result, altered_recipe_or_error = Recipe.objects.get_recipe_by_id(post_recipe_id)
+        result, altered_recipe_or_error = Recipe.objects.get_recipe_by_id(
+            post_recipe_id
+        )
         self.assertFalse(result)
 
         elasped_time = time.perf_counter() - start_time

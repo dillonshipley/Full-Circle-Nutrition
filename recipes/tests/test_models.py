@@ -23,9 +23,9 @@ class RecipeTests(TestCase):
             creator=RecipeDefaults.CREATOR,
             price=RecipeDefaults.PRICE,
             meal_type=RecipeDefaults.MEAL_TYPE,
-            description=RecipeDefaults.DESCRIPTION
+            description=RecipeDefaults.DESCRIPTION,
         )
-        
+
         self.assertEqual(new_recipe.recipe_id, RecipeDefaults.RECIPE_ID)
         self.assertEqual(new_recipe.recipe_name, RecipeDefaults.RECIPE_NAME)
         self.assertEqual(new_recipe.creator, RecipeDefaults.CREATOR)

@@ -1,6 +1,5 @@
 import json
 import logging
-from datetime import datetime
 from time import time
 from uuid import UUID, uuid4
 
@@ -75,7 +74,7 @@ def create_recipe(request: HttpRequest) -> JsonResponse:
     if status:
         return JsonResponse(status=201, data={"status": "SUCCESS", "recipe_id": result})
 
-    return JsonResponse(status=409, data={"status": "FAILURE", "error": str(result)})
+    return JsonResponse(status=409, data={"status": "FAILURE", "reason": result})
 
 
 def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
@@ -96,7 +95,7 @@ def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
 
     return JsonResponse(
         status=404,
-        data={"status": "FAILURE", "recipe_id": recipe_id, "error": str(result)},
+        data={"status": "FAILURE", "recipe_id": recipe_id, "reason": result},
     )
 
 
@@ -126,7 +125,6 @@ def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
     recipe_or_error.modify_date = now()
     validated_data = RecipeSerializer(recipe_or_error, data=request, partial=True)
     if validated_data.is_valid():
-        # TODO Update the last modified timestamp to the current time (using timezone)
         validated_data.save()
         return JsonResponse(
             status=200, data={"status": "SUCCESS", "recipe_id": recipe_id}
@@ -145,13 +143,13 @@ def delete_recipe_by_id(recipe_id: UUID) -> JsonResponse:
         recipe_id (UUID): The recipe that should be updated
     Returns:
         JsonResponse: Response indicating the succes of the delete operation
-            204: Recipe was deleted successfully
+            200: Recipe was deleted successfully
             400: An error prevented the recipe from being deleted
             404: Recipe could not be found
     """
     result = Recipe.objects.delete_recipe_by_id(recipe_id=recipe_id)
     return (
-        JsonResponse(status=204, data={"status": "SUCCESS", "recipe_id": recipe_id})
+        JsonResponse(status=200, data={"status": "SUCCESS", "recipe_id": recipe_id})
         if result
         else JsonResponse(
             status=404, data={"status": "FAILURE", "recipe_id": recipe_id}

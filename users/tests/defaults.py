@@ -29,19 +29,19 @@ class UserDefaults:
         "goal": GOAL,
     }
 
-    USER_PATCH_REQUEST = {"goal": 1}
+    USER_PATCH_REQUEST = {"goal": "1"}
 
     USER_GET_SUCCESS_MESSAGE = {
-        'status': "SUCCESS",
-        'status_code': 200,
+        "status": "SUCCESS",
+        "status_code": 200,
         "user": {
             "user_name": USER_NAME,
             "age": AGE,
             "height": HEIGHT,
             "weight": WEIGHT,
             "body_fat": BODY_FAT,
-            "goal": GOAL_VERBOSE
-        }
+            "goal": GOAL_VERBOSE,
+        },
     }
 
-    USER_DELETE_SUCCESS_MESSAGE = {"status": "SUCCESS", "status_code": 204}
+    USER_DELETE_SUCCESS_MESSAGE = {"status": "SUCCESS", "status_code": 200}
