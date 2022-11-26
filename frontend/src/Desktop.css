@@ -16,7 +16,7 @@
 
 /* --- SECTION 1: HOMEPAGE --- */
 #mainBodyDiv {
-  height: 100vh;
+  height: 200vh;
   width: 100vw;
   background-color: var(--gray-7);
 
@@ -35,6 +35,10 @@
 
   width: 100vw;
   height: 55vh;
+}
+
+#circleRotator{
+  border: 1px solid red;
 }
 
 #homepageCircleText{

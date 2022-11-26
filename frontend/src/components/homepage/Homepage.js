@@ -5,7 +5,7 @@ import { ReactComponent as ToolsImg} from './tools.svg';
 
 import ReactCurvedText from "react-curved-text";
 
-const circleText = "Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition"
+const circleText = "Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition | Full Circle Nutrition |"
 
 function Card(props){
   let mysrc;
@@ -30,30 +30,50 @@ function Card(props){
 
 class Homepage extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      rotation: 220,
+      interval: null
+    }
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {
+        this.setState({rotation: this.state.rotation + 1});
+        console.log(this.state.rotation);
+      }, 20);
+    }
+
+    componentWillUnmount(){
+      clearInterval(this.interval);
+    }
+
     render(){
+      const style = {transform: "rotate(" + this.state.rotation + ")deg"}
         return(
         <div id = "mainBodyDiv">
-            <div id = "homePageTitle">Full Circle Nutrition </div>
-            <ReactCurvedText width='1080'
+
+          <div id = "circleRotator" style={style}>
+            <ReactCurvedText width='1920'
               height='1000'
-              cx='590'
-              cy='377'
-              rx={500}
-              ry={500}
+              cx='875'
+              cy='459'
+              rx={750}
+              ry={750}
               startOffset={0}
               reversed={false}
               text={circleText}
-              textProps={{"style": {"fontSize":74}}}
-              textPathProps={{"fill": "#ffd6d6"}}
+              textProps={{"style": {"fontSize":46, "-webkit-text-stroke": "2px white"}}}
+              textPathProps={{"fill": "#000000"}}
               tspanProps={null}
               ellipseProps={null}
               svgProps={null} />
-            <div id = "homePageCardContainer">
+          </div>
               <div id = "homepageCircleText">
                 <Card onClick = {(e) => this.props.change("forms", e)} title = "BUILD" text = "from the ground up"/>
                 <Card onClick = {(e) => this.props.change("tools", e)} title = "USE" text = "use one of our tools"/>
               </div>
-            </div>
             <div className = "homepageLoginText" onClick = {() => this.changeDisplay("login")}>
                 Log in for the complete experience
             </div>
