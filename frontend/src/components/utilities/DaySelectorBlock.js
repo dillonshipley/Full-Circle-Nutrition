@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 
 function Counter(props){
 
@@ -13,7 +13,7 @@ function Counter(props){
   );
 }
 
-class DaySelectorBlock extends React.Component{
+class DaySelectorBlock extends Component{
 
   constructor(props){
     super(props);

@@ -9,7 +9,6 @@ class FormController extends Component {
 
   constructor(props){
     super(props);
-    const progess = ["logon"];
     this.state = JSON.parse(localStorage.getItem('formState')) || {
       logon: false,
       recipe_complete: true,
@@ -48,6 +47,8 @@ class FormController extends Component {
         return <PreferencesForm forward = {(e) => this.advance(e)}/>
       case 4:
         return <Results />
+      default:
+        return <div>ERROR</div>;
     }
   }
 

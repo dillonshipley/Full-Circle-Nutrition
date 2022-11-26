@@ -6,37 +6,17 @@ import Login from '../Login';
 import Tools from '../tools/Tools';
 import Homepage from './Homepage.js';
 
-import ReactCurvedText from "react-curved-text";
 
 
-import { ReactComponent as CalculatorImg} from './calculator.svg';
-import { ReactComponent as ToolsImg} from './tools.svg';
+
+
 
 //var cardTextOneTitle = "BUILD";
 //var cardTextOneDetail = "from the ground up"
 
 //var cardTextOneTitle = "EXPERIMENT";
 
-function Card(props){
-  let mysrc;
-  if(props.title === "BUILD")
-    mysrc = <CalculatorImg className ="homepageIcon"/>;
-  else
-    mysrc = <ToolsImg className ="homepageIcon"/>;
 
-  return (
-    <div className = "card homepageCard" id = {"homepageCard" + props.num} onClick = {props.onClick}>
-      <div className = "cardIcon">
-        {mysrc}
-      </div>
-      <div>
-        <div className = "cardSpacer"></div>
-        <div className = "cardTitle">{props.title}</div>
-        <div className = "cardInfoText">{props.text}</div>
-      </div>
-    </div>
-  );
-}
 
 class Body extends Component{
     constructor(props){
@@ -53,10 +33,6 @@ class Body extends Component{
       });
     }
 
-    reset(){
-      localStorage.clear();
-    }
-
     render(){
       if(this.state.display === "forms"){
         return (
@@ -66,22 +42,7 @@ class Body extends Component{
         )
       } else if (this.state.display === "start"){
         return (
-            <div id = "mainBodyDiv">
-                <div id = "homePageTitle">Full Circle Nutrition </div>
-                <div id = "homePageCardContainer">
-                  <div id = "homepageCircleText">
-                    <Card onClick = {(e) => this.changeDisplay("forms", e)} title = "BUILD" text = "from the ground up"/>
-                    <Card onClick = {(e) => this.changeDisplay("tools", e)} title = "USE" text = "use one of our tools"/>
-                  </div>
-                </div>
-                <div className = "homepageLoginText" onClick = {() => this.changeDisplay("login")}>
-                    Log in for the complete experience
-                </div>
-                <button onClick = {() => this.reset()}>Reset</button>
-                <div className = "homepageRegisterText">
-
-                </div>
-            </div>
+          <Homepage change = {(e) => this.changeDisplay(e)}/>
         );
       } else if (this.state.display === "results"){
           <Results />

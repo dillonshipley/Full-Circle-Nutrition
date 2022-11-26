@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class PreferencesForm extends React.Component {
+class PreferencesForm extends Component {
 
   render(){
     return(

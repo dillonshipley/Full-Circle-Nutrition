@@ -1,10 +1,10 @@
 
 const fatCals = 9;
-const proteinCals = 4;
+//const proteinCals = 4;
 const carbCals = 4;
-const alcCals = 7;
+//const alcCals = 7;
 
-const studyURL = "https://pubmed.ncbi.nlm.nih.gov/2305711/";
+//const studyURL = "https://pubmed.ncbi.nlm.nih.gov/2305711/";
 
 function LBTOKG(lb){
   return lb * .453592;
@@ -29,7 +29,7 @@ function MacroCalculator(valueData, typeData) {
       const goal = valueData[5];
 
       //console.log(weightType);
-      if(weightType == "LB")
+      if(weightType === "LB")
         weight = LBTOKG(weight)
       if(heightType === "IN")
         height = INTOCM(height)
@@ -67,6 +67,8 @@ function MacroCalculator(valueData, typeData) {
         case "rgain":
           TDEE = TDEE + 600;
           break;
+        default:
+        break;
       }
 
       //console.log("new TDEE: " + TDEE);

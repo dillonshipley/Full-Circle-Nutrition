@@ -6,7 +6,7 @@ function Selector(props){
   function setSelectedWrapper(value){
     if(optionSelected === value + "Option")
       return; //no additional logic, not switching
-    else if(optionSelected != "")
+    else if(optionSelected !== "")
       document.getElementById(optionSelected).classList.remove("selected");
 
     document.getElementById(value + "Option").classList.add("selected");
