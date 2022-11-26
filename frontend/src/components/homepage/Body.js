@@ -4,6 +4,10 @@ import FormController from '../FormController';
 import Results from '../Results';
 import Login from '../Login';
 import Tools from '../tools/Tools';
+import Homepage from './Homepage.js';
+
+import ReactCurvedText from "react-curved-text";
+
 
 import { ReactComponent as CalculatorImg} from './calculator.svg';
 import { ReactComponent as ToolsImg} from './tools.svg';
