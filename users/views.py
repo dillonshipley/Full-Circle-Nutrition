@@ -33,7 +33,6 @@ def user_interactions_by_id(request: HttpRequest, user_id: UUID) -> JsonResponse
         return patch_user_by_id(user_id=user_id, request=body)
 
     if request.method == "DELETE":
-        # TODO Delete user by id method
         return delete_user_by_id(user_id=user_id)
 
     return JsonResponse(status=405, data={})
@@ -82,8 +81,8 @@ def get_user_by_id(user_id: UUID) -> JsonResponse:
             200: Found the user object
             404: User could not be found
     """
-    status, user_or_error = User.objects.get_user_by_id(user_id=user_id)
-    if status:
+    exists, user_or_error = User.objects.get_user_by_id(user_id=user_id)
+    if exists:
         return JsonResponse(
             status=200, data={"status": "SUCCESS", "user": user_or_error.serialize()}
         )

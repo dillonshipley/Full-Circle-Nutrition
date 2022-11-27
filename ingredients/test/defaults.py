@@ -1,0 +1,22 @@
+import uuid
+
+class IngredientDefaults:
+    BASE_URL = "/v0/users"
+    INGREDIENT_ID = uuid.UUID("{f81ee084-9cef-49cc-a68c-51f17e548725}")
+    NAME = "TESTINGREDIENT"
+    VEGETARIAN=False
+    CALORIES=100
+    FAT=10
+    PROTEIN=10
+    UNITS="TBP"
+    UNITS_VERBOSE="table spoon"
+    
+    INGREDIENT_POST_REQUEST= {}
+
+    INGREDIENT_POST_SUCCESS_MESSAGE = {}
+
+    INGREDIENT_POST_FAILURE_MESSAGE = {}
+
+    INGREDIENT_PATCH_REQUEST = {}
+
+    INGREDEINT
