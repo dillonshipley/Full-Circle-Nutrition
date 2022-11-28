@@ -40,11 +40,18 @@
 }
 
 #circleRotator{
-  border: 1px solid red;
+
   width: 1620px;
   height: 1550px;
 
   margin-top: -300px;
+  margin-left: 100px;
+}
+
+#circleText {
+  width: 1620px;
+  height: 1500px;
+  margin-left: 30px;
 }
 
 #homepageCircleText{

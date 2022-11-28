@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import { ReactComponent as CalculatorImg} from './calculator.svg';
 import { ReactComponent as ToolsImg} from './tools.svg';
+import Circle from './images/circle.PNG';
 
 import ReactCurvedText from "react-curved-text";
 
@@ -40,8 +41,8 @@ class Homepage extends Component {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-        this.setState({rotation: this.state.rotation - .02} , () => {document.getElementById("circleRotator").style.transform = "rotate(" + this.state.rotation + "deg)"} );
-      }, 15);
+        this.setState({rotation: this.state.rotation - .08} , () => {document.getElementById("circleRotator").style.transform = "rotate(" + this.state.rotation + "deg)"} );
+      }, 40);
     }
 
     componentWillUnmount(){
@@ -53,7 +54,7 @@ class Homepage extends Component {
         <div id = "mainBodyDiv">
 
           <div id = "circleRotator">
-            <ReactCurvedText
+            {/*<ReactCurvedText
               width='1620'
               height='1550'
               cx='800'
@@ -67,7 +68,8 @@ class Homepage extends Component {
               textPathProps={{"fill": "#dddddd"}}
               tspanProps={null}
               ellipseProps={null}
-              svgProps={null} />
+              svgProps={null} />*/}
+              <img id = "circleText" src = {Circle} alt = "oop" />
           </div>
               <div id = "homepageCircleText">
                 <Card onClick = {(e) => this.props.change("forms", e)} title = "BUILD" text = "from the ground up"/>
