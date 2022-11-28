@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 
 import { ReactComponent as CalculatorImg} from './calculator.svg';
 import { ReactComponent as ToolsImg} from './tools.svg';

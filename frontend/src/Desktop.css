@@ -117,8 +117,8 @@
 }
 
 .card:hover{
-  box-shadow: 10px 10px 30px 2px #F9F9FB;
-  transform: translate(-3px, -2px);
+  box-shadow: 0px 0px 20px #F7F7F7;
+  transform: translate(2px, -2px);
 }
 .cardSpacer {
   margin-bottom: 20px;
