@@ -89,7 +89,7 @@ def get_user_by_id(user_id: UUID) -> JsonResponse:
 
     return JsonResponse(
         status=404,
-        data={"status": "FAILURE", "user_id": user_id, "reason": user_or_error},
+        data={"status": "FAILURE", "user_id": user_id, "reason": str(user_or_error)},
     )
 
 

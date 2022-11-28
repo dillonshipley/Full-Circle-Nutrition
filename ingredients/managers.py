@@ -4,8 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Manager
 from django.db.utils import IntegrityError
 
-from .models import Ingredient
-
 
 class IngredientManager(Manager):
     def create_ingredient(
@@ -16,7 +14,7 @@ class IngredientManager(Manager):
         fat: float,
         protein: float,
         units: str,
-    ) -> tuple[bool, (UUID | IntegrityError)]:
+    ) -> tuple:
         """Creates and validates new ingredient entries to the database. Returns the UUID 
         of the new ingredient, or an error if the operation did not complete
 
@@ -46,7 +44,7 @@ class IngredientManager(Manager):
 
     def get_ingredient_by_id(
         self, ingredient_id: UUID
-    ) -> tuple[bool, (Ingredient | ObjectDoesNotExist)]:
+    ) -> tuple:
         """Retrieve an ingredient from the database using the ingredient_id as the query
 
         Args:

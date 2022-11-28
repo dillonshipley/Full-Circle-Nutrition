@@ -28,11 +28,13 @@ class Ingredient(models.Model):
         default=uuid4(),
     )
     name = models.CharField(name="name", max_length=80, null=False, unique=True)
-    vegetarian = models.BinaryField(name="vegetarian", default=False)
-    calories = models.PostitveSmallIntegerField(
+    vegetarian = models.BooleanField(name="vegetarian", default=False)
+    calories = models.PositiveSmallIntegerField(
         name="calories", null=False, default=0, editable=True
     )
-    fat = models.PositiveSmallIntegerField(name="fat", null=False, default=0, editable=True)
+    fat = models.PositiveSmallIntegerField(
+        name="fat", null=False, default=0, editable=True
+    )
     protein = models.PositiveSmallIntegerField(
         name="protein", null=False, default=0, editable=True
     )

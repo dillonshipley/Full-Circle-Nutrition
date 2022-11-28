@@ -1,8 +1,6 @@
 import json
 import logging
-import re
 import time
-from uuid import uuid4
 
 from django.test import Client, RequestFactory, TestCase
 
@@ -18,7 +16,7 @@ class UserViewTests(TestCase):
         self.client = Client()
         return super().setUp()
 
-    def test_create_user_endpoint(self):
+    def test_create_user_endpoint(self) -> None:
         start_time = time.perf_counter()
         response = self.client.post(
             UserDefaults.BASE_URL,

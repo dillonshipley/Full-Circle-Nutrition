@@ -95,7 +95,7 @@ def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
 
     return JsonResponse(
         status=404,
-        data={"status": "FAILURE", "recipe_id": recipe_id, "reason": result},
+        data={"status": "FAILURE", "recipe_id": recipe_id, "reason": str(result)},
     )
 
 
@@ -140,11 +140,10 @@ def delete_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     """Delete a recipe from the database using the recipe id as a key
 
     Args:
-        recipe_id (UUID): The recipe that should be updated
+        recipe_id (UUID): The recipe that should be deleted
     Returns:
         JsonResponse: Response indicating the succes of the delete operation
             200: Recipe was deleted successfully
-            400: An error prevented the recipe from being deleted
             404: Recipe could not be found
     """
     result = Recipe.objects.delete_recipe_by_id(recipe_id=recipe_id)
@@ -152,7 +151,12 @@ def delete_recipe_by_id(recipe_id: UUID) -> JsonResponse:
         JsonResponse(status=200, data={"status": "SUCCESS", "recipe_id": recipe_id})
         if result
         else JsonResponse(
-            status=404, data={"status": "FAILURE", "recipe_id": recipe_id}
+            status=404,
+            data={
+                "status": "FAILURE",
+                "recipe_id": recipe_id,
+                "reason": "Recipe does not exist",
+            },
         )
     )
 

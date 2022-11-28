@@ -93,7 +93,7 @@ def get_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:
         data={
             "status": "FAILURE",
             "ingredient_id": ingredient_id,
-            "reason": ingredient_or_error,
+            "reason": str(ingredient_or_error),
         },
     )
 
@@ -141,16 +141,18 @@ def patch_ingredient_by_id(ingredient_id: UUID, request: dict) -> JsonResponse:
 
 
 def delete_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:
-    """_summary_ad request
+    """Delete a ingredient from the database using the ingredient_id as a key
 
     Args:
-        ingredient_id (UUID): _description_
+        ingredient_id (UUID): The ingredient that should be deleted
     Returns:
-        JsonResponse: _description_
+        JsonResponse: Response indicating the succes of the delete operation
+            200: Ingredient was deleted successfully
+            404: Ingredient could not be found
     """
     result = Ingredient.objects.delete_ingredients_by_id(ingredient_id=ingredient_id)
     return (
-        JsonResponse(200, data={"status": "SUCCESS", "ingredient_id": ingredient_id})
+        JsonResponse(status=200, data={"status": "SUCCESS", "ingredient_id": ingredient_id})
         if result
         else JsonResponse(
             status=404,

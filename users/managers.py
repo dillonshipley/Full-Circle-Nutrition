@@ -4,8 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Manager
 from django.db.utils import IntegrityError
 
-from .models import User
-
 
 class UserManager(Manager):
     def create_user(
