@@ -40,9 +40,8 @@ class Homepage extends Component {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-        this.setState({rotation: this.state.rotation + 1});
-        console.log(this.state.rotation);
-      }, 20);
+        this.setState({rotation: this.state.rotation - .02} , () => {document.getElementById("circleRotator").style.transform = "rotate(" + this.state.rotation + "deg)"} );
+      }, 15);
     }
 
     componentWillUnmount(){
@@ -50,22 +49,22 @@ class Homepage extends Component {
     }
 
     render(){
-      const style = {transform: "rotate(" + this.state.rotation + ")deg"}
         return(
         <div id = "mainBodyDiv">
 
-          <div id = "circleRotator" style={style}>
-            <ReactCurvedText width='1920'
-              height='1000'
-              cx='875'
-              cy='459'
+          <div id = "circleRotator">
+            <ReactCurvedText
+              width='1620'
+              height='1550'
+              cx='800'
+              cy='759'
               rx={750}
               ry={750}
               startOffset={0}
               reversed={false}
               text={circleText}
-              textProps={{"style": {"fontSize":46, "-webkit-text-stroke": "2px white"}}}
-              textPathProps={{"fill": "#000000"}}
+              textProps={{"style": {"fontSize":46, "WebkitTextStroke": "2px white"}}}
+              textPathProps={{"fill": "#dddddd"}}
               tspanProps={null}
               ellipseProps={null}
               svgProps={null} />
@@ -80,8 +79,9 @@ class Homepage extends Component {
             <div className = "homepageRegisterText">
 
             </div>
+
         </div>
-        );
+      )
     }
 }
 
