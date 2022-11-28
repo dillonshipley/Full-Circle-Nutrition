@@ -53,7 +53,23 @@ class Homepage extends Component {
         return(
         <div id = "mainBodyDiv">
 
-          <div id = "circleRotator">
+
+          <div className = "content">
+              <div id = "cardHeader">
+                take your goals -> make them your habits
+              </div>
+              <div id = "cardContainer">
+                <Card onClick = {(e) => this.props.change("forms", e)} title = "BUILD" text = "from the ground up"/>
+                <Card onClick = {(e) => this.props.change("tools", e)} title = "USE" text = "use one of our tools"/>
+              </div>
+            <div className = "homepageLoginText" onClick = {() => this.changeDisplay("login")}>
+                Log in for the complete experience
+            </div>
+            <div className = "homepageRegisterText">
+
+            </div>
+          </div>
+          <div className = "background" id = "circleRotator">
             {/*<ReactCurvedText
               width='1620'
               height='1550'
@@ -71,16 +87,6 @@ class Homepage extends Component {
               svgProps={null} />*/}
               <img id = "circleText" src = {Circle} alt = "oop" />
           </div>
-              <div id = "homepageCircleText">
-                <Card onClick = {(e) => this.props.change("forms", e)} title = "BUILD" text = "from the ground up"/>
-                <Card onClick = {(e) => this.props.change("tools", e)} title = "USE" text = "use one of our tools"/>
-              </div>
-            <div className = "homepageLoginText" onClick = {() => this.changeDisplay("login")}>
-                Log in for the complete experience
-            </div>
-            <div className = "homepageRegisterText">
-
-            </div>
 
         </div>
       )
