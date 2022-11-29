@@ -170,27 +170,88 @@
 
 /* --- SECTION 2: FORMS --- */
 #NLBioFormContainer {
-  margin-left: 10px;
   background-color: grey;
 
   text-align: left;
+  display: grid;
+  grid-template-columns: 50vw 50vw;
+
 }
+
+.BioFormColumn{
+  width: 30vw;
+  background-color: #cccccc;
+}
+
+#BioFormLeftColumn{
+  margin-left: 20vw;
+  border-right: 2px solid #ffffff;
+}
+
+#BioFormRightColumn{
+  margin-right: 20vw;
+}
+
+.BioFormLabel{
+  font-weight: 800;
+  color: #000000;
+  margin-left: 1vw;
+  padding-top: 15px;
+
+}
+
+.InputContainer{
+  float: left;
+  width: 25vw;
+}
+
+.OptionContainer{
+  float: left;
+  margin-left: 1vw;
+  width: 25vw;
+}
+
 .textInput{
   margin-top: 10px;
-  margin-left: 50px;
   margin-bottom: 25px;
 
   display: inline-block;
 
   border-radius: 2px;
-  border: 2px solid lightblue;
+  border: 2px solid #333333;
+  box-shadow: 1px 1px 3px #000000;
+}
+
+.digitInput{
+  width: 40px;
+  height: 60px;
+  margin-right: 5px;
+
+  background: var(--gradient-7);
+  text-align: center;
+  color: #eeeeee;
+  font-weight: 700;
+  font-size: 30px;
+  border-radius: 7px;
+
+  border: 2px solid black;
+
+}
+
+.digitContainer{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 20vw;
+  border: 1px solid red;
+  margin-left: 5vw;
+
 }
 
 .InputLabel{
   padding-top: 10px;
-  margin-left: 50px;
-
-  color: beige;
+  text-align: center;
+  color: #444444;
+  font-weight: 600;
 }
 #formControllerHeader {
   width: 100vw;
@@ -356,4 +417,28 @@
   0% {color: var(--indigo-1);}
   50% {color: var(--indigo-2);}
   100% {color: var(--indigo-1);}
+}
+
+/* --- SECTION 6: HEADER --- */
+#header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 6vh;
+  background-color: #dddddd;
+  border-bottom: 2px solid black;
+  z-index: 3;
+}
+
+#loginButton {
+  position: relative;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+#register {
+  position: relative;
+  margin-right: 0;
+  margin-left: auto;
 }

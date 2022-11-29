@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MacroCalculator from '../tools/MacroCalculator';
-import Selector from '../utilities/Selector'
+import TextInput from '../utilities/TextInput'
 
 const sexOptions = [{value: '', text: ''}, {value: 'M', text: 'Male'}, {value:'F', text: 'Female'}];
 const activityOptions = [{value: '', text: ''}, {value: "1.2", text: "Sedentary"}, {value: "1.375", text: "Lightly Active"}, {value: "1.55", text: "Moderately Active"}, {value: "1.725", text: "Active"}, {value: "1.9", text: "Very Active"}];
@@ -18,24 +18,6 @@ const goalOptions = [
 const ids = ["weightInput", "heightInput", "ageInput", "sexInput", "activityInput", "goalInput"]
 
 
-function TextInput(props){
-  if(props.options === null){
-    return (
-      <div id = {"current" + props.type}>
-        <p className = "InputLabel">Please enter your current {props.type}:</p>
-        <input type = "text" id = {props.type + "Input"} name = {props.type} className = "textInput"/>
-      </div>
-    );
-  } else {
-    return (
-      <div id = {"current" + props.type}>
-        <p className = "InputLabel">Please enter your current {props.type}:</p>
-        <input type = "text" id = {props.type + "Input"} name = {props.type} className = "textInput"/>
-        <Selector options = {props.options} type = {props.type} setType = {props.setType}/>
-      </div>
-    );
-  }
-}
 
 function Option(props){
   var mappingObject = null;
@@ -44,22 +26,22 @@ function Option(props){
   switch(props.name){
     case "sex":
       mappingObject = sexOptions;
-      label = "Please enter your sex:";
+      label = "Sex";
       break;
     case "activity":
       mappingObject = activityOptions;
-      label = "Please enter your activity level:";
+      label = "Activity Level:";
       break;
     case "goal":
       mappingObject = goalOptions;
-      label = "Please enter your current goal:"
+      label = "Current Goal:"
       break;
     default:
       break;
   }
 
   return (
-    <div>
+    <div className = "OptionContainer">
       <p className = "InputLabel">{label}</p>
       <select name = {props.name} id = {props.name + "Input"} className = "textInput">
         {mappingObject.map(({value, text}, index) => <option key = {text} value = {value}>{text}</option>)}
@@ -140,17 +122,23 @@ class BioForm extends Component{
 
   render(){
     return (
-      <div id = "NLBioFormContainer">
-        <form>
-          <TextInput type = "weight" options = {["LB", "KG"]} setType = {(e) => this.changeSelection(e)}/>
-          <TextInput type = "height" options = {["IN", "CM"]} setType = {(e) => this.changeSelection(e)}/>
-          <TextInput type = "age" options = {null}/>
-          <Option name = {"sex"}/>
-          <Option name = {"activity"} />
-          <Option name = {"goal"} />
-        </form>
-        <button className = "SaveButton" onClick = {() => this.calculateMacros()}>Save</button>
-        <button className = "LoginButton" onClick = {() => this.prePopulate()}>Login or Create an Account</button>
+      <div id = "BioFormScreen">
+        <div id = "NLBioFormContainer">
+          <div id = "BioFormLeftColumn" className = "BioFormColumn">
+            <p className = "BioFormLabel">Information About Your Body</p>
+            <TextInput type = "Weight" options = {["LB", "KG"]} setType = {(e) => this.changeSelection(e)}/>
+            <TextInput type = "Height" options = {["IN", "CM"]} setType = {(e) => this.changeSelection(e)}/>
+            <TextInput type = "Age" options = {null}/>
+            <Option name = {"sex"}/>
+          </div>
+          <div id= "BioFormRightColumn" className = "BioFormColumn">
+            <p className = "BioFormLabel">Information About Your Habits</p>
+            <Option name = {"activity"} />
+            <Option name = {"goal"} />
+          </div>
+          </div>
+      <button className = "SaveButton" onClick = {() => this.calculateMacros()}>Save</button>
+      <button className = "LoginButton" onClick = {() => this.prePopulate()}>Login or Create an Account</button>
       </div>
     );
   }
