@@ -1,5 +1,14 @@
-FROM python:3.11
+FROM python:3.11-slim
+
+ENV key=value
+
 WORKDIR /macros
+
 COPY ./requirements.txt /code/
+
 RUN pip install -r requirements.txt
+
 COPY . /macros/
+
+EXPOSE 8000
+CMD [ "python3.11", "manage.py", "runserver" ]

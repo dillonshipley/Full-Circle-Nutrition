@@ -37,3 +37,5 @@ Since there is no production environment yet, we should use a Postgres Docker im
 docker pull postgres
 ```
 Use/create the environment variables file at `macros-backend/.env` to store the user and password for the database instance you create. You will need to create your own username and password. I recommend using the default username and generating a random password and saving it in the `.env` file for now.
+
+## Build Backend Docker Image
