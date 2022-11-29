@@ -16,9 +16,11 @@ function Selector(props){
 
   return (
     <div className = "selectorContainer">
-        {props.options?.map(option => (
-          <div id = {option + "Option"} className = "selectorOption" key = {option} onClick = {(e) => setSelectedWrapper(option)}>{option}</div>
-        ))}
+      <div className = "selectorGrid">
+          {props.options?.map(option => (
+            <div id = {option + "Option"} className = "selectorOption" key = {option} onClick = {(e) => setSelectedWrapper(option)}>{option}</div>
+          ))}
+      </div>
     </div>
   );
 }
