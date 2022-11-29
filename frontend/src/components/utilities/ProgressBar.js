@@ -1,3 +1,5 @@
+import './ProgressBar.css';
+
 function Segment(props){
   if(props.num < props.selected){
     return <div id = {"PB" + props.num} className = "progressBarSegment completed"></div>

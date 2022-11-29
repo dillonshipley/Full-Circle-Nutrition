@@ -52,8 +52,6 @@ class Homepage extends Component {
     render(){
         return(
         <div id = "mainBodyDiv">
-
-
           <div className = "content">
               <div id = "cardHeader">
                 take your goals -> make them your habits

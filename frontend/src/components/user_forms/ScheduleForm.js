@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DaySelectorBlock from '../utilities/DaySelectorBlock';
-
+import './ScheduleForm.css';
 
 class ScheduleForm extends Component{
 

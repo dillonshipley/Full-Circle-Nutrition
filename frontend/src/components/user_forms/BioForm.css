@@ -1,0 +1,113 @@
+#NLBioFormContainer {
+  background-color: grey;
+
+  text-align: left;
+  display: grid;
+  grid-template-columns: 50vw 50vw;
+
+}
+
+.BioFormColumn{
+  width: 30vw;
+  background-color: #cccccc;
+}
+
+#BioFormLeftColumn{
+  margin-left: 20vw;
+  border-right: 2px solid #ffffff;
+}
+
+#BioFormRightColumn{
+  margin-right: 20vw;
+}
+
+.BioFormLabel{
+  font-weight: 800;
+  color: #000000;
+  margin-left: 1vw;
+  padding-top: 15px;
+
+}
+
+.InputContainer{
+  float: left;
+  width: 25vw;
+}
+
+.OptionContainer{
+  float: left;
+  margin-left: 1vw;
+  width: 25vw;
+}
+
+.textInput{
+  margin-top: 10px;
+  margin-bottom: 25px;
+
+  display: inline-block;
+
+  border-radius: 2px;
+  border: 2px solid #333333;
+  box-shadow: 1px 1px 3px #000000;
+}
+
+.digitInput{
+  width: 40px;
+  height: 60px;
+  margin-right: 5px;
+
+  background: var(--gradient-7);
+  text-align: center;
+  color: #eeeeee;
+  font-weight: 700;
+  font-size: 30px;
+  border-radius: 7px;
+
+  border: 2px solid black;
+
+}
+
+.digitContainer{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 20vw;
+  border: 1px solid red;
+  margin-left: 5vw;
+
+}
+
+.InputLabel{
+  padding-top: 10px;
+  text-align: center;
+  color: #444444;
+  font-weight: 600;
+}
+
+.selectorContainer{
+  margin-left: 25px;
+
+  width: 105px;
+  display: inline-grid;
+
+  grid-template-columns: 50px 50px;
+  border-radius: 5px;
+
+  border: 3px solid #444444;
+}
+.selectorOption{
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: #dddddd;
+
+  color: #222222;
+  font-weight: 700px;
+
+  border-left: 2px solid #444444;
+  border-right: 2px solid #444444;
+
+}
+
+.selected{
+  background-color: #444444;
+}

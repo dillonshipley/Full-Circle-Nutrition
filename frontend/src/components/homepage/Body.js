@@ -6,17 +6,7 @@ import Login from '../Login';
 import Tools from '../tools/Tools';
 import Homepage from './Homepage.js';
 
-
-
-
-
-
-//var cardTextOneTitle = "BUILD";
-//var cardTextOneDetail = "from the ground up"
-
-//var cardTextOneTitle = "EXPERIMENT";
-
-
+import './Homepage.css';
 
 class Body extends Component{
     constructor(props){
