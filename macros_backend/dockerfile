@@ -1,0 +1,5 @@
+FROM python:3.11
+WORKDIR /macros
+COPY ./requirements.txt /code/
+RUN pip install -r requirements.txt
+COPY . /macros/
