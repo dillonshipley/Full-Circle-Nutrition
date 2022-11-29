@@ -1,7 +1,7 @@
 from django.urls import path
 
 import users
-from users.views import create_user, user_interactions_by_id
+from .views import create_user, user_interactions_by_id
 
 API_VERSION = f"{users.API_VERSION}"
 

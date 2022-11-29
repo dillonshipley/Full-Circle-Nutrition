@@ -39,15 +39,15 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "{levelname} [{asctime}] | {name} {module} {message}",
+            "format": "{levelname}\t[{asctime}] | {name} {module} {message}",
             "style": "{",
         },
         "simple": {
-            "format": "{levelname} [{asctime}] | {message}",
+            "format": "{levelname}\t[{asctime}] | {message}",
             "style": "{",
         },
         "test": {
-            "format": "{levelname} [{asctime}] | Filename: {module} Test method: {funcName} Output: {message}",
+            "format": "{levelname}\t[{asctime}] | Filename: {module} Test method: {funcName} Output: {message}",
             "style": "{",
         },
     },

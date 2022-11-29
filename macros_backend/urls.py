@@ -25,4 +25,5 @@ urlpatterns = [
     path("docs/", schema_view.with_ui()),
     path("", include("recipes.urls")),
     path("", include("users.urls")),
+    path("", include("ingredients.urls"))
 ]
