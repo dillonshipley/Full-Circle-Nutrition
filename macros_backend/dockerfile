@@ -1,14 +1,18 @@
 FROM python:3.11-slim
 
-ENV key=value
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 WORKDIR /macros
 
-COPY ./requirements.txt /code/
+COPY ./requirements.txt .
+COPY ./macros_backend/ .
+COPY ./recipes/ .
+COPY ./ingredients/ .
+COPY ./static/ .
+COPY manage.py .
 
 RUN pip install -r requirements.txt
-
-COPY . /macros/
 
 EXPOSE 8000
 CMD [ "python3.11", "manage.py", "runserver" ]
