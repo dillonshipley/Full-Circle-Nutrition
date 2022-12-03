@@ -38,14 +38,16 @@ export default function Option(props){
 
   const change = event => {
     console.log(event.target.value);
-    props.setVal(event.taret.value);
+    props.setVal(event.target.value);
   }
 
   return (
     <div className = "OptionContainer">
       <p className = "InputLabel">{label}</p>
       <select onChange = {change} name = {props.name} id = {props.name + "Input"} className = "textInput">
-        {mappingObject.map(({value, text}, index) => {<option key = {text} value = {value}>{text}</option>})}
+        {mappingObject.map(option => (
+          <option key = {option.text} value = {option.value}>{option.text}</option>
+        ))}
       </select>
     </div>
   );
