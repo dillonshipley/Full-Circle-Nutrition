@@ -3,10 +3,11 @@ import DaySelectorBlock from '../utilities/DaySelectorBlock';
 import './ScheduleForm.css';
 
 import Option from '../utilities/Option';
+import TextInput from '../utilities/TextInput';
 
 
 const days = [
-  "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+  '', "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 ];
 
 class ScheduleForm extends Component{
@@ -54,6 +55,8 @@ class ScheduleForm extends Component{
       case "firstDay":
         this.setState({firstDay: value});
         break;
+      case "firstDayMeals":
+        this.setState({firstDayMeals: value});
       default:
         break;
     }
@@ -64,8 +67,12 @@ class ScheduleForm extends Component{
   render(){
     return (
         <div>
-
-            <Option vals = {days} setVal = {(e) => this.change("firstDay", e)} name = {"day"} />
+            <Option vals = {days} setVal = {(e) => this.change("firstDay", e)} name = {"day"} settings = "wholeline"/>
+            <TextInput type = "firstDayMeals" setVal = {(e) => this.change("firstDayMeals", e)} settings = "wholeline"/>
+            {this.state.firstDay != null && (
+              <DaySelectorBlock day = {this.state.firstDay} increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)} />
+            )}
+            {/*
             <table>
               <tr>
                 <td className = "scheduleGridLabel">Please choose your meals per day</td>
@@ -81,7 +88,7 @@ class ScheduleForm extends Component{
               <DaySelectorBlock day = "Thursday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
               <DaySelectorBlock day = "Friday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
               <DaySelectorBlock day = "Saturday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-            </div>
+            </div>*/}
             <button onClick = {() => this.finish()}>Save</button>
         </div>
     );

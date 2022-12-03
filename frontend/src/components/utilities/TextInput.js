@@ -48,21 +48,36 @@ function InputBlock(props){
   let divClass = props.type + "DigitContainer digitContainer"
 
   return (
-    <div className = {divClass}>
+    <div id = {props.type + "Container"} className = {divClass}>
       {[...Array(props.n)].map((e, i) => <input type = "text" maxLength = "1" id = {props.type + "DigitInput" + i} className="digitInput" key={i}></input>)}
     </div>
   );
 }
 
 export default function TextInput(props){
+  const [label, setLabel] = useState(null);
   const [n, setN] = useState(() => {
     switch(props.type){
       case "Weight":
+        setLabel(props.type);
         return 3;
       case "Height":
+        setLabel(props.type);
         return 2;
       case "Age":
-        return 2
+        setLabel(props.type);
+        return 2;
+      case "firstDayMeals":
+        setLabel("How many meals will you eat after finishing prep?");
+        return 1;
+    }
+  });
+
+  useEffect(() => {
+    if(props.settings != null && props.settings.includes("wholeline")){
+      document.getElementById("current" + props.type).classList.add("wholeline");
+      document.getElementById(props.type + "InputLabel").classList.add("wholeline");
+      document.getElementById(props.type + "Container").classList.add("wholeline");
     }
   });
 
@@ -70,8 +85,8 @@ export default function TextInput(props){
 
   return(
     <div id = {"current" + props.type} className = "InputContainer">
-      <p className = "InputLabel">{props.type}</p>
-      <InputBlock type = {props.type} edit = {(e) => {setVal(e); props.setVal(e)}}className = "digitContainer" n = {n} />
+      <div id = {props.type + "InputLabel"} className = "InputLabel">{label}</div>
+      <InputBlock type = {props.type} edit = {(e) => {setVal(e); props.setVal(e)}} id = {props.type + "Container"} className = "digitContainer" n = {n} />
      {(props.options != null) && <Selector options = {props.options} type = {props.type} setType = {(e) => props.setType(e)}/>}
      </div>
   );

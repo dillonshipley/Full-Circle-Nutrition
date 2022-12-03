@@ -13,8 +13,6 @@
   text-align: center;
 }
 
-/* --- SECTION 2: FORMS --- */
-
 #formControllerHeader {
   width: 100vw;
   display: inline-grid;
@@ -22,8 +20,6 @@
   border: 1px dotted red;
 }
 
-
-/*  --- SECTION 3: BIOFORM --- */
 
 .backButton {
   text-align: left;
@@ -42,7 +38,6 @@
   margin-bottom: 25px;
 }
 
-/* --- SECTION 4: SCHEDULE INFO --- */
 
 /*  --- SECTION 5: ANIMATIONS --- */
 @keyframes fade {

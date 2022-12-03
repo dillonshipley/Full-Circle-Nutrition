@@ -1,0 +1,101 @@
+.InputContainer{
+  float: left;
+  width: 30vw;
+}
+
+.OptionContainer{
+  display: inline-block;
+  text-align: center;
+  width: 30vw;
+}
+
+.InputLabel{
+  padding-top: 25px;
+  text-align: center;
+  color: #444444;
+  font-weight: 700;
+}
+
+
+
+.textInput{
+  margin-top: 10px;
+  margin-bottom: 25px;
+
+  display: inline-block;
+
+  border-radius: 6px;
+  text-align: left;
+  border: 2px solid #333333;
+  box-shadow: 1px 1px 3px #000000;
+}
+
+.digitInput{
+  width: 40px;
+  height: 60px;
+  margin-right: 5px;
+
+  background: rgb(105,105,105);
+  background: linear-gradient(0deg, rgba(105,105,105,1) 0%, rgba(29,29,29,1) 65%, rgba(0,0,0,1) 100%);text-align: center;
+
+  color: #eeeeee;
+  font-weight: 700;
+  font-size: 30px;
+  border-radius: 7px;
+
+  border: 2px solid black;
+
+  display: inline-block;
+
+}
+
+.digitContainer{
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  width: 20vw;
+  margin-left: 5vw;
+
+}
+
+.selectorContainer{
+  width: 30vw;
+  margin-left: 0vw;
+  display: inline-block;
+  text-align: center;
+
+}
+
+.selectorGrid{
+  width: 105px;
+  height: 36px;
+
+  display: inline-grid;
+  grid-template-columns: 50px 50px;
+  border-radius: 5px;
+
+  border: 3px solid #444444;
+}
+
+.selectorOption{
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: #dddddd;
+
+  color: #222222;
+  font-weight: 700px;
+
+  border-left: 2px solid #444444;
+  border-right: 2px solid #444444;
+
+}
+
+.selected{
+  background-color: #999999;
+}
+
+.wholeline{
+  width: 100vw;
+  margin-left: 0;
+}

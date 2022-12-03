@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
+import './Utilities.css';
+
 export default function Option(props){
   const [val, setVal] = useState('');
   const [dictionary, setDictionary] = useState();
@@ -23,6 +25,10 @@ export default function Option(props){
       default:
         break;
     }
+    if(props.settings != null && props.settings.includes("wholeline")){
+      document.getElementById(props.name + "OptionDiv").classList.add("wholeline");
+      document.getElementById(props.name + "OptionLabel").classList.add("wholeline");
+    }
   })
 
   const change = event => {
@@ -31,8 +37,8 @@ export default function Option(props){
   }
 
   return (
-    <div className = "OptionContainer">
-      <p className = "InputLabel">{label}</p>
+    <div id = {props.name  + "OptionDiv"}className = "OptionContainer">
+      <div id = {props.name + "OptionLabel"} className = "InputLabel">{label}</div>
       <select onChange = {change} name = {props.name} id = {props.name + "Input"} className = "textInput">
         {props.vals.map(option => (
           <option key = {option} value = {option}>{option}</option>
