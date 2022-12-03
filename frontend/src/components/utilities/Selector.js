@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Selector(props){
-  const [optionSelected, setOptionSelected] = useState("");
+  const [optionSelected, setOptionSelected] = useState(props.options[0]);
+
+  useEffect(() => {
+    document.getElementById(optionSelected + "Option").classList.add("selected");
+  });
 
   function setSelectedWrapper(value){
-    if(optionSelected === value + "Option")
+    if(optionSelected ===  value)
       return; //no additional logic, not switching
-    else if(optionSelected !== "")
-      document.getElementById(optionSelected).classList.remove("selected");
 
+    document.getElementById(optionSelected + "Option").classList.remove("selected");
     document.getElementById(value + "Option").classList.add("selected");
-    setOptionSelected(value + "Option");
-    props.setType({type: props.type + "Type", option: value})
+    setOptionSelected(value);
+    props.setType(value);
   }
 
   return (

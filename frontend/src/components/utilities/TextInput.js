@@ -21,12 +21,13 @@ function InputBlock(props){
         var target = e.target;
         var maxLength = parseInt(target.attributes["maxlength"].value, 10);
         var myLength = target.value.length;
-        console.log(target.id);
         if (myLength >= maxLength) {
           var next = target.nextElementSibling;
-          if (next == null)
-              setVal(concatVals(props.n, props.type));
-          else
+          if (next == null){
+              let value = concatVals(props.n, props.type);
+              setVal(value);
+              props.edit(value)
+          }else
                 next.focus();
       }
     // Move to previous field if empty (user pressed backspace)
@@ -65,11 +66,13 @@ export default function TextInput(props){
     }
   });
 
+  const [val, setVal] = useState(0);
+
   return(
     <div id = {"current" + props.type} className = "InputContainer">
       <p className = "InputLabel">{props.type}</p>
-      <InputBlock type = {props.type} className = "digitContainer" n = {n} />
-     {(props.options != null) && <Selector options = {props.options} type = {props.type} setType = {props.setType}/>}
+      <InputBlock type = {props.type} edit = {(e) => {setVal(e); props.setVal(e)}}className = "digitContainer" n = {n} />
+     {(props.options != null) && <Selector options = {props.options} type = {props.type} setType = {(e) => props.setType(e)}/>}
      </div>
   );
 }

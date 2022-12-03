@@ -1,63 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import MacroCalculator from '../tools/MacroCalculator';
-import TextInput from '../utilities/TextInput'
+import TextInput from '../utilities/TextInput';
+import Option from '../utilities/Option'
 
 import './BioForm.css';
 
-const sexOptions = [{value: '', text: ''}, {value: 'M', text: 'Male'}, {value:'F', text: 'Female'}];
-const activityOptions = [{value: '', text: ''}, {value: "1.2", text: "Sedentary"}, {value: "1.375", text: "Lightly Active"}, {value: "1.55", text: "Moderately Active"}, {value: "1.725", text: "Active"}, {value: "1.9", text: "Very Active"}];
-const goalOptions = [
-  {value: '', text: ''},
-  {value: 'rloss', text: 'Rapid Loss'},
-  {value:'mloss', text: 'Moderate Loss'},
-  {value:'sloss', text: 'Slight Loss'},
-  {value:'netural', text: 'Neutral'},
-  {value:'sgain', text: 'Slight Gain'},
-  {value:'mgain', text: 'Moderate Gain'},
-  {value:'rgain', text: 'Rapid Gain'}
-];
+const ids = ["sexInput", "activityInput", "goalInput"]
 
-const ids = ["weightInput", "heightInput", "ageInput", "sexInput", "activityInput", "goalInput"]
-
-
-
-function Option(props){
-  var mappingObject = null;
-  var label = "";
-
-  switch(props.name){
-    case "sex":
-      mappingObject = sexOptions;
-      label = "Sex";
-      break;
-    case "activity":
-      mappingObject = activityOptions;
-      label = "Activity Level:";
-      break;
-    case "goal":
-      mappingObject = goalOptions;
-      label = "Current Goal:"
-      break;
-    default:
-      break;
-  }
-
-  return (
-    <div className = "OptionContainer">
-      <p className = "InputLabel">{label}</p>
-      <select name = {props.name} id = {props.name + "Input"} className = "textInput">
-        {mappingObject.map(({value, text}, index) => <option key = {text} value = {value}>{text}</option>)}
-      </select>
-    </div>
-  );
-}
 
 class BioForm extends Component{
   constructor(props){
     super(props);
     this.state = {
       macros: [],
-      loading: false,
       weightType: "LB",
       heightType: "IN"
     }
@@ -73,42 +28,48 @@ class BioForm extends Component{
     }
   }
 
-  changeSelection(props){
-    switch(props.type){
-      case "weightType":
-        this.setState({weightType: props.option});
+  changeSelection(type, value){
+    switch(type){
+      case "weight":
+        console.log(value);
+        this.setState({weightType: value});
         break;
-      case "heightType":
-        this.setState({heightType: props.option});
+      case "height":
+        console.log(value);
+        this.setState({heightType: value});
         break;
       default:
         break;
     }
   }
 
-  prePopulate(){
-    document.getElementById("weightInput").value = 195;
-    document.getElementById("heightInput").value = 71;
-    document.getElementById("ageInput").value = 21;
-    document.getElementById("sexInput").value = 'M';
-    document.getElementById("activityInput").value = '1.2';
-    document.getElementById("goalInput").value = 'rloss';
+  change(type, value){
+    switch(type){
+      case "weight":
+        this.setState({weight: value});
+        break;
+      case "height":
+        this.setState({height: value});
+        break;
+      case "age":
+        this.setState({age: value});
+        break;
+      case "sex":
+        this.setState({sex: value});
+        break;
+      case "activity":
+        this.setState({activity: value});
+        break;
+      case "goal":
+        this.setState({goal: value});
+        break;
+    }
   }
 
   calculateMacros(){
-    const valueData = [];
-    for(let i = 0; i < ids.length; i++){
-      let element = document.getElementById(ids[i]);
-      if(element.value === ''){
-        this.error();
-        return;
-      } else {
-        if(isNaN(element.value))
-          valueData.push(element.value);
-        else
-          valueData.push(parseInt(element.value));
-      }
-    }
+
+    let valueData = [this.state.weight, this.state.height, this.state.age, this.state.sex, this.state.activity, this.state.goal]
+    ids.forEach(element => valueData.push(document.getElementById(element).value))
 
     const typeData = [];
     typeData.push(this.state.weightType);
@@ -128,15 +89,15 @@ class BioForm extends Component{
         <div id = "NLBioFormContainer">
           <div id = "BioFormLeftColumn" className = "BioFormColumn">
             <p className = "BioFormLabel">Information About Your Body</p>
-            <TextInput type = "Weight" options = {["LB", "KG"]} setType = {(e) => this.changeSelection(e)}/>
-            <TextInput type = "Height" options = {["IN", "CM"]} setType = {(e) => this.changeSelection(e)}/>
-            <TextInput type = "Age" options = {null}/>
-            <Option name = {"sex"}/>
+            <TextInput type = "Weight" options = {["LB", "KG"]} setVal = {(e) => this.change("weight", e)} setType = {(e) => this.changeSelection("weight", e)}/>
+            <TextInput type = "Height" options = {["IN", "CM"]} setVal = {(e) => this.change("height", e)} setType = {(e) => this.changeSelection("height", e)}/>
+            <TextInput type = "Age" setVal = {(e) => this.change("age", e)} options = {null}/>
+            <Option setVal = {(e) => this.change("sex", e)} name = {"sex"}/>
           </div>
           <div id= "BioFormRightColumn" className = "BioFormColumn">
             <p className = "BioFormLabel">Information About Your Habits</p>
-            <Option name = {"activity"} />
-            <Option name = {"goal"} />
+            <Option setVal = {(e) => this.change("sex", e)} name = {"activity"} />
+            <Option setVal = {(e) => this.change("sex", e)} name = {"goal"} />
           </div>
           </div>
       <button className = "SaveButton" onClick = {() => this.calculateMacros()}>Save</button>
