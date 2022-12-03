@@ -1,4 +1,7 @@
 
+const activityOptions = [{value: '', text: ''}, {value: "1.2", text: "Sedentary"}, {value: "1.375", text: "Lightly Active"}, {value: "1.55", text: "Moderately Active"}, {value: "1.725", text: "Active"}, {value: "1.9", text: "Very Active"}];
+
+
 const fatCals = 9;
 //const proteinCals = 4;
 const carbCals = 4;

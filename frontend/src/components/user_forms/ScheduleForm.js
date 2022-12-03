@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import DaySelectorBlock from '../utilities/DaySelectorBlock';
 import './ScheduleForm.css';
 
+import Option from '../utilities/Option';
+
+
+const days = [
+  "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+];
+
 class ScheduleForm extends Component{
 
   constructor(props){
@@ -42,9 +49,23 @@ class ScheduleForm extends Component{
     this.props.forward(scheduleArray);
   }
 
+  change(type, value){
+    switch(type){
+      case "firstDay":
+        this.setState({firstDay: value});
+        break;
+      default:
+        break;
+    }
+  }
+
+
+
   render(){
     return (
         <div>
+
+            <Option vals = {days} setVal = {(e) => this.change("firstDay", e)} name = {"day"} />
             <table>
               <tr>
                 <td className = "scheduleGridLabel">Please choose your meals per day</td>

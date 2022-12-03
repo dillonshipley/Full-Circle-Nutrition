@@ -6,7 +6,11 @@ import Option from '../utilities/Option'
 import './BioForm.css';
 
 const ids = ["sexInput", "activityInput", "goalInput"]
-
+const sexOptions = ['', 'Male', 'Female'];
+const activityOptions = ['', "Sedentary", "Lightly Active", "Moderately Active", "Active", "Very Active"];
+const goalOptions = [
+'', 'Rapid Loss', 'Moderate Loss', 'Slight Loss', 'Neutral','Slight Gain','Moderate Gain', 'Rapid Gain'
+];
 
 class BioForm extends Component{
   constructor(props){
@@ -92,12 +96,12 @@ class BioForm extends Component{
             <TextInput type = "Weight" options = {["LB", "KG"]} setVal = {(e) => this.change("weight", e)} setType = {(e) => this.changeSelection("weight", e)}/>
             <TextInput type = "Height" options = {["IN", "CM"]} setVal = {(e) => this.change("height", e)} setType = {(e) => this.changeSelection("height", e)}/>
             <TextInput type = "Age" setVal = {(e) => this.change("age", e)} options = {null}/>
-            <Option setVal = {(e) => this.change("sex", e)} name = {"sex"}/>
+            <Option setVal = {(e) => this.change("sex", e)} vals = {sexOptions} name = {"sex"}/>
           </div>
           <div id= "BioFormRightColumn" className = "BioFormColumn">
             <p className = "BioFormLabel">Information About Your Habits</p>
-            <Option setVal = {(e) => this.change("sex", e)} name = {"activity"} />
-            <Option setVal = {(e) => this.change("sex", e)} name = {"goal"} />
+            <Option setVal = {(e) => this.change("sex", e)} vals = {activityOptions} name = {"activity"} />
+            <Option setVal = {(e) => this.change("sex", e)} vals = {goalOptions} name = {"goal"} />
           </div>
           </div>
       <button className = "SaveButton" onClick = {() => this.calculateMacros()}>Save</button>
