@@ -62,7 +62,10 @@ class ScheduleForm extends Component{
     }
   }
 
-
+  getNextDay(firstDay){
+    let index = days.indexOf(firstDay);
+    return days[(index + 1) % 7];
+  }
 
   render(){
     return (
@@ -70,26 +73,9 @@ class ScheduleForm extends Component{
             <Option vals = {days} setVal = {(e) => this.change("firstDay", e)} name = {"day"} settings = "wholeline"/>
             <TextInput type = "firstDayMeals" setVal = {(e) => this.change("firstDayMeals", e)} settings = "wholeline"/>
             {this.state.firstDay != null && (
-              <DaySelectorBlock day = {this.state.firstDay} increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)} />
+              <DaySelectorBlock day = {this.getNextDay(this.state.firstDay)} increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)} />
             )}
-            {/*
-            <table>
-              <tr>
-                <td className = "scheduleGridLabel">Please choose your meals per day</td>
-                <td className = "scheduleGridLabel">Meals</td>
-                <td className = "scheduleGridLabel">Snacks</td>
-              </tr>
-            </table>
-            <div id = "scheduleGrid">
-              <DaySelectorBlock day = "Sunday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Monday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Tuesday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Wednesday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Thursday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Friday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Saturday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-            </div>*/}
-            <button onClick = {() => this.finish()}>Save</button>
+            <button id = "advanceToPreferences" onClick = {() => this.finish()}>Save</button>
         </div>
     );
     }

@@ -1,36 +1,4 @@
-.daySelectorCB{
-  display: inline-block;
-  margin-top: 20px;
-  height: 60px;
-  width: 100vw;
-  border-radius: 5px;
-  border: 1px solid black;
 
-}
-
-.counterDiv {
-  display: inline-block;
-
-  width: 25px;
-  height: 25px;
-  line-height: 20px;
-
-  font-size: 20px;
-  text-align: center;
-}
-
-.dayLabel {
-  display: inline-block;
-  width: 10vw;
-  line-height: 60px;
-}
-
-.counterDivSymbol{
-  border-radius: 100%;
-  background-color: #444444;
-  font-weight: 900;
-  color: #ffffff;
-}
 
 .scheduleContainer {
   margin-top: 5vh;
@@ -47,15 +15,6 @@
   grid-column-end: 3;
 }
 
-.scheduleGrid {
-
-}
-
-.counterContainer {
-  width: 20vw;
-  display: inline;
-
-
-  margin-right: 20px;
-  margin-left: 20px;
+#advanceToPreferences {
+  margin-top: 30px;
 }

@@ -16,8 +16,6 @@
   font-weight: 700;
 }
 
-
-
 .textInput{
   margin-top: 10px;
   margin-bottom: 25px;
@@ -98,4 +96,68 @@
 .wholeline{
   width: 100vw;
   margin-left: 0;
+}
+
+.daySelectorCB{
+  margin-top: 10px;
+  margin-left: 35vw;
+  display: flex;
+  height: 80px;
+  width: 30vw;
+  border-radius: 5px;
+  border: 1px solid black;
+
+}
+
+.daySelectorGrid{
+  margin-top: 0;
+  display: inline-grid;
+  grid-template-rows: 30px 50px;
+}
+
+.daySelectorLower{
+  border: 1px solid blue;
+  justify-content: left;
+}
+
+.daySelectorUpper {
+  border: 1px solid red;
+}
+
+.dayDetailLabel {
+  display: inline-block;
+  width: 100px;
+}
+
+.counterContainer {
+  width: 100px;
+  height: 50px;
+
+  margin-left: 0;
+  border: 1px solid green;
+}
+
+
+.counterDiv {
+  display: inline-block;
+
+  width: 25px;
+  height: 25px;
+  line-height: 20px;
+
+  font-size: 20px;
+  text-align: ceter;
+}
+
+.dayLabel {
+  display: inline-block;
+  width: 10vw;
+  line-height: 80px;
+}
+
+.counterDivSymbol{
+  border-radius: 100%;
+  background-color: #444444;
+  font-weight: 900;
+  color: #ffffff;
 }

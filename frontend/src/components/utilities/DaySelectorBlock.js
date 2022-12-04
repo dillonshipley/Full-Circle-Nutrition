@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import './Utilities.css';
+
 function Counter(props){
   return (
     <div className = "counterContainer">
@@ -57,10 +59,19 @@ class DaySelectorBlock extends Component{
     return (
       <div className = "daySelectorCB">
         <div className = "dayLabel">{this.props.day}</div>
-        <Counter className = "counter" num = {this.state.MPD} type = "MPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
-        <Counter className = "counter" num = {this.state.SPD} type = "SPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
-        <input type = "checkbox"></input>
-        <input type = "checkbox"></input>
+        <div className = "daySelectorGrid">
+          <div className = "daySelectorUpper">
+            <div className = "dayDetailLabel">Meals</div>
+            <div className = "dayDetailLabel">Snacks</div>
+            <div className = "dayDetailLabel">Breakfast?</div>
+          </div>
+          <div className = "daySelectorLower">
+            <Counter className = "counter" num = {this.state.MPD} type = "MPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
+            <Counter className = "counter" num = {this.state.SPD} type = "SPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
+            {/*}<input type = "checkbox"></input>
+            //<input type = "checkbox"></input>*/}
+          </div>
+        </div>
       </div>
     )
   }
