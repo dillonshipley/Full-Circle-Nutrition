@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DaySelectorBlock from '../utilities/DaySelectorBlock';
 import './ScheduleForm.css';
 
-import { ReactComponent as DownArrowImg} from './downArrow.png';
+//import { ReactComponent as DownArrowImg} from './downArrow.png';
 
 import Option from '../utilities/Option';
 import TextInput from '../utilities/TextInput';
@@ -15,7 +15,7 @@ const days = [
 function ScheduleOption(props){
   return (
     <div className = "scheduleOptionContainer">
-      {props.type === "repeat" && <DownArrowImg />}
+      {/*props.type === "repeat" && <DownArrowImg />*/}
       <p>icon</p>
       <div id = "scheduleOptionLabelText">{props.label}</div>
     </div>
