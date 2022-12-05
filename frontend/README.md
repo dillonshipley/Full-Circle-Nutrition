@@ -68,3 +68,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+___
+
+Build front end Docker Image
+From the root `/macros/` directory, run these commands to build the front end application Docker image
+
+```bash
+docker build . -t macros-frontend -f ./frontend/Dockerfile
+```
+
+```bash
+docker run --name macros-frontend-server --env-file ./frontend/.env -p 3000:3000 macros-frontend
+```
