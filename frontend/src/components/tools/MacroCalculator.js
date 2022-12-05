@@ -1,7 +1,3 @@
-
-const activityOptions = [{value: '', text: ''}, {value: "1.2", text: "Sedentary"}, {value: "1.375", text: "Lightly Active"}, {value: "1.55", text: "Moderately Active"}, {value: "1.725", text: "Active"}, {value: "1.9", text: "Very Active"}];
-
-
 const fatCals = 9;
 //const proteinCals = 4;
 const carbCals = 4;
@@ -37,44 +33,58 @@ function MacroCalculator(valueData, typeData) {
       if(heightType === "IN")
         height = INTOCM(height)
 
+      let activityRatio = 0;
+      switch(activity){
+        case "Sedentary":
+          activityRatio = 1.2;
+          break;
+        case "Lightly Active":
+          activityRatio = 1.375;
+          break;
+        case "Moderately Active":
+          activityRatio = 1.55;
+          break;
+        case "Active":
+          activityRatio = 1.725;
+          break;
+        case "Very Active":
+          activityRatio = 1.9;
+          break;
+        default:
+          break;
+      }
+
       //weight in kg
       //height in cm
-      var REE = (10 * weight) + (6.25 * height) + (5 * age);
-      //console.log(REE);
-      if(sex === "M")
-        REE = REE + 5;
-      else
-        REE = REE - 161;
+      let REE = (10 * weight) + (6.25 * height) + (5 * age);
+      REE = (sex === "M") ? (REE + 5) : (REE + 161);
 
-       var TDEE = Math.round(REE * activity);
-       console.log("TDEE: " + TDEE);
+      var TDEE = Math.round(REE * activityRatio);
 
       switch(goal){
-        case "rloss":
+        case "Rapid Loss":
           TDEE = TDEE - 600;
           break;
-        case "mloss":
+        case "Moderate Loss":
           TDEE = TDEE - 400;
           break;
-        case "sloss":
+        case "Slight Loss":
           TDEE = TDEE - 250;
           break;
-        case "netural":
+        case "Neutral":
             break;
-        case "sgain":
+        case "Slight Gain":
           TDEE = TDEE + 250;
           break;
-        case "mgain":
+        case "Moderate Gain":
           TDEE = TDEE + 400;
           break;
-        case "rgain":
+        case "Rapid Gain":
           TDEE = TDEE + 600;
           break;
         default:
         break;
       }
-
-      //console.log("new TDEE: " + TDEE);
 
        var protein = Math.round(KGTOLB(weight));
        var calsFromProtein = 4 * weight;

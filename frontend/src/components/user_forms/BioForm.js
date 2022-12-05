@@ -71,19 +71,10 @@ class BioForm extends Component{
   }
 
   calculateMacros(){
+    let valueData = [this.state.weight, this.state.height, this.state.age, this.state.sex, this.state.activity, this.state.goal];
+    const typeData = [this.state.weightType, this.state.HeightType];
 
-    let valueData = [this.state.weight, this.state.height, this.state.age, this.state.sex, this.state.activity, this.state.goal]
-    ids.forEach(element => valueData.push(document.getElementById(element).value))
-
-    const typeData = [];
-    typeData.push(this.state.weightType);
-    typeData.push(this.state.heightType);
-
-    this.setState({loading: true});
     var macroArray = MacroCalculator(valueData, typeData);
-    this.setState({macros: macroArray}, () => {
-        this.setState({loading: false});
-    });
     this.props.forward(macroArray);
   }
 
@@ -100,8 +91,8 @@ class BioForm extends Component{
           </div>
           <div id= "BioFormRightColumn" className = "BioFormColumn">
             <p className = "BioFormLabel">Information About Your Habits</p>
-            <Option setVal = {(e) => this.change("sex", e)} vals = {activityOptions} name = {"activity"} />
-            <Option setVal = {(e) => this.change("sex", e)} vals = {goalOptions} name = {"goal"} />
+            <Option setVal = {(e) => this.change("activity", e)} vals = {activityOptions} name = {"activity"} />
+            <Option setVal = {(e) => this.change("goal", e)} vals = {goalOptions} name = {"goal"} />
           </div>
           </div>
       <button className = "SaveButton" onClick = {() => this.calculateMacros()}>Save</button>
