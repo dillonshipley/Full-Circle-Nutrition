@@ -98,6 +98,10 @@
   margin-left: 0;
 }
 
+.condense {
+  padding-top: 0px;
+}
+
 .daySelectorCB{
   margin-top: 10px;
   margin-left: 35vw;
@@ -116,12 +120,10 @@
 }
 
 .daySelectorLower{
-  border: 1px solid blue;
   justify-content: left;
 }
 
 .daySelectorUpper {
-  border: 1px solid red;
 }
 
 .dayDetailLabel {
@@ -132,9 +134,8 @@
 .counterContainer {
   width: 100px;
   height: 50px;
-
-  margin-left: 0;
-  border: 1px solid green;
+  display: inline-block;
+  float: left;
 }
 
 
@@ -144,6 +145,7 @@
   width: 25px;
   height: 25px;
   line-height: 20px;
+  margin-top:3px;
 
   font-size: 20px;
   text-align: ceter;
@@ -160,4 +162,8 @@
   background-color: #444444;
   font-weight: 900;
   color: #ffffff;
+}
+
+.breakfastCheckBox {
+  margin-top:6px;
 }

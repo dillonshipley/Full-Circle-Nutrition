@@ -74,12 +74,17 @@ export default function TextInput(props){
   });
 
   useEffect(() => {
-    if(props.settings != null && props.settings.includes("wholeline")){
-      document.getElementById("current" + props.type).classList.add("wholeline");
-      document.getElementById(props.type + "InputLabel").classList.add("wholeline");
-      document.getElementById(props.type + "Container").classList.add("wholeline");
-    }
-  });
+    if(props.settings != null){
+      if(props.settings.includes("wholeline")){
+        document.getElementById("current" + props.type).classList.add("wholeline");
+        document.getElementById(props.type + "InputLabel").classList.add("wholeline");
+        document.getElementById(props.type + "Container").classList.add("wholeline");
+      }
+      if(props.settings.includes("condense")){
+        document.getElementById(props.type + "InputLabel").classList.add("condense");
+        document.getElementById(props.type + "Container").classList.add("condense");
+      }
+  }});
 
   const [val, setVal] = useState(0);
 

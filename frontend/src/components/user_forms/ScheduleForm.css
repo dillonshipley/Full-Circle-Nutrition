@@ -18,3 +18,13 @@
 #advanceToPreferences {
   margin-top: 30px;
 }
+
+.scheduleOptionContainer{
+  width: 200px;
+  margin-left: 30px;
+  background-color: blue;
+  height: 120px;
+  display: inline-block;
+
+  border-radius: 20px;
+}

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import DaySelectorBlock from '../utilities/DaySelectorBlock';
 import './ScheduleForm.css';
 
+import { ReactComponent as DownArrowImg} from './downArrow.png';
+
 import Option from '../utilities/Option';
 import TextInput from '../utilities/TextInput';
 
@@ -9,6 +11,16 @@ import TextInput from '../utilities/TextInput';
 const days = [
   '', "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 ];
+
+function ScheduleOption(props){
+  return (
+    <div className = "scheduleOptionContainer">
+      {props.type === "repeat" && <DownArrowImg />}
+      <p>icon</p>
+      <div id = "scheduleOptionLabelText">{props.label}</div>
+    </div>
+  );
+}
 
 class ScheduleForm extends Component{
 
@@ -71,9 +83,16 @@ class ScheduleForm extends Component{
     return (
         <div>
             <Option vals = {days} setVal = {(e) => this.change("firstDay", e)} name = {"day"} settings = "wholeline"/>
-            <TextInput type = "firstDayMeals" setVal = {(e) => this.change("firstDayMeals", e)} settings = "wholeline"/>
+            <TextInput type = "firstDayMeals" setVal = {(e) => this.change("firstDayMeals", e)} settings = "wholeline condense"/>
             {this.state.firstDay != null && (
-              <DaySelectorBlock day = {this.getNextDay(this.state.firstDay)} increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)} />
+              <div id = "firstNameSelected">
+                <DaySelectorBlock day = {this.getNextDay(this.state.firstDay)} increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)} />
+                <div id = "scheduleOptionContainer">
+                  <ScheduleOption label = "Copy this meal schedule for all days"/>
+                  <ScheduleOption label = "Copy this meal scheudle for some days"/>
+                  <ScheduleOption label = "Customize every day"/>
+                </div>
+              </div>
             )}
             <button id = "advanceToPreferences" onClick = {() => this.finish()}>Save</button>
         </div>

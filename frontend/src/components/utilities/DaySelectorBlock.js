@@ -68,8 +68,8 @@ class DaySelectorBlock extends Component{
           <div className = "daySelectorLower">
             <Counter className = "counter" num = {this.state.MPD} type = "MPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
             <Counter className = "counter" num = {this.state.SPD} type = "SPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
-            {/*}<input type = "checkbox"></input>
-            //<input type = "checkbox"></input>*/}
+            <input type = "checkbox" className = "breakfastCheckBox"></input>
+            {/*//<input type = "checkbox"></input>*/}
           </div>
         </div>
       </div>
