@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  backend:
+    image: imageName
+    env_file:
+      - ./macros_backend/.env
+    environment:
+      - DEBUG_MODE=0
+    build: ./macros_backend
