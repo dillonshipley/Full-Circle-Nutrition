@@ -1,10 +1,35 @@
 version: '3.8'
 
 services:
+
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  
   backend:
-    image: imageName
+    image: macros-backend
     env_file:
       - ./macros_backend/.env
     environment:
       - DEBUG_MODE=0
-    build: ./macros_backend
+    build: ./macros_backend/Dockerfile
+    ports:
+      - "8000:8000"
+    command: python3 manage.py migrate & python3 manage.py runserver 127.0.0.1:8000
+    depends_on:
+      - database
+  
+  frontend:
+    image: macros-frontend
+    env_file: 
+      - ./frontend/.env
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+        PYTHONUNBUFFERED=1
+    build: ./frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    command: npx serve build
+    depends_on: 
+      - backend
