@@ -183,7 +183,7 @@ DATABASES = {
         "NAME": "postgres",
         "USER": f"{env('DB_USER')}",
         "PASSWORD": f"{env('DB_PASSWORD')}",
-        "HOST": "localhost",
+        "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
