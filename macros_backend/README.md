@@ -52,5 +52,5 @@ docker build . -t macros-backend -f ./macros_backend/Dockerfile
 ```
 
 ```bash
-docker run --name macros-backend-server --env-file ./macros_backend/.env -p 8000:8080 macros-backend
+docker run --name macros-backend-server --env-file ./macros_backend/.env -p 8000:8080 -d macros-backend
 ```

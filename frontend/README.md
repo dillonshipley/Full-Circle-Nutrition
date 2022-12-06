@@ -80,5 +80,5 @@ docker build . -t macros-frontend -f ./frontend/Dockerfile
 ```
 
 ```bash
-docker run --name macros-frontend-server --env-file ./frontend/.env -p 3000:3000 macros-frontend
+docker run --name macros-frontend-server --env-file ./frontend/.env -p 3000:3000 -d macros-frontend
 ```
