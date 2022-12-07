@@ -1,10 +1,9 @@
-
 const fatCals = 9;
-const proteinCals = 4;
+//const proteinCals = 4;
 const carbCals = 4;
-const alcCals = 7;
+//const alcCals = 7;
 
-const studyURL = "https://pubmed.ncbi.nlm.nih.gov/2305711/";
+//const studyURL = "https://pubmed.ncbi.nlm.nih.gov/2305711/";
 
 function LBTOKG(lb){
   return lb * .453592;
@@ -29,47 +28,63 @@ function MacroCalculator(valueData, typeData) {
       const goal = valueData[5];
 
       //console.log(weightType);
-      if(weightType == "LB")
+      if(weightType === "LB")
         weight = LBTOKG(weight)
       if(heightType === "IN")
         height = INTOCM(height)
 
-      //weight in kg
-      //height in cm
-      var REE = (10 * weight) + (6.25 * height) + (5 * age);
-      //console.log(REE);
-      if(sex === "M")
-        REE = REE + 5;
-      else
-        REE = REE - 161;
-
-       var TDEE = Math.round(REE * activity);
-       console.log("TDEE: " + TDEE);
-
-      switch(goal){
-        case "rloss":
-          TDEE = TDEE - 600;
+      let activityRatio = 0;
+      switch(activity){
+        case "Sedentary":
+          activityRatio = 1.2;
           break;
-        case "mloss":
-          TDEE = TDEE - 400;
+        case "Lightly Active":
+          activityRatio = 1.375;
           break;
-        case "sloss":
-          TDEE = TDEE - 250;
+        case "Moderately Active":
+          activityRatio = 1.55;
           break;
-        case "netural":
-            break;
-        case "sgain":
-          TDEE = TDEE + 250;
+        case "Active":
+          activityRatio = 1.725;
           break;
-        case "mgain":
-          TDEE = TDEE + 400;
+        case "Very Active":
+          activityRatio = 1.9;
           break;
-        case "rgain":
-          TDEE = TDEE + 600;
+        default:
           break;
       }
 
-      //console.log("new TDEE: " + TDEE);
+      //weight in kg
+      //height in cm
+      let REE = (10 * weight) + (6.25 * height) + (5 * age);
+      REE = (sex === "M") ? (REE + 5) : (REE + 161);
+
+      var TDEE = Math.round(REE * activityRatio);
+
+      switch(goal){
+        case "Rapid Loss":
+          TDEE = TDEE - 600;
+          break;
+        case "Moderate Loss":
+          TDEE = TDEE - 400;
+          break;
+        case "Slight Loss":
+          TDEE = TDEE - 250;
+          break;
+        case "Neutral":
+            break;
+        case "Slight Gain":
+          TDEE = TDEE + 250;
+          break;
+        case "Moderate Gain":
+          TDEE = TDEE + 400;
+          break;
+        case "Rapid Gain":
+          TDEE = TDEE + 600;
+          break;
+        default:
+        break;
+      }
 
        var protein = Math.round(KGTOLB(weight));
        var calsFromProtein = 4 * weight;

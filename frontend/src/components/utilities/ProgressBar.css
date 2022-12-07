@@ -1,0 +1,44 @@
+.progressBarContainer {
+  text-align: center;
+}
+
+.progressBar {
+  display: grid;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+#progressBarSubdivider{
+  height: 22px;
+  border-radius: 10px;
+
+  display: grid;
+  grid-template-columns: 10vw 10vw 10vw;
+
+}
+
+#PB1{
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+  border-left: 3px solid navy;
+  border-right: 3px solid navy;
+}
+#PB3{
+  border-bottom-right-radius: 7px;
+  border-top-right-radius: 7px;
+  border-left: 3px solid navy;
+  border-right: 3px solid navy;
+}
+.progressBarSegment{
+  margin-top: 0px;
+  border-top: 3px solid navy;
+  border-bottom: 3px solid navy;
+  height: 20px;
+}
+
+.inProgress{
+  background-color: var(--yellow-2);
+}
+.completed{
+  background-color: var(--green-8);
+}

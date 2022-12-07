@@ -1,0 +1,30 @@
+
+
+.scheduleContainer {
+  margin-top: 5vh;
+  margin-left: 12.5vw;
+
+  display: grid;
+  width: 75vw;
+  grid-template-columns: 25vw 25vw 25vw;
+  grid-template-rows: 25vh;
+}
+
+.scheduleGridLabel {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+#advanceToPreferences {
+  margin-top: 30px;
+}
+
+.scheduleOptionContainer{
+  width: 200px;
+  margin-left: 30px;
+  background-color: blue;
+  height: 120px;
+  display: inline-block;
+
+  border-radius: 20px;
+}
