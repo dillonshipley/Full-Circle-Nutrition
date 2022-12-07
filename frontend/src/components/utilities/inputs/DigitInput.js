@@ -55,24 +55,18 @@ function InputBlock(props){
 }
 
 export default function DigitInput(props){
-  const [label, setLabel] = useState(null);
-  const [n, setN] = useState(() => {
+  const [label, setLabel] = useState(() => {
     switch(props.type){
       case "Weight":
-        setLabel(props.type);
-        return 3;
+        return props.type;
       case "Height":
-        setLabel(props.type);
-        return 2;
+        return props.type;
       case "Age":
-        setLabel(props.type);
-        return 2;
+        return props.type;
       case "firstDayMeals":
-        setLabel("How many meals will you eat after finishing prep?");
-        return 1;
+        return "How many meals will you eat after finishing prep?";
       default:
-        setLabel(props.type);
-        return 1;
+        return props.type;
     }
   });
 
@@ -94,7 +88,7 @@ export default function DigitInput(props){
   return(
     <div id = {"current" + props.type} className = "InputContainer">
       <div id = {props.type + "InputLabel"} className = "InputLabel">{label}</div>
-      <InputBlock type = {props.type} edit = {(e) => {setVal(e); props.setVal(e)}} id = {props.type + "Container"} className = "digitContainer" n = {n} />
+      <InputBlock type = {props.type} edit = {(e) => {setVal(e); props.setVal(e)}} id = {props.type + "Container"} className = "digitContainer" n = {props.n} />
      {(props.options != null) && <Selector options = {props.options} type = {props.type} setType = {(e) => props.setType(e)}/>}
      </div>
   );

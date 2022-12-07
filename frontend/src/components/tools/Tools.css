@@ -1,0 +1,12 @@
+#ingredientEntryContainer {
+  width: 30vw;
+  height: 100vh;
+}
+
+#saveIngredientButton{
+  margin-top: 10px;
+}
+
+h4 {
+  margin-top: 30px;
+}
