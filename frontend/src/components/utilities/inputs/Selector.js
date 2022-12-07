@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Inputs.css';
 
 function Selector(props){
   const [optionSelected, setOptionSelected] = useState(props.options[0]);

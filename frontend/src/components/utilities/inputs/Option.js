@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import './Utilities.css';
+import './Inputs.css';
 
 export default function Option(props){
   const [val, setVal] = useState('');

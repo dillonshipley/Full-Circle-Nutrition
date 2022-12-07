@@ -54,7 +54,7 @@ function InputBlock(props){
   );
 }
 
-export default function TextInput(props){
+export default function DigitInput(props){
   const [label, setLabel] = useState(null);
   const [n, setN] = useState(() => {
     switch(props.type){
@@ -69,6 +69,9 @@ export default function TextInput(props){
         return 2;
       case "firstDayMeals":
         setLabel("How many meals will you eat after finishing prep?");
+        return 1;
+      default:
+        setLabel(props.type);
         return 1;
     }
   });

@@ -4,8 +4,8 @@ import './ScheduleForm.css';
 
 //import { ReactComponent as DownArrowImg} from './downArrow.png';
 
-import Option from '../utilities/Option';
-import TextInput from '../utilities/TextInput';
+import Option from '../utilities/inputs/Option';
+import DigitInput from '../utilities/inputs/DigitInput';
 
 
 const days = [
@@ -83,7 +83,7 @@ class ScheduleForm extends Component{
     return (
         <div>
             <Option vals = {days} setVal = {(e) => this.change("firstDay", e)} name = {"day"} settings = "wholeline"/>
-            <TextInput type = "firstDayMeals" setVal = {(e) => this.change("firstDayMeals", e)} settings = "wholeline condense"/>
+            <DigitInput type = "firstDayMeals" setVal = {(e) => this.change("firstDayMeals", e)} settings = "wholeline condense"/>
             {this.state.firstDay != null && (
               <div id = "firstNameSelected">
                 <DaySelectorBlock day = {this.getNextDay(this.state.firstDay)} increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)} />

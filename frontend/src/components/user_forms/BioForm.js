@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import MacroCalculator from '../tools/MacroCalculator';
-import TextInput from '../utilities/TextInput';
-import Option from '../utilities/Option'
+import DigitInput from '../utilities/inputs/DigitInput';
+import Option from '../utilities/inputs/Option';
 
 import './BioForm.css';
 
@@ -84,9 +84,9 @@ class BioForm extends Component{
         <div id = "NLBioFormContainer">
           <div id = "BioFormLeftColumn" className = "BioFormColumn">
             <p className = "BioFormLabel">Information About Your Body</p>
-            <TextInput type = "Weight" options = {["LB", "KG"]} setVal = {(e) => this.change("weight", e)} setType = {(e) => this.changeSelection("weight", e)}/>
-            <TextInput type = "Height" options = {["IN", "CM"]} setVal = {(e) => this.change("height", e)} setType = {(e) => this.changeSelection("height", e)}/>
-            <TextInput type = "Age" setVal = {(e) => this.change("age", e)} options = {null}/>
+            <DigitInput type = "Weight" options = {["LB", "KG"]} setVal = {(e) => this.change("weight", e)} setType = {(e) => this.changeSelection("weight", e)}/>
+            <DigitInput type = "Height" options = {["IN", "CM"]} setVal = {(e) => this.change("height", e)} setType = {(e) => this.changeSelection("height", e)}/>
+            <DigitInput type = "Age" setVal = {(e) => this.change("age", e)} options = {null}/>
             <Option setVal = {(e) => this.change("sex", e)} vals = {sexOptions} name = {"sex"}/>
           </div>
           <div id= "BioFormRightColumn" className = "BioFormColumn">
