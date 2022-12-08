@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -714,
-    "scrollLeft": -2,
-    "zoomLevel": 0.8,
+    "scrollTop": -633,
+    "scrollLeft": -109,
+    "zoomLevel": 1,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -77,7 +77,7 @@
             "option": {
               "autoIncrement": false,
               "primaryKey": false,
-              "unique": false,
+              "unique": true,
               "notNull": true
             },
             "ui": {
@@ -188,8 +188,8 @@
         "ui": {
           "active": false,
           "left": 773.1699,
-          "top": 891.9393,
-          "zIndex": 278,
+          "top": 892.9393,
+          "zIndex": 301,
           "widthName": 60,
           "widthComment": 83.65625
         },
@@ -1569,114 +1569,6 @@
         "id": "b96d468b-0672-43a6-9c1a-2afa9285a44e"
       },
       {
-        "name": "recipe_notes",
-        "comment": "",
-        "columns": [
-          {
-            "name": "recipe_id",
-            "comment": "",
-            "dataType": "text",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": true,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "ec0ff454-5c75-47e5-831f-2e386d6b632e"
-          },
-          {
-            "name": "",
-            "comment": "",
-            "dataType": "",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "63befa3c-a6f5-4b4b-838b-b451ad40c844"
-          },
-          {
-            "name": "",
-            "comment": "",
-            "dataType": "",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "d0b2e9ce-9ed0-4e18-8834-0ac9d6ccc9a6"
-          },
-          {
-            "name": "",
-            "comment": "",
-            "dataType": "",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "38084642-cd6e-450e-a2c6-fdf1d01d994d"
-          }
-        ],
-        "ui": {
-          "active": false,
-          "left": 135.221,
-          "top": 1105.338,
-          "zIndex": 191,
-          "widthName": 76.43896484375,
-          "widthComment": 60
-        },
-        "visible": true,
-        "id": "b6573863-64e7-4f06-b689-4532caeac76e"
-      },
-      {
         "name": "ingredient_cooking_instructions",
         "comment": "Cooking instructions for individual ingredients",
         "columns": [
@@ -1771,13 +1663,59 @@
               "widthDefault": 60
             },
             "id": "321c0cd0-6443-4e79-a3ff-8bb1bac397d6"
+          },
+          {
+            "name": "time",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "b4ee2321-d995-4ac8-b40e-f33f8f80bf97"
+          },
+          {
+            "name": "cooking_location",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 98.84619140625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "7d8bd5f3-be99-43fc-b2f9-1f644b9aab58"
           }
         ],
         "ui": {
           "active": false,
-          "left": 1067.25,
-          "top": 1506.75,
-          "zIndex": 297,
+          "left": 1032.8059,
+          "top": 1421.195,
+          "zIndex": 357,
           "widthName": 184.1142578125,
           "widthComment": 120
         },
@@ -1786,7 +1724,7 @@
       },
       {
         "name": "recipe_cooking_instructions",
-        "comment": "",
+        "comment": "Recipe Instructions",
         "columns": [
           {
             "name": "recipe_step_id",
@@ -1902,18 +1840,172 @@
               "widthDefault": 60
             },
             "id": "f2499d00-e666-416e-823e-e0cba22f5f67"
+          },
+          {
+            "name": "time",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "65ea5ee9-ee5d-42dd-9fb2-a65f31aa52ca"
+          },
+          {
+            "name": "cooking_location",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 98.84619140625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "3116ba0a-918a-4bf4-b9cf-97e5a83dad08"
           }
         ],
         "ui": {
-          "active": true,
-          "left": 704.25,
-          "top": 1217.5,
-          "zIndex": 299,
+          "active": false,
+          "left": 665.9178,
+          "top": 1162.9446,
+          "zIndex": 353,
           "widthName": 162.42431640625,
-          "widthComment": 60
+          "widthComment": 112.55078125
         },
         "visible": true,
         "id": "a9a6d34d-43ca-4024-a0f4-05c30936c636"
+      },
+      {
+        "name": "cooking_location",
+        "comment": "Cooking Location Enum",
+        "columns": [
+          {
+            "name": "table",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "11351a33-b40e-4374-bc08-b29997669a55"
+          },
+          {
+            "name": "large_burner",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 75.71533203125,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "234e7ce6-6372-4d44-9695-bcf2bb23e973"
+          },
+          {
+            "name": "small_burner",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 77.1435546875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "7b7d96c7-80eb-4bdb-8213-c72c69264f33"
+          },
+          {
+            "name": "oven",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "5fb1f6b4-4b9e-4fcd-878a-38c901b946a7"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 32.445,
+          "top": 1589.2222,
+          "zIndex": 352,
+          "widthName": 98.84619140625,
+          "widthComment": 120
+        },
+        "visible": true,
+        "id": "4ef35db0-0fd3-4692-a24d-d2a4d8fddc25"
       }
     ],
     "indexes": []
@@ -1946,7 +2038,7 @@
             "31f8505b-c035-4579-bb3b-003cb2167d62"
           ],
           "x": 889.462136328125,
-          "y": 891.9393,
+          "y": 892.9393,
           "direction": "top"
         },
         "end": {
@@ -1998,7 +2090,7 @@
             "31f8505b-c035-4579-bb3b-003cb2167d62"
           ],
           "x": 1122.0466089843749,
-          "y": 891.9393,
+          "y": 892.9393,
           "direction": "top"
         },
         "end": {
@@ -2059,7 +2151,7 @@
             "f1da7db9-f35a-4463-a44a-529e69d8bb0a"
           ],
           "x": 773.1699,
-          "y": 987.9393,
+          "y": 988.9393,
           "direction": "left"
         },
         "constraintName": "fk_users_to_recipes",
@@ -2084,8 +2176,8 @@
           "columnIds": [
             "6625036c-34bc-46e9-b51d-b3b53fda8763"
           ],
-          "x": 1537.6953125,
-          "y": 1582.25,
+          "x": 1525.65209140625,
+          "y": 1517.195,
           "direction": "right"
         },
         "constraintName": "fk_ingredients_to_ingredient_cooking_instructions",
@@ -2101,8 +2193,8 @@
           "columnIds": [
             "ee2ff0ac-bbfe-4de7-af00-6fa20251af60"
           ],
-          "x": 1067.25,
-          "y": 1582.25,
+          "x": 1032.8059,
+          "y": 1517.195,
           "direction": "left"
         },
         "end": {
@@ -2110,8 +2202,8 @@
           "columnIds": [
             "169559fb-1a06-4b06-9ff6-748992948a1f"
           ],
-          "x": 944.528564453125,
-          "y": 1389,
+          "x": 912.340895703125,
+          "y": 1375.4446,
           "direction": "bottom"
         },
         "constraintName": "fk_ingredient_cooking_instructions_to_recipe_cooking_instructions",
@@ -2128,7 +2220,7 @@
             "31f8505b-c035-4579-bb3b-003cb2167d62"
           ],
           "x": 1005.75437265625,
-          "y": 1083.9393,
+          "y": 1084.9393,
           "direction": "bottom"
         },
         "end": {
@@ -2136,8 +2228,8 @@
           "columnIds": [
             "f6ee2947-846a-4746-9e6b-aa7ba94979f2"
           ],
-          "x": 944.528564453125,
-          "y": 1217.5,
+          "x": 912.340895703125,
+          "y": 1162.9446,
           "direction": "top"
         },
         "constraintName": "fk_recipes_to_recipe_cooking_instructions",

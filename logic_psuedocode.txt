@@ -1,0 +1,43 @@
+This is going to be our communal brainstorming doc for doing the macro -> meal calculation.
+This will be the most difficult part of the project, but also probably the most interesting.
+
+I've been doing this for a while now, and I found that protein was always the hardest part.
+
+let weeklyMeals = input;
+let remaining_macros = [day, protein, carbs, fats, cals];
+meals = [];
+
+If they actively use protein supplements (protein bars, powder, etc)
+We need to ask them to put in what they're consuming on that front & incorporate that into schedule.
+
+That should happen before run. First method we should run is something like
+
+determineProteinSource(theme, preferences_input){
+  -> pull input from preferences
+  -> if none, assign bare minimum one meal of chicken, turkey, fish (preferably not beef or pork) per day.
+  -> search for meals in the database that fit both the theme and determineProteinSource
+  -> assign 1 meal per day unless meals = 1. that triggers edge case
+  -> if meals > 3, assign 2 meals per day;
+}
+
+meals.push[ ^ above meals calculated ]
+weeklyMeals - above meals calculated
+
+Then look at meals per day. If the individual is averaging > 3 meals per day, assign them another meal with that protein.
+
+"Basics" are other types of meals that we are going to incorporate into the system that serve as an alternate source of protein.
+These are things like ham/turkey sandwiches, hamburgers, scrambled eggs, etc that do not belong to a theme.
+Every week should have at least one set of Basic meals.
+
+meals.push [ ^ some basic meals ]
+
+remaining_macros.recalc(meals);
+
++ breakfast
+see how many breakfasts are needed per week. By this point we should be calculating day by day if they are different.
+
+
++ snacks
+
+
++ meal_additions
