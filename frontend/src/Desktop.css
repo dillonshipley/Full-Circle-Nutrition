@@ -52,16 +52,22 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 6vh;
+  height: 8vh;
   background-color: #dddddd;
   border-bottom: 2px solid black;
   z-index: 3;
 }
 
 #loginButton {
-  position: relative;
-  margin-right: 0;
-  margin-left: auto;
+  float: right;
+  margin-right: 5vw;
+  width: 3vw;
+  height: 6vh;
+  line-height: 6vh;
+  font-weight: 800;
+  color: #d3bfff;
+  border-bottom: 2px solid black;
+  background-color: #ab88b3;
 }
 
 #register {

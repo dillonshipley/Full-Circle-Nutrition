@@ -84,9 +84,9 @@ class BioForm extends Component{
         <div id = "NLBioFormContainer">
           <div id = "BioFormLeftColumn" className = "BioFormColumn">
             <p className = "BioFormLabel">Information About Your Body</p>
-            <DigitInput type = "Weight" options = {["LB", "KG"]} setVal = {(e) => this.change("weight", e)} setType = {(e) => this.changeSelection("weight", e)}/>
-            <DigitInput type = "Height" options = {["IN", "CM"]} setVal = {(e) => this.change("height", e)} setType = {(e) => this.changeSelection("height", e)}/>
-            <DigitInput type = "Age" setVal = {(e) => this.change("age", e)} options = {null}/>
+            <DigitInput type = "Weight" options = {["LB", "KG"]} setVal = {(e) => this.change("weight", e)} setType = {(e) => this.changeSelection("weight", e)} n = {3}/>
+            <DigitInput type = "Height" options = {["IN", "CM"]} setVal = {(e) => this.change("height", e)} setType = {(e) => this.changeSelection("height", e)} n = {2}/>
+            <DigitInput type = "Age" setVal = {(e) => this.change("age", e)} options = {null} n = {2}/>
             <Option setVal = {(e) => this.change("sex", e)} vals = {sexOptions} name = {"sex"}/>
           </div>
           <div id= "BioFormRightColumn" className = "BioFormColumn">

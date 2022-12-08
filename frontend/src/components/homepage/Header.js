@@ -1,8 +1,11 @@
+import Login from '../Login';
+
 function Header() {
-    //return <div id = "header">
-        //<button id = "loginButton">Log In</button>
-        //<button id = "register">Register</button>
-    //</div>
+
+    return <div id = "header">
+        <div id = "loginButton">Log In</div>
+        <div id = "register">Register</div>
+    </div>
 }
 
 export default Header;
