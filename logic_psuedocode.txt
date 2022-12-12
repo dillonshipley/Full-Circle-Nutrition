@@ -4,7 +4,9 @@ This will be the most difficult part of the project, but also probably the most 
 I've been doing this for a while now, and I found that protein was always the hardest part.
 
 let weeklyMeals = input;
-let remaining_macros = [day, protein, carbs, fats, cals];
+
+create 7 Day objects, each of them have remaining macros.
+
 meals = [];
 
 If they actively use protein supplements (protein bars, powder, etc)
@@ -15,6 +17,9 @@ That should happen before run. First method we should run is something like
 determineProteinSource(theme, preferences_input){
   -> pull input from preferences
   -> if none, assign bare minimum one meal of chicken, turkey, fish (preferably not beef or pork) per day.
+
+-- TODO 1: DETERMINE PROTEIN SOURCES COMMON SIZES AT GROCERY STORE --
+
   -> search for meals in the database that fit both the theme and determineProteinSource
   -> assign 1 meal per day unless meals = 1. that triggers edge case
   -> if meals > 3, assign 2 meals per day;
