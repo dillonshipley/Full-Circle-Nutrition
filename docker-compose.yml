@@ -20,7 +20,8 @@ services:
     build: ./macros_backend/Dockerfile
     ports:
       - "8000:8000"
-    command: python3 manage.py runserver
+    command: > 
+      sh -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db
   
