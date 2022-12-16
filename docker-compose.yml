@@ -15,6 +15,7 @@ services:
       - ./macros_backend/.env
     environment:
       - DEBUG_MODE=0
+      - POSTGRES_HOST=db
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
     build: ./macros_backend/Dockerfile

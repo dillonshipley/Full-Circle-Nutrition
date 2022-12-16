@@ -71,6 +71,24 @@ def create_ingredient(request: HttpRequest) -> JsonResponse:
     )
 
 
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_all_ingredients(request: HttpRequest) -> JsonResponse:
+    status, result = Ingredient.objects.get_ingredients()
+
+    if status:
+        return JsonResponse(
+            status=200,
+            data={
+                "status": "SUCCESS",
+                "data": {
+                    index: ingredient.serialize()
+                    for index, ingredient in enumerate(result)
+                },
+            },
+        )
+
+
 def get_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:
     """_summary_
 
@@ -152,7 +170,9 @@ def delete_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:
     """
     result = Ingredient.objects.delete_ingredients_by_id(ingredient_id=ingredient_id)
     return (
-        JsonResponse(status=200, data={"status": "SUCCESS", "ingredient_id": ingredient_id})
+        JsonResponse(
+            status=200, data={"status": "SUCCESS", "ingredient_id": ingredient_id}
+        )
         if result
         else JsonResponse(
             status=404,

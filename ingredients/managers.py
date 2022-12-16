@@ -3,7 +3,7 @@ from uuid import UUID, uuid4
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Manager
 from django.db.utils import IntegrityError
-
+from typing import Tuple
 
 class IngredientManager(Manager):
     def create_ingredient(
@@ -56,6 +56,14 @@ class IngredientManager(Manager):
             return True, self.get(ingredient_id=ingredient_id)
         except ObjectDoesNotExist as e:
             return False, e
+
+    def get_ingredients(self, amount: int = -1) -> Tuple:
+        ingredients = list()
+
+        if amount == -1:
+            ingredients = [ingredient for ingredient in self.all()]
+
+        return True, ingredients
 
     def delete_ingredients_by_id(self, ingredient_id: UUID) -> bool:
         """Remove an ingedient from the db using the ingredient_id as a query

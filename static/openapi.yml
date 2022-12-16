@@ -483,6 +483,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserFailedRequest'
 
+  /v0/ingredients:
+    post:
+      summary: Create new ingredient
+      description: Create new ingredient with nutrition_information
+      operationId: getIngredients
+      responses:
+        '201':
+          description: Ingredient created
+
   /:
     get:
       summary: Application index
