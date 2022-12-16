@@ -26,4 +26,3 @@ RUN pip install -r requirements.txt
 
 # ==== RUN =======
 EXPOSE 8000
-CMD [ "python3.11", "manage.py", "runserver" ]

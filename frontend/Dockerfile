@@ -1,9 +1,12 @@
 # ==== CONFIGURE =====#
 FROM node:lts-slim
 
-WORKDIR /macros-frontend
+ENV NODE_ENV=production
 
 COPY ./frontend/ .
+
+WORKDIR /macros-frontend
+
 
 # ==== BUILD =====
 RUN npm ci
@@ -11,6 +14,4 @@ RUN npm ci
 RUN npm run build
 
 # ==== RUN =======
-ENV NODE_ENV=production
 EXPOSE 3000
-CMD [ "npx", "serve", "build" ]
