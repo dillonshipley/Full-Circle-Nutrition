@@ -1,6 +1,26 @@
 import React, { Component } from 'react';
 import DaySelectorBlock from '../utilities/DaySelectorBlock';
+import './ScheduleForm.css';
 
+//import { ReactComponent as DownArrowImg} from './downArrow.png';
+
+import Option from '../utilities/Option';
+import TextInput from '../utilities/TextInput';
+
+
+const days = [
+  '', "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+];
+
+function ScheduleOption(props){
+  return (
+    <div className = "scheduleOptionContainer">
+      {/*props.type === "repeat" && <DownArrowImg />*/}
+      <p>icon</p>
+      <div id = "scheduleOptionLabelText">{props.label}</div>
+    </div>
+  );
+}
 
 class ScheduleForm extends Component{
 
@@ -42,26 +62,39 @@ class ScheduleForm extends Component{
     this.props.forward(scheduleArray);
   }
 
+  change(type, value){
+    switch(type){
+      case "firstDay":
+        this.setState({firstDay: value});
+        break;
+      case "firstDayMeals":
+        this.setState({firstDayMeals: value});
+      default:
+        break;
+    }
+  }
+
+  getNextDay(firstDay){
+    let index = days.indexOf(firstDay);
+    return days[(index + 1) % 7];
+  }
+
   render(){
     return (
         <div>
-            <table>
-              <tr>
-                <td className = "scheduleGridLabel">Please choose your meals per day</td>
-                <td className = "scheduleGridLabel">Meals</td>
-                <td className = "scheduleGridLabel">Snacks</td>
-              </tr>
-            </table>
-            <div id = "scheduleGrid">
-              <DaySelectorBlock day = "Sunday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Monday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Tuesday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Wednesday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Thursday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Friday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-              <DaySelectorBlock day = "Saturday" increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)}/>
-            </div>
-            <button onClick = {() => this.finish()}>Save</button>
+            <Option vals = {days} setVal = {(e) => this.change("firstDay", e)} name = {"day"} settings = "wholeline"/>
+            <TextInput type = "firstDayMeals" setVal = {(e) => this.change("firstDayMeals", e)} settings = "wholeline condense"/>
+            {this.state.firstDay != null && (
+              <div id = "firstNameSelected">
+                <DaySelectorBlock day = {this.getNextDay(this.state.firstDay)} increase = {(e) => this.increase(e)} decrease = {(e) => this.decrease(e)} />
+                <div id = "scheduleOptionContainer">
+                  <ScheduleOption label = "Copy this meal schedule for all days"/>
+                  <ScheduleOption label = "Copy this meal scheudle for some days"/>
+                  <ScheduleOption label = "Customize every day"/>
+                </div>
+              </div>
+            )}
+            <button id = "advanceToPreferences" onClick = {() => this.finish()}>Save</button>
         </div>
     );
     }

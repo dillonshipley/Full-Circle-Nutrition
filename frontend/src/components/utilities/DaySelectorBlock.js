@@ -1,9 +1,8 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
+
+import './Utilities.css';
 
 function Counter(props){
-
-
-
   return (
     <div className = "counterContainer">
       <div className = "counterDiv counterDivSymbol" onClick = {(e) => props.down(props.type)}>-</div>
@@ -13,7 +12,7 @@ function Counter(props){
   );
 }
 
-class DaySelectorBlock extends React.Component{
+class DaySelectorBlock extends Component{
 
   constructor(props){
     super(props);
@@ -25,7 +24,6 @@ class DaySelectorBlock extends React.Component{
   }
 
   increase(props){
-    console.log("here");
     if(props === "MPD") {
       this.setState({MPD: this.state.MPD + 1});
       this.props.increase("MPD");
@@ -59,12 +57,21 @@ class DaySelectorBlock extends React.Component{
 
   render(){
     return (
-      <div id = "daySelectorCB">
+      <div className = "daySelectorCB">
         <div className = "dayLabel">{this.props.day}</div>
-        <Counter className = "counter" num = {this.state.MPD} type = "MPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
-        <Counter className = "counter" num = {this.state.SPD} type = "SPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
-        <input type = "checkbox"></input>
-        <input type = "checkbox"></input>
+        <div className = "daySelectorGrid">
+          <div className = "daySelectorUpper">
+            <div className = "dayDetailLabel">Meals</div>
+            <div className = "dayDetailLabel">Snacks</div>
+            <div className = "dayDetailLabel">Breakfast?</div>
+          </div>
+          <div className = "daySelectorLower">
+            <Counter className = "counter" num = {this.state.MPD} type = "MPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
+            <Counter className = "counter" num = {this.state.SPD} type = "SPD" down = {(e) => this.decrease(e)} up = {(e) => this.increase(e)} />
+            <input type = "checkbox" className = "breakfastCheckBox"></input>
+            {/*//<input type = "checkbox"></input>*/}
+          </div>
+        </div>
       </div>
     )
   }

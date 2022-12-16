@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import './ProgressBar.css';
 
 function Segment(props){
   if(props.num < props.selected){
@@ -6,18 +6,12 @@ function Segment(props){
   } else if (props.num === props.selected){
     return <div id = {"PB" + props.num} className = "progressBarSegment inProgress"></div>
   } else {
-    return <div id = {"PB" + props.num} className = "progressBarSegment"></div>  
+    return <div id = {"PB" + props.num} className = "progressBarSegment"></div>
   }
 }
 
 function ProgressBar(props) {
 
-  /*
-  const [step, setStep] = useState(props.step);
-  let length = 3;
-
-  useEffect(() => {console.log(props.step)})
-*/
   return (
     <div className = "progressBarContainer">
       <div id = "progressBarLabel">Progress</div>
