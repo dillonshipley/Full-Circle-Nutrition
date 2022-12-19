@@ -38,10 +38,18 @@ def ingredient_interactions_by_id(
 
     return JsonResponse(status=405, data={})
 
-
 @csrf_exempt
-@require_http_methods(["POST"])
-def create_ingredient(request: HttpRequest) -> JsonResponse:
+@require_http_methods(["POST", "GET"])
+def ingredient_interactions(request: HttpRequest) -> JsonResponse:
+    if request.method == "POST":
+        request_body = json.loads(request.body.decode("utf-8"))
+        return create_ingredient(request_body)
+    if request.method == "GET:
+        request.
+        
+
+
+def create_ingredient(request_body: HttpRequest) -> JsonResponse:
     """_summary_
 
     Args:
@@ -49,15 +57,15 @@ def create_ingredient(request: HttpRequest) -> JsonResponse:
     Returns:
         JsonResponse: _description_
     """
-    body = json.loads(request.body.decode("utf-8"))
+    request_body = json.loads(request.body.decode("utf-8"))
 
     status, new_ingredient_or_error = Ingredient.objects.create_ingredient(
-        name=body["name"],
-        vegetarian=body["vegetarian"],
-        calories=body["calories"],
-        fat=body["fat"],
-        protein=body["protein"],
-        units=body["units"],
+        name=request_body["name"],
+        vegetarian=request_body["vegetarian"],
+        calories=request_body["calories"],
+        fat=request_body["fat"],
+        protein=request_body["protein"],
+        units=request_body["units"],
     )
 
     if status:
@@ -70,6 +78,9 @@ def create_ingredient(request: HttpRequest) -> JsonResponse:
         status=409, data={"status": "FAILURE", "reason": new_ingredient_or_error}
     )
 
+
+def get_ingredients_by_filters(request: HttpRequest, query_params: Query) -> JsonResponse:
+    request.
 
 @csrf_exempt
 @require_http_methods(["GET"])
