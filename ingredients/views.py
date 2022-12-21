@@ -2,7 +2,7 @@ import json
 import logging
 from uuid import UUID, uuid4
 
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse, QueryDict
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -38,15 +38,42 @@ def ingredient_interactions_by_id(
 
     return JsonResponse(status=405, data={})
 
+
 @csrf_exempt
 @require_http_methods(["POST", "GET"])
 def ingredient_interactions(request: HttpRequest) -> JsonResponse:
+    """_summary_
+
+    Args:
+        request (HttpRequest): _description_
+    Returns:
+        JsonResponse: _description_
+    """
     if request.method == "POST":
         request_body = json.loads(request.body.decode("utf-8"))
         return create_ingredient(request_body)
-    if request.method == "GET:
-        request.
-        
+
+    if request.method == "GET":
+        query_params = request.GET
+        return get_ingredients_by_filters(request)
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_all_ingredients(request: HttpRequest) -> JsonResponse:
+    status, result = Ingredient.objects.get_ingredients()
+
+    if status:
+        return JsonResponse(
+            status=200,
+            data={
+                "status": "SUCCESS",
+                "data": {
+                    index: ingredient.serialize()
+                    for index, ingredient in enumerate(result)
+                },
+            },
+        )
 
 
 def create_ingredient(request_body: HttpRequest) -> JsonResponse:
@@ -57,8 +84,6 @@ def create_ingredient(request_body: HttpRequest) -> JsonResponse:
     Returns:
         JsonResponse: _description_
     """
-    request_body = json.loads(request.body.decode("utf-8"))
-
     status, new_ingredient_or_error = Ingredient.objects.create_ingredient(
         name=request_body["name"],
         vegetarian=request_body["vegetarian"],
@@ -79,25 +104,8 @@ def create_ingredient(request_body: HttpRequest) -> JsonResponse:
     )
 
 
-def get_ingredients_by_filters(request: HttpRequest, query_params: Query) -> JsonResponse:
-    request.
-
-@csrf_exempt
-@require_http_methods(["GET"])
-def get_all_ingredients(request: HttpRequest) -> JsonResponse:
-    status, result = Ingredient.objects.get_ingredients()
-
-    if status:
-        return JsonResponse(
-            status=200,
-            data={
-                "status": "SUCCESS",
-                "data": {
-                    index: ingredient.serialize()
-                    for index, ingredient in enumerate(result)
-                },
-            },
-        )
+def get_ingredients_by_filters(query_params: QueryDict) -> JsonResponse:
+    return JsonResponse(status=200, data={'data': [query for query in query_params]})
 
 
 def get_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:
