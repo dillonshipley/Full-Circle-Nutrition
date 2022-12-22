@@ -5,7 +5,7 @@ import logging
 from django.test import TestCase
 from .defaults import IngredientDefaults
 
-log = logging.getLogger('test')
+log = logging.getLogger("test")
 
 
 class GetIngredientByFiltersValidatorTests(TestCase):

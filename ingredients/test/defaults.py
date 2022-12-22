@@ -16,6 +16,7 @@ class IngredientDefaults:
     INGREDIENT_POST_REQUEST = {
         "name": NAME,
         "vegetarian": VEGETARIAN,
+        "gluten_free": GLUTEN_FREE,
         "calories": CALORIES,
         "fat": FAT,
         "protein": PROTEIN,

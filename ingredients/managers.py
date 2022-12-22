@@ -5,18 +5,19 @@ from django.db.models import Manager
 from django.db.utils import IntegrityError
 from typing import Tuple
 
+
 class IngredientManager(Manager):
     def create_ingredient(
         self,
         name: str,
         vegetarian: bool,
-        gluten_free:bool,
+        gluten_free: bool,
         calories: float,
         fat: float,
         protein: float,
         units: str,
     ) -> tuple:
-        """Creates and validates new ingredient entries to the database. Returns the UUID 
+        """Creates and validates new ingredient entries to the database. Returns the UUID
         of the new ingredient, or an error if the operation did not complete
 
         Args:
@@ -45,9 +46,7 @@ class IngredientManager(Manager):
         except IntegrityError as e:
             return False, e
 
-    def get_ingredient_by_id(
-        self, ingredient_id: UUID
-    ) -> tuple:
+    def get_ingredient_by_id(self, ingredient_id: UUID) -> tuple:
         """Retrieve an ingredient from the database using the ingredient_id as the query
 
         Args:
@@ -67,6 +66,11 @@ class IngredientManager(Manager):
             ingredients = [ingredient for ingredient in self.all()]
 
         return True, ingredients
+
+    def get_ingredients_by_filters(
+        self, name: str=None, vegetarian: bool=None, gluten_free: bool=None, limit: int=None
+    ) -> Tuple:
+        pass
 
     def delete_ingredients_by_id(self, ingredient_id: UUID) -> bool:
         """Remove an ingedient from the db using the ingredient_id as a query

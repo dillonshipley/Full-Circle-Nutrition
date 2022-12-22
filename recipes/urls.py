@@ -1,7 +1,12 @@
 from django.urls import path
 
 import recipes
-from recipes.views import create_recipe, recipe_interactions_by_id, get_all_recipes, health
+from recipes.views import (
+    create_recipe,
+    recipe_interactions_by_id,
+    get_all_recipes,
+    health,
+)
 
 API_VERSION = f"{recipes.API_VERSION}"
 

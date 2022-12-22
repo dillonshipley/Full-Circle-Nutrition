@@ -46,7 +46,7 @@ class RecipeManager(models.Manager):
 
         if amount == -1:
             recipes = [recipe for recipe in self.all()]
-        
+
         return True, recipes
 
     def get_recipe_by_id(self, recipe_id: UUID) -> tuple:

@@ -1,5 +1,6 @@
 from django.http import QueryDict
 
+
 class GetByFiltersValidator:
     PREFIX = "filter"
     SEPERATOR = ","

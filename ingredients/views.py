@@ -58,6 +58,8 @@ def ingredient_interactions(request: HttpRequest) -> JsonResponse:
         query_params = request.GET
         return get_ingredients_by_filters(query_params)
 
+    return JsonResponse(staticmethod=405, data={})
+
 
 @csrf_exempt
 @require_http_methods(["GET"])
@@ -88,6 +90,7 @@ def create_ingredient(request_body: HttpRequest) -> JsonResponse:
     status, new_ingredient_or_error = Ingredient.objects.create_ingredient(
         name=request_body["name"],
         vegetarian=request_body["vegetarian"],
+        gluten_free=request_body["gluten_free"],
         calories=request_body["calories"],
         fat=request_body["fat"],
         protein=request_body["protein"],
@@ -107,7 +110,15 @@ def create_ingredient(request_body: HttpRequest) -> JsonResponse:
 
 def get_ingredients_by_filters(query_params: QueryDict) -> JsonResponse:
     if validator.validate(query_params):
-        pass
+        filter_values = dict(
+            zip(
+                [key.removeprefix("filter.") for key in query_params],
+                query_params.dict().values(),
+            )
+        )
+        filter_results = Ingredient.objects.get_ingredients_by_filters(**filter_values)
+        print(filter_values)
+        return JsonResponse(data={})
     return JsonResponse(data={})
 
 

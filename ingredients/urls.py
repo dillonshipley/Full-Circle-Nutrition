@@ -11,7 +11,9 @@ API_VERSION = f"{ingredients.API_VERSION}"
 
 urlpatterns = [
     path(
-        API_VERSION + "/ingredients/", ingredient_interactions, name="Ingredient Interactions"
+        API_VERSION + "/ingredients/",
+        ingredient_interactions,
+        name="Ingredient Interactions",
     ),
     path(
         API_VERSION + "/ingredients/all/",
