@@ -9,6 +9,7 @@ from django.views.decorators.http import require_http_methods
 
 from .models import Ingredient
 from .serializers import IngredientSerializer
+from .validators.get_by_filters_validator import GetByFiltersValidator as validator
 
 log = logging.getLogger("ingredients")
 
@@ -55,7 +56,7 @@ def ingredient_interactions(request: HttpRequest) -> JsonResponse:
 
     if request.method == "GET":
         query_params = request.GET
-        return get_ingredients_by_filters(request)
+        return get_ingredients_by_filters(query_params)
 
 
 @csrf_exempt
@@ -105,7 +106,9 @@ def create_ingredient(request_body: HttpRequest) -> JsonResponse:
 
 
 def get_ingredients_by_filters(query_params: QueryDict) -> JsonResponse:
-    return JsonResponse(status=200, data={'data': [query for query in query_params]})
+    if validator.validate(query_params):
+        pass
+    return JsonResponse(data={})
 
 
 def get_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:

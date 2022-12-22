@@ -6,6 +6,7 @@ class IngredientDefaults:
     INGREDIENT_ID = uuid.UUID("{f81ee084-9cef-49cc-a68c-51f17e548725}")
     NAME = "TESTINGREDIENT"
     VEGETARIAN = False
+    GLUTEN_FREE = False
     CALORIES = 100
     FAT = 10
     PROTEIN = 10
@@ -35,6 +36,7 @@ class IngredientDefaults:
         "ingredient": {
             "name": NAME,
             "vegetarian": VEGETARIAN,
+            "gluten_free": GLUTEN_FREE,
             "calories": CALORIES,
             "fat": FAT,
             "protein": PROTEIN,

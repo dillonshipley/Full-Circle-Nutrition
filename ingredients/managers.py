@@ -10,6 +10,7 @@ class IngredientManager(Manager):
         self,
         name: str,
         vegetarian: bool,
+        gluten_free:bool,
         calories: float,
         fat: float,
         protein: float,
@@ -21,6 +22,7 @@ class IngredientManager(Manager):
         Args:
             name (str): _description_
             vegetarian (bool): _description_
+            gluten_free (bool): _description_
             calories (float): _description_
             fat (float): _description_
             protein (float): _description_
@@ -33,6 +35,7 @@ class IngredientManager(Manager):
                 ingredient_id=uuid4(),
                 name=name,
                 vegetarian=vegetarian,
+                gluten_free=gluten_free,
                 calories=calories,
                 fat=fat,
                 protein=protein,
