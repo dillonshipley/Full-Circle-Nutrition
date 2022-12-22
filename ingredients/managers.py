@@ -3,7 +3,7 @@ from uuid import UUID, uuid4
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Manager
 from django.db.utils import IntegrityError
-from typing import Tuple
+from typing import List
 
 
 class IngredientManager(Manager):
@@ -59,18 +59,41 @@ class IngredientManager(Manager):
         except ObjectDoesNotExist as e:
             return False, e
 
-    def get_ingredients(self, amount: int = -1) -> Tuple:
-        ingredients = list()
-
-        if amount == -1:
-            ingredients = [ingredient for ingredient in self.all()]
-
-        return True, ingredients
+    def get_all_ingredients(self) -> List:
+        return [ingredient for ingredient in self.all()]
 
     def get_ingredients_by_filters(
-        self, name: str=None, vegetarian: bool=None, gluten_free: bool=None, limit: int=None
-    ) -> Tuple:
-        pass
+        self,
+        name: str = None,
+        vegetarian: bool = None,
+        gluten_free: bool = None,
+        limit: int = None,
+        order: str = None,
+    ) -> List:
+        ingredient_order = "-"
+        ingredient_limit = 10
+
+        ingredient_filters = self.none()
+
+        # Optional values that should be set before examining the next filters
+        if limit is not None:
+            ingredient_limit = int(limit)
+
+        if order is not None:
+            if ingredient_order == "ASC":
+                ingredient_order == ""
+
+        if name is not None:
+            ingredient_filters.filter(name=name)
+
+        if vegetarian is not None:
+            ingredient_filters.filter(vegetarian='True')
+
+        if 
+
+        return ingredient_filters.order_by(f"{ingredient_order}modify_date")[
+            :ingredient_limit
+        ]
 
     def delete_ingredients_by_id(self, ingredient_id: UUID) -> bool:
         """Remove an ingedient from the db using the ingredient_id as a query

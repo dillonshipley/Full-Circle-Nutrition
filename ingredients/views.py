@@ -1,6 +1,6 @@
 import json
 import logging
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from django.http import HttpRequest, JsonResponse, QueryDict
 from django.utils.timezone import now
@@ -64,19 +64,18 @@ def ingredient_interactions(request: HttpRequest) -> JsonResponse:
 @csrf_exempt
 @require_http_methods(["GET"])
 def get_all_ingredients(request: HttpRequest) -> JsonResponse:
-    status, result = Ingredient.objects.get_ingredients()
+    result = Ingredient.objects.get_all_ingredients()
 
-    if status:
-        return JsonResponse(
-            status=200,
-            data={
-                "status": "SUCCESS",
-                "data": {
-                    index: ingredient.serialize()
-                    for index, ingredient in enumerate(result)
-                },
+    return JsonResponse(
+        status=200,
+        data={
+            "status": "SUCCESS",
+            "data": {
+                index: ingredient.serialize()
+                for index, ingredient in enumerate(result)
             },
-        )
+        },
+    )
 
 
 def create_ingredient(request_body: HttpRequest) -> JsonResponse:
@@ -110,14 +109,15 @@ def create_ingredient(request_body: HttpRequest) -> JsonResponse:
 
 def get_ingredients_by_filters(query_params: QueryDict) -> JsonResponse:
     if validator.validate(query_params):
+        log.info(f"Query Params: {query_params}")
         filter_values = dict(
             zip(
                 [key.removeprefix("filter.") for key in query_params],
                 query_params.dict().values(),
             )
         )
-        filter_results = Ingredient.objects.get_ingredients_by_filters(**filter_values)
         print(filter_values)
+        filter_results = Ingredient.objects.get_ingredients_by_filters(**filter_values)
         return JsonResponse(data={})
     return JsonResponse(data={})
 
