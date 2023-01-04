@@ -1,9 +1,12 @@
+import logging
 from uuid import UUID, uuid4
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Manager
+from django.db.models import Manager, Q
 from django.db.utils import IntegrityError
 from typing import List
+
+log = logging.getLogger("ingredients")
 
 
 class IngredientManager(Manager):
@@ -60,6 +63,11 @@ class IngredientManager(Manager):
             return False, e
 
     def get_all_ingredients(self) -> List:
+        """Return a list of all ingredients in the database
+
+        Returns:
+            List: List of all stored ingredients
+        """
         return [ingredient for ingredient in self.all()]
 
     def get_ingredients_by_filters(
@@ -70,38 +78,52 @@ class IngredientManager(Manager):
         limit: int = None,
         order: str = None,
     ) -> List:
+        """Get ingredients from the database using filters provided by the client. 
+
+        Args:
+            name (str, optional): _description_. Defaults to None.
+            vegetarian (bool, optional): _description_. Defaults to None.
+            gluten_free (bool, optional): _description_. Defaults to None.
+            limit (int, optional): _description_. Defaults to None.
+            order (str, optional): _description_. Defaults to None.
+
+        Returns:
+            List: _description_
+        """
         ingredient_order = "-"
         ingredient_limit = 10
 
-        ingredient_filters = self.none()
+        ingredient_filters = self.all()
 
-        # Optional values that should be set before examining the next filters
+        # Check for the existance of all the filters and apply them to the objects
         if limit is not None:
             ingredient_limit = int(limit)
 
+        # TODO: Fix the ordering implementation
         if order is not None:
             if ingredient_order == "ASC":
-                ingredient_order == ""
+                ingredient_order = ingredient_order[:-1]
 
         if name is not None:
-            ingredient_filters.filter(name=name)
+            ingredient_filters = ingredient_filters & self.filter(name=name)
 
         if vegetarian is not None:
-            ingredient_filters.filter(vegetarian='True')
+            ingredient_filters = ingredient_filters & self.filter(vegetarian=vegetarian)
 
-        if 
+        if gluten_free is not None:
+            ingredient_filters = ingredient_filters & self.filter(
+                gluten_free=gluten_free
+            )
 
-        return ingredient_filters.order_by(f"{ingredient_order}modify_date")[
-            :ingredient_limit
-        ]
+        return ingredient_filters.order_by(f"{ingredient_order}modify_date")[:ingredient_limit]
 
     def delete_ingredients_by_id(self, ingredient_id: UUID) -> bool:
         """Remove an ingedient from the db using the ingredient_id as a query
 
         Args:
-            ingredient_id (UUID): _description_
+            ingredient_id (UUID): UUID of the ingredient to delete
         Returns:
-            bool: _description_
+            bool: Result of the delete operation. True if successful, Fa
         """
         try:
             ingredient_to_delete = self.get(ingredient_id=ingredient_id)

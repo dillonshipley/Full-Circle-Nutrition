@@ -64,6 +64,14 @@ def ingredient_interactions(request: HttpRequest) -> JsonResponse:
 @csrf_exempt
 @require_http_methods(["GET"])
 def get_all_ingredients(request: HttpRequest) -> JsonResponse:
+    """_summary_
+
+    Args:
+        request (HttpRequest): _description_
+
+    Returns:
+        JsonResponse: _description_
+    """
     result = Ingredient.objects.get_all_ingredients()
 
     return JsonResponse(
@@ -71,8 +79,7 @@ def get_all_ingredients(request: HttpRequest) -> JsonResponse:
         data={
             "status": "SUCCESS",
             "data": {
-                index: ingredient.serialize()
-                for index, ingredient in enumerate(result)
+                index: ingredient.serialize() for index, ingredient in enumerate(result)
             },
         },
     )
@@ -108,18 +115,27 @@ def create_ingredient(request_body: HttpRequest) -> JsonResponse:
 
 
 def get_ingredients_by_filters(query_params: QueryDict) -> JsonResponse:
-    if validator.validate(query_params):
-        log.info(f"Query Params: {query_params}")
-        filter_values = dict(
-            zip(
-                [key.removeprefix("filter.") for key in query_params],
-                query_params.dict().values(),
-            )
+    """_summary_
+
+    Args:
+        query_params (QueryDict): _description_
+
+    Returns:
+        JsonResponse: _description_
+    """
+    log.info(f"Query Params: {query_params}")
+    is_valid, filter_values_or_error = validator.validate(query_params)
+    if is_valid:
+        filter_results = Ingredient.objects.get_ingredients_by_filters(**filter_values_or_error)
+        return JsonResponse(
+            data={
+                "status": "SUCCESS",
+                "data": {
+                    index: ingredient.serialize() for index, ingredient in enumerate(filter_results)
+                },
+            }
         )
-        print(filter_values)
-        filter_results = Ingredient.objects.get_ingredients_by_filters(**filter_values)
-        return JsonResponse(data={})
-    return JsonResponse(data={})
+    return JsonResponse(data={"status": "FAILURE", "reason": ""})
 
 
 def get_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:

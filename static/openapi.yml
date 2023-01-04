@@ -270,6 +270,9 @@ components:
           type: integer
           nullable: false
 
+    Ingredient:
+      description: Request body for creating a new ingredient object
+
 paths:
   /v0/recipes/{recipe_id}:
     get: 
