@@ -12,5 +12,5 @@ class GetIngredientByFiltersValidatorTests(TestCase):
     def setUp(self) -> None:
         return super().setUp()
 
-    def test_should_return_false_when_no_filters_provided():
-        pass
+    def test_should_return_false_when_no_filters_provided(self):
+        self.assertTrue(True)

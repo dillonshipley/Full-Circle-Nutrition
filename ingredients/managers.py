@@ -24,7 +24,7 @@ class IngredientManager(Manager):
         of the new ingredient, or an error if the operation did not complete
 
         Args:
-            name (str): _description_
+            name (str): 
             vegetarian (bool): _description_
             gluten_free (bool): _description_
             calories (float): _description_
@@ -86,7 +86,7 @@ class IngredientManager(Manager):
             gluten_free (bool, optional): _description_. Defaults to None.
             limit (int, optional): _description_. Defaults to None.
             order (str, optional): _description_. Defaults to None.
-
+        
         Returns:
             List: _description_
         """
@@ -99,7 +99,7 @@ class IngredientManager(Manager):
         if limit is not None:
             ingredient_limit = int(limit)
 
-        # TODO: Fix the ordering implementation
+        # FIXME: Fix the ordering implementation
         if order is not None:
             if ingredient_order == "ASC":
                 ingredient_order = ingredient_order[:-1]

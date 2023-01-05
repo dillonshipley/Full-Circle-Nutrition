@@ -135,7 +135,7 @@ def get_ingredients_by_filters(query_params: QueryDict) -> JsonResponse:
                 },
             }
         )
-    return JsonResponse(data={"status": "FAILURE", "reason": ""})
+    return JsonResponse(data={"status": "FAILURE", "reason": filter_values_or_error})
 
 
 def get_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:
