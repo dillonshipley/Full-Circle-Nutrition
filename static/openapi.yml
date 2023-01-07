@@ -209,6 +209,17 @@ components:
         user_id:
           description: Unique identifier for the newly created user
           type: string
+    
+    PostIngredientResponse:
+      description: POST response after successfully creating a new ingredient.
+      type: object
+      properties:
+        status:
+          description: Status of the creation of a new ingredient
+          type: string
+        user_id:
+          description: Unique identifier for the newly created ingredient
+          type: string
 
     GetIngredientResponse:
       type: object
@@ -222,24 +233,26 @@ components:
         vegetarian:
           description: Vegetarian flag for the ingredient
           type: boolean
+        gluten_free:
+          description: Gluten free flag for the ingredient
+          type: boolean
         units:
           description: Units of measurement this ingredient will use for its recipe
           type: string
-        amount:
-          description: Amount of the ingredient to use in the recipe
-          type: number
-        nutrition_information:
-          description: Macro nutrition information about the ingredient
-          type: object
-          items:
-            type: object
-          
         notes:
           description: Notes about the ingredient. 
           type: object
           items:
             type: string
           example: {'flavor_profile': "Salty"}
+        create_date:
+          description: Creation date of the object
+          type: string
+          format: date-time
+        modify_date:
+          description: Date the object was last modified
+          type: string
+          format: date-time
         
     User:
       description: Request body for creating a new user object
@@ -272,6 +285,66 @@ components:
 
     Ingredient:
       description: Request body for creating a new ingredient object
+      type: object
+      properties:
+        name:
+          description: Ingredient name
+          type: string
+          nullable: false
+        vegetarian:
+          description: Flag the ingredient as vegetarian or not
+          type: boolean
+          nullable: false
+        gluten_free:
+          description: Flag the ingredient as gluten free or not
+          type: boolean
+          nullable: false
+        calories:
+          description: Number of calories the ingredient has
+          type: number
+          nullable: false
+        fat:
+          description: Fat content of the ingredient
+          type: number
+          nullable: false
+        protein:
+          description: Protein content of the ingredient
+          type: number
+          nullable: false
+        units:
+          type: string
+          enum: [CUP, TBP, TSP, DSH, PCH, LBS, OZS, GRM, SLC]
+          description: >
+            Units the ingredients should use for measurement:
+              * `CUP` - Cup
+              * `TBP` - Table Spoon
+              * `TSP` - Tea Spoon
+              * `DSH` - Dash
+              * `PCH` - Pinch
+              * `LBS` - Point
+              * `OZS` - Ounce
+              * `GRM` - Gram
+              * `SLC` - Slice 
+
+    GetIngredientByFiltersResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the operation
+          example: SUCCESS
+        data:
+          type: object
+          description: Filtered ingredients
+          properties:
+            index: 
+              type: integer
+              example: 0
+              description: Result ingredient index
+            ingredient:
+              type: object
+              $ref: '#components/schemas/GetIngredientResponse'
+            
 
 paths:
   /v0/recipes/{recipe_id}:
@@ -493,6 +566,11 @@ paths:
       operationId: getIngredients
       tags:
         - Ingredients
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Ingredient'
       responses:
         '201':
           description: Ingredient created
@@ -500,12 +578,57 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/PostIngredientResponse'
+        '400':
+          description: Error prevented the ingredient from being created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of the operation
+                    example: FAILURE
+                  reason:
+                    type: string
+                    description: Error message from the operation
     get:
       summary: Get ingredients by filters
       description: Get an ingredient or ingredients using a combination of filters
       operationId: get_ingredients_by_filters
       tags:
         - Ingredients
+      parameters:
+        - in: query
+          name: filter.order
+          schema:
+            type: string
+            example: ASC
+          description: The chronological order the objects should be returned in.
+        - in: query
+          name: filter.limit
+          schema:
+            type: integer
+            example: 10
+          description: The limit to the number of objects that should be returned.
+        - in: query
+          name: filter.name
+          schema:
+            type: string
+            example: Butter
+          description: Filter ingredients by name
+        - in: query
+          name: filter.vegetarian
+          schema:
+            type: boolean
+            example: True
+          description: Filter ingredients by their vegetarian status
+        - in: query
+          name: filter.gluten_free
+          schema:
+            type: boolean
+            example: True
+          description: Filter ingredients by their gluten free status
       responses:
         '200':
           description: A list of ingredient matching the provided filters
@@ -513,7 +636,91 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/GetIngredientByFiltersResponse'
-
+        '400':
+          description: Invalid GET by filters request
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    description: Status of the operation
+                    example: FAILURE
+                  reason:
+                    type: string
+                    description: Error message from the operation
+  
+  /v0/ingredients/{ingredient_id}:
+    get:
+      summary: Get ingredient by UUID
+      description: Retrieve an ingredient from the database by UUID
+      operationId: get_ingredient_by_id
+      tags:
+        - Ingredients
+      responses:
+        '200':
+          description: Found ingredient with that UUID in the database
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/GetIngredientResponse'
+    patch:
+      summary: Update ingredient
+      description: Update ingredient using UUID as a key
+      operationId: patch_ingredient_by_id
+      tags:
+        - Ingredients
+      responses:
+        '200':
+          description: Updated ingredient with that UUID and saved changes to the database
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: SUCCESS
+                  ingredient_id:
+                    description: UUID of the updated object
+                    type: string
+                    format: uuid
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: FAILURE
+                  ingredient_id:
+                    description: UUID of the requested object
+                    type: string
+                    format: uuid 
+                  reason:
+                    description: Reason the error occurred
+                    type: string
+                    example: Bad request
+        '404':
+          description: Could not find ingredient with the provided UUID
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: FAILURE
+                  ingredient_id:
+                    description: UUID of the requested object
+                    type: string
+                    format: uuid
+                  reason:
+                    description: Reason the error occurred
+                    type: string
+  
   /v0/ingredients/all:
     get:
       summary: Get all ingredients

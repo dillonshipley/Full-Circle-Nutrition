@@ -110,7 +110,7 @@ def create_ingredient(request_body: HttpRequest) -> JsonResponse:
         )
 
     return JsonResponse(
-        status=409, data={"status": "FAILURE", "reason": new_ingredient_or_error}
+        status=400, data={"status": "FAILURE", "reason": new_ingredient_or_error}
     )
 
 
@@ -126,16 +126,21 @@ def get_ingredients_by_filters(query_params: QueryDict) -> JsonResponse:
     log.info(f"Query Params: {query_params}")
     is_valid, filter_values_or_error = validator.validate(query_params)
     if is_valid:
-        filter_results = Ingredient.objects.get_ingredients_by_filters(**filter_values_or_error)
+        filter_results = Ingredient.objects.get_ingredients_by_filters(
+            **filter_values_or_error
+        )
         return JsonResponse(
             data={
                 "status": "SUCCESS",
                 "data": {
-                    index: ingredient.serialize() for index, ingredient in enumerate(filter_results)
+                    index: ingredient.serialize()
+                    for index, ingredient in enumerate(filter_results)
                 },
             }
         )
-    return JsonResponse(data={"status": "FAILURE", "reason": filter_values_or_error})
+    return JsonResponse(
+        status=400, data={"status": "FAILURE", "reason": filter_values_or_error}
+    )
 
 
 def get_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:
@@ -200,7 +205,7 @@ def patch_ingredient_by_id(ingredient_id: UUID, request: dict) -> JsonResponse:
     return JsonResponse(
         status=400,
         data={
-            "status": "SUCCESS",
+            "status": "FAILURE",
             "ingredient_id": ingredient_id,
             "reason": "Bad request",
         },

@@ -8,7 +8,7 @@ from .managers import IngredientManager
 
 class Ingredient(models.Model):
     __unit_choices = (
-        ("CUP", "cups"),
+        ("CUP", "cup"),
         ("TBP", "table spoon"),
         ("TSP", "tea spoon"),
         ("DSH", "dash"),
