@@ -345,8 +345,8 @@ components:
               type: object
               $ref: '#components/schemas/GetIngredientResponse'
             
-
 paths:
+  # ====================================Recipes==================================== 
   /v0/recipes/{recipe_id}:
     get: 
       summary: Get recipe by recipe_id
@@ -406,7 +406,7 @@ paths:
       responses:
         '204':
           description: Recipe deleted
-  
+
   /v0/recipes/:
     post:
       summary: Create new recipe
@@ -427,6 +427,7 @@ paths:
               schema: 
                 $ref: '#/components/schemas/PostRecipeNoIngredientsResponse'
 
+  # ====================================Users==================================== 
   /v0/users/{user_id}:
     get:
       summary: Get user by user_id
@@ -559,6 +560,173 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserFailedRequest'
 
+  # ====================================Ingredients==================================== 
+  /v0/ingredients/{ingredient_id}:
+    get:
+      summary: Get ingredient by UUID
+      description: Retrieve an ingredient from the database by UUID
+      operationId: get_ingredient_by_id
+      tags:
+        - Ingredients
+      parameters:
+        - in: path
+          name: ingredient_id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of ingredient to retrieve
+      responses:
+        '200':
+          description: Found ingredient with that UUID in the database
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/GetIngredientResponse'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: FAILURE
+                  reason:
+                    description: Reason the error occurred
+                    type: string
+
+    patch:
+      summary: Update ingredient
+      description: Update ingredient using UUID as a key
+      operationId: patch_ingredient_by_id
+      tags:
+        - Ingredients
+      parameters:
+        - in: path
+          name: ingredient_id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of ingredient to retrieve
+      responses:
+        '200':
+          description: Updated ingredient with that UUID and save changes to the database
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: SUCCESS
+                  ingredient_id:
+                    description: UUID of the updated object
+                    type: string
+                    format: uuid
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: FAILURE
+                  ingredient_id:
+                    description: UUID of the requested object
+                    type: string
+                    format: uuid 
+                  reason:
+                    description: Reason the error occurred
+                    type: string
+                    example: Bad request
+        '404':
+          description: Could not find ingredient with the provided UUID
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: FAILURE
+                  ingredient_id:
+                    description: UUID of the requested object
+                    type: string
+                    format: uuid
+                  reason:
+                    description: Reason the error occurred
+                    type: string
+  
+    delete:
+      summary: Delete ingredient
+      description: Delete ingredient using the UUID as a key 
+      operationId: delete_ingredient_by_id
+      tags:
+        - Ingredients
+      parameters:
+        - in: path
+          name: ingredient_id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of ingredient to delete
+      responses:
+        '204':
+          description: Delete ingredient with that UUID
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: SUCCESS
+                  ingredient_id:
+                    description: UUID of the deleted object
+                    type: string
+                    format: uuid
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: FAILURE
+                  ingredient_id:
+                    description: UUID of the requested object
+                    type: string
+                    format: uuid 
+                  reason:
+                    description: Reason the error occurred
+                    type: string
+                    example: Bad request
+        '404':
+          description: Could not find ingredient with the provided UUID
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Status of the operation
+                    type: string
+                    example: FAILURE
+                  ingredient_id:
+                    description: UUID of the requested object
+                    type: string
+                    format: uuid
+                  reason:
+                    description: Reason the error occurred
+                    type: string
+
   /v0/ingredients:
     post:
       summary: Create new ingredient
@@ -592,6 +760,7 @@ paths:
                   reason:
                     type: string
                     description: Error message from the operation
+
     get:
       summary: Get ingredients by filters
       description: Get an ingredient or ingredients using a combination of filters
@@ -650,77 +819,6 @@ paths:
                     type: string
                     description: Error message from the operation
   
-  /v0/ingredients/{ingredient_id}:
-    get:
-      summary: Get ingredient by UUID
-      description: Retrieve an ingredient from the database by UUID
-      operationId: get_ingredient_by_id
-      tags:
-        - Ingredients
-      responses:
-        '200':
-          description: Found ingredient with that UUID in the database
-          content:
-            application/json:
-              schema:
-                $ref: '#components/schemas/GetIngredientResponse'
-    patch:
-      summary: Update ingredient
-      description: Update ingredient using UUID as a key
-      operationId: patch_ingredient_by_id
-      tags:
-        - Ingredients
-      responses:
-        '200':
-          description: Updated ingredient with that UUID and saved changes to the database
-          content:
-            application/json:
-              schema:
-                properties:
-                  status:
-                    description: Status of the operation
-                    type: string
-                    example: SUCCESS
-                  ingredient_id:
-                    description: UUID of the updated object
-                    type: string
-                    format: uuid
-        '400':
-          description: Invalid request body
-          content:
-            application/json:
-              schema:
-                properties:
-                  status:
-                    description: Status of the operation
-                    type: string
-                    example: FAILURE
-                  ingredient_id:
-                    description: UUID of the requested object
-                    type: string
-                    format: uuid 
-                  reason:
-                    description: Reason the error occurred
-                    type: string
-                    example: Bad request
-        '404':
-          description: Could not find ingredient with the provided UUID
-          content:
-            application/json:
-              schema:
-                properties:
-                  status:
-                    description: Status of the operation
-                    type: string
-                    example: FAILURE
-                  ingredient_id:
-                    description: UUID of the requested object
-                    type: string
-                    format: uuid
-                  reason:
-                    description: Reason the error occurred
-                    type: string
-  
   /v0/ingredients/all:
     get:
       summary: Get all ingredients
@@ -736,6 +834,7 @@ paths:
               schema:
                 $ref: "#components/schemas/GetIngredientsByFiltersResponse"
 
+  # ====================================Infomation====================================
   /:
     get:
       summary: Application index
