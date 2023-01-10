@@ -10,6 +10,7 @@ class IngredientSerializer(serializers.ModelSerializer):
             "ingredient_id",
             "name",
             "vegetarian",
+            "gluten_free",
             "calories",
             "fat",
             "protein",

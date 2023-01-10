@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 import users
 from .views import create_user, user_interactions_by_id

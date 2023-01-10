@@ -1,14 +1,15 @@
 import json
 import logging
-from uuid import UUID, uuid4
+from uuid import UUID
 
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse, QueryDict
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from .models import Ingredient
 from .serializers import IngredientSerializer
+from .validators.get_by_filters_validator import GetByFiltersValidator as validator
 
 log = logging.getLogger("ingredients")
 
@@ -40,8 +41,8 @@ def ingredient_interactions_by_id(
 
 
 @csrf_exempt
-@require_http_methods(["POST"])
-def create_ingredient(request: HttpRequest) -> JsonResponse:
+@require_http_methods(["POST", "GET"])
+def ingredient_interactions(request: HttpRequest) -> JsonResponse:
     """_summary_
 
     Args:
@@ -49,15 +50,57 @@ def create_ingredient(request: HttpRequest) -> JsonResponse:
     Returns:
         JsonResponse: _description_
     """
-    body = json.loads(request.body.decode("utf-8"))
+    if request.method == "POST":
+        request_body = json.loads(request.body.decode("utf-8"))
+        return create_ingredient(request_body)
 
+    if request.method == "GET":
+        query_params = request.GET
+        return get_ingredients_by_filters(query_params)
+
+    return JsonResponse(staticmethod=405, data={})
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_all_ingredients(request: HttpRequest) -> JsonResponse:
+    """_summary_
+
+    Args:
+        request (HttpRequest): _description_
+
+    Returns:
+        JsonResponse: _description_
+    """
+    result = Ingredient.objects.get_all_ingredients()
+
+    return JsonResponse(
+        status=200,
+        data={
+            "status": "SUCCESS",
+            "data": {
+                index: ingredient.serialize() for index, ingredient in enumerate(result)
+            },
+        },
+    )
+
+
+def create_ingredient(request_body: HttpRequest) -> JsonResponse:
+    """_summary_
+
+    Args:
+        request (HttpRequest): _description_
+    Returns:
+        JsonResponse: _description_
+    """
     status, new_ingredient_or_error = Ingredient.objects.create_ingredient(
-        name=body["name"],
-        vegetarian=body["vegetarian"],
-        calories=body["calories"],
-        fat=body["fat"],
-        protein=body["protein"],
-        units=body["units"],
+        name=request_body["name"],
+        vegetarian=request_body["vegetarian"],
+        gluten_free=request_body["gluten_free"],
+        calories=request_body["calories"],
+        fat=request_body["fat"],
+        protein=request_body["protein"],
+        units=request_body["units"],
     )
 
     if status:
@@ -67,7 +110,36 @@ def create_ingredient(request: HttpRequest) -> JsonResponse:
         )
 
     return JsonResponse(
-        status=409, data={"status": "FAILURE", "reason": new_ingredient_or_error}
+        status=400, data={"status": "FAILURE", "reason": new_ingredient_or_error}
+    )
+
+
+def get_ingredients_by_filters(query_params: QueryDict) -> JsonResponse:
+    """_summary_
+
+    Args:
+        query_params (QueryDict): _description_
+
+    Returns:
+        JsonResponse: _description_
+    """
+    log.info(f"Query Params: {query_params}")
+    is_valid, filter_values_or_error = validator.validate(query_params)
+    if is_valid:
+        filter_results = Ingredient.objects.get_ingredients_by_filters(
+            **filter_values_or_error
+        )
+        return JsonResponse(
+            data={
+                "status": "SUCCESS",
+                "data": {
+                    index: ingredient.serialize()
+                    for index, ingredient in enumerate(filter_results)
+                },
+            }
+        )
+    return JsonResponse(
+        status=400, data={"status": "FAILURE", "reason": filter_values_or_error}
     )
 
 
@@ -133,7 +205,7 @@ def patch_ingredient_by_id(ingredient_id: UUID, request: dict) -> JsonResponse:
     return JsonResponse(
         status=400,
         data={
-            "status": "SUCCESS",
+            "status": "FAILURE",
             "ingredient_id": ingredient_id,
             "reason": "Bad request",
         },
@@ -152,7 +224,9 @@ def delete_ingredient_by_id(ingredient_id: UUID) -> JsonResponse:
     """
     result = Ingredient.objects.delete_ingredients_by_id(ingredient_id=ingredient_id)
     return (
-        JsonResponse(status=200, data={"status": "SUCCESS", "ingredient_id": ingredient_id})
+        JsonResponse(
+            status=200, data={"status": "SUCCESS", "ingredient_id": ingredient_id}
+        )
         if result
         else JsonResponse(
             status=404,

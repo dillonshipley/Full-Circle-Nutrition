@@ -132,7 +132,7 @@ class UserViewTests(TestCase):
             UserDefaults.USER_POST_SUCCESS_MESSAGE["status_code"],
         )
 
-        # Assert the delete response body matches what's expected 
+        # Assert the delete response body matches what's expected
         delete_response = self.client.delete(
             UserDefaults.BASE_URL + f"{post_user_id}/",
         )

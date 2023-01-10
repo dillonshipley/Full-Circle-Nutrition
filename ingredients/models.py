@@ -8,7 +8,7 @@ from .managers import IngredientManager
 
 class Ingredient(models.Model):
     __unit_choices = (
-        ("CUP", "cups"),
+        ("CUP", "cup"),
         ("TBP", "table spoon"),
         ("TSP", "tea spoon"),
         ("DSH", "dash"),
@@ -29,6 +29,7 @@ class Ingredient(models.Model):
     )
     name = models.CharField(name="name", max_length=80, null=False, unique=True)
     vegetarian = models.BooleanField(name="vegetarian", default=False)
+    gluten_free = models.BooleanField(name="gluten_free", default=False)
     calories = models.PositiveSmallIntegerField(
         name="calories", null=False, default=0, editable=True
     )
@@ -53,6 +54,7 @@ class Ingredient(models.Model):
             "ingredient_id": self.ingredient_id,
             "name": self.name,
             "vegetarian": self.vegetarian,
+            "gluten_free": self.gluten_free,
             "calories": float(self.calories),
             "fat": float(self.fat),
             "protein": float(self.protein),

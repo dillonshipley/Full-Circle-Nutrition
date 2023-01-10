@@ -48,11 +48,25 @@ class UserManager(Manager):
         Args:
             user_id (UUID): User id of the User model that should be restored
         Returns:
-            tuple(bool, [User, Error]): Tuple containing the success of the operation,
+            tuple(bool, [User | Error]): Tuple containing the success of the operation,
             and the resulting User or error
         """
         try:
             return True, self.get(user_id=user_id)
+        except ObjectDoesNotExist as e:
+            return False, e
+
+    def get_user_by_username(self, username: str) -> tuple:
+        """Retrieve an user using the username as a query
+
+        Args:
+            username (str): Username of the user that should be restored
+        Returns:
+            tuple(bool, [User | Error]): Tuple containing the success of the operation,
+            and the resulting User or Error
+        """
+        try:
+            return True, self.get(name=username)
         except ObjectDoesNotExist as e:
             return False, e
 

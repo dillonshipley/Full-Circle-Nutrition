@@ -77,6 +77,25 @@ def create_recipe(request: HttpRequest) -> JsonResponse:
     return JsonResponse(status=409, data={"status": "FAILURE", "reason": result})
 
 
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_all_recipes(request: HttpRequest) -> JsonResponse:
+    status, result = Recipe.objects.get_recipes()
+
+    if status:
+        return JsonResponse(
+            status=200,
+            data={
+                "status": "SUCCESS",
+                "data": {
+                    index: recipe.serialize() for index, recipe in enumerate(result)
+                },
+            },
+        )
+
+    return JsonResponse(status=404, data={"status": "FAILURE", "reason": str(result)})
+
+
 def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
     """Retrieve a recipe's data using the recipe_id as a query
 

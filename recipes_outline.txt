@@ -107,3 +107,7 @@ Tumeric
 
 
 
+Ingredients should have:
+A theme
+
+A cooking style should have

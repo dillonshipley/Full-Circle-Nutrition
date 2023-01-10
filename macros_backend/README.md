@@ -5,7 +5,7 @@ Macros Backend
 
 1. Start virtual environment
     ```bash
-    source env/bin/activate
+    source .venv/bin/activate
     ```
 1. Install required packages
     ```bash
