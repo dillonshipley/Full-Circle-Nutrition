@@ -19,7 +19,8 @@ log = logging.getLogger("ingredients")
 def ingredient_interactions_by_id(
     request: HttpRequest, ingredient_id: UUID
 ) -> JsonResponse:
-    """_summary_
+    """Handles interactions against the ingredients model using the ingredient_id as a key.
+    Uses the request method to determine how the request should be handled
 
     Args:
         request (HttpRequest): _description_
@@ -43,7 +44,8 @@ def ingredient_interactions_by_id(
 @csrf_exempt
 @require_http_methods(["POST", "GET"])
 def ingredient_interactions(request: HttpRequest) -> JsonResponse:
-    """_summary_
+    """Handles interactions against the ingredients model. Uses the request method to determine 
+    how the request should be handled
 
     Args:
         request (HttpRequest): _description_
@@ -85,11 +87,11 @@ def get_all_ingredients(request: HttpRequest) -> JsonResponse:
     )
 
 
-def create_ingredient(request_body: HttpRequest) -> JsonResponse:
+def create_ingredient(request_body: dict) -> JsonResponse:
     """_summary_
 
     Args:
-        request (HttpRequest): _description_
+        request (dict): _description_
     Returns:
         JsonResponse: _description_
     """

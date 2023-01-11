@@ -1,25 +1,23 @@
 import json
 import logging
 from time import time
-from uuid import UUID, uuid4
+from uuid import UUID
 
 import environ
 import requests
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse, QueryDict
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 import frontend
 import macros_backend
-from recipes.models import Recipe
-from recipes.serializers import RecipeSerializer
+from .models import Recipe
+from .serializers import RecipeSerializer
 
-# Initialize environment variables
 env = environ.Env()
 environ.Env.read_env()
 
-# Initialize logging helper
 log = logging.getLogger("recipes")
 
 
@@ -28,7 +26,7 @@ log = logging.getLogger("recipes")
 @require_http_methods(["GET", "PATCH", "DELETE"])
 def recipe_interactions_by_id(request: HttpRequest, recipe_id: UUID) -> JsonResponse:
     """Handles interactions against the recipes model using the recipe_id as a key.
-    Uses the request method to determine how the object should be manipulated.
+    Uses the request method to determine how the request should be handled
 
     Args:
         request (HttpRequest): Request recieved by the application
@@ -48,10 +46,29 @@ def recipe_interactions_by_id(request: HttpRequest, recipe_id: UUID) -> JsonResp
 
     return JsonResponse(status=405, data={})
 
-
 @csrf_exempt
-@require_http_methods(["POST"])
-def create_recipe(request: HttpRequest) -> JsonResponse:
+@require_http_methods(['GET', "POST"])
+def recipe_interactions(request: HttpRequest) -> JsonResponse:
+    """Handle interactions against the recipes model. Uses the request method to determine
+    how the request should be handled
+
+    Args:
+        request (HttpRequest): Request recieved by the application
+    Returns:
+        JsonResponse: Response object for the completed request
+    """
+    if request.method == 'POST':
+        request_body = json.loads(request.body.decode('utf-8'))
+        return create_recipe(request_body)
+
+    if request.method == 'GET':
+        query_params = request.GET
+        return get_recipe_by_filters(query_params)
+
+    return JsonResponse(status=405, data={})
+
+
+def create_recipe(request_body: dict) -> JsonResponse:
     """Create a new recipe object and persist it to the database
 
     Args:
@@ -61,14 +78,12 @@ def create_recipe(request: HttpRequest) -> JsonResponse:
             201: Created new user
             400: Bad request
     """
-    body = json.loads(request.body.decode("utf-8"))
-
     status, result = Recipe.objects.create_recipe(
-        recipe_name=body["recipe_name"],
-        creator=body["creator"],
-        price=body["price"],
-        meal_type=body["meal_type"],
-        description=body["description"],
+        recipe_name=request_body["recipe_name"],
+        creator=request_body["creator"],
+        price=request_body["price"],
+        meal_type=request_body["meal_type"],
+        description=request_body["description"],
     )
 
     if status:
@@ -116,6 +131,12 @@ def get_recipe_by_id(recipe_id: UUID) -> JsonResponse:
         status=404,
         data={"status": "FAILURE", "recipe_id": recipe_id, "reason": str(result)},
     )
+
+def get_recipe_by_filters(query_params: QueryDict) -> JsonResponse:
+    log.info(f"Query Params: {query_params}")
+    is_valid, filter_values_or_error = validator.validate(query_params)
+    if is_valid:
+        filter_results = Recipe.objects
 
 
 def patch_recipe_by_id(recipe_id: UUID, request: dict) -> JsonResponse:
